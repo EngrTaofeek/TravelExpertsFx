@@ -1,5 +1,5 @@
 # TravelExpertsGRP5-DesktopApp
-## Group Member
+## Group Members
  - Taofeek 
  - Daryl
  - Ryan
