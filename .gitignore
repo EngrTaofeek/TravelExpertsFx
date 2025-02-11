@@ -15,7 +15,7 @@ out/
 *.iws
 *.iml
 *.ipr
-db.properties
+/src/main/resources/db.properties
 
 ### Eclipse ###
 .apt_generated
