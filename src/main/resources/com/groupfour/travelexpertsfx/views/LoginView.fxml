@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.groupfour.travelexpertsfx.controllers.LoginController">  <!-- 🔹 ADDED THIS LINE -->
+
+   <!-- Left Side (Image/Logo) -->
+   <left>
+      <AnchorPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #292929;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="25.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <!--                  <Image url="@../images/logo.png" />  &lt;!&ndash; Change this to your logo path &ndash;&gt;-->
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </left>
+
+   <!-- Center (Login Form) -->
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="400.0"
+                  styleClass="root"
+                  stylesheets="@../styles/login.css"
+                  BorderPane.alignment="CENTER">
+         <children>
+            <!-- Login Title -->
+            <Label layoutX="100.0" layoutY="60.0" prefHeight="40.0" prefWidth="200.0" text="Login" styleClass="label">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+            </Label>
+
+            <!-- Username Label -->
+            <Label layoutX="50.0" layoutY="130.0" text="Email:" styleClass="label" />
+
+            <!-- Username Field -->
+            <TextField fx:id="txtEmail" layoutX="150.0" layoutY="125.0" promptText="Enter your email"
+                       styleClass="text-field" />
+
+            <!-- Password Label -->
+            <Label layoutX="50.0" layoutY="180.0" text="Password:" styleClass="label" />
+
+            <!-- Password Field -->
+            <PasswordField fx:id="txtPassword" layoutX="150.0" layoutY="175.0" promptText="Enter your password"
+                           styleClass="password-field" />
+
+            <!-- Error Message -->
+            <Label fx:id="lblMessage" layoutX="150.0" layoutY="220.0" textFill="#df0a0a" />
+
+            <!-- Login Button -->
+            <Button fx:id="btnlogin" layoutX="150.0" layoutY="260.0" mnemonicParsing="false" text="Log In"
+                    onAction="#handleLogin"
+                    styleClass="button"/>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
