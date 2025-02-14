@@ -1,108 +1,164 @@
 package com.groupfour.travelexpertsfx.controllers;
 
-import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.util.Duration;
-
-import java.io.IOException;
+import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
 
     @FXML private HBox topButtonContainer;
-    @FXML private AnchorPane mainContent; // Main content area for loading views
-    @FXML private AnchorPane sideMenu; // Sidebar for navigation
-    @FXML private Label lblMenu; // Menu toggle label
-    @FXML private ImageView exitIcon; // Exit button icon
-    @FXML private Button btnHome, btnAdd, btnEdit, btnDelete; // Top buttons
-    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers; // Sidebar buttons
+    @FXML private AnchorPane mainContent;
+    @FXML private Button btnHome, btnAdd, btnEdit, btnDelete;
+    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers, btnProducts;
+    @FXML private VBox sideMenu;
+    @FXML private Button btnMenuToggle;  // Changed from Label to Button
 
-    private boolean isMenuOpen = false; // Sidebar initially hidden
+    private Object currentController;
+    private static String userRole;
+    private boolean isSidebarVisible = false;
+
+    public static void setUserRole(String role) {
+        userRole = role;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Ensure sidebar starts hidden
-        sideMenu.setLayoutX(-200);
 
-        // Set event listener for "☰ Menu" label
-        lblMenu.setOnMouseClicked(event -> toggleSidebar());
 
-        // Set event for Exit button
-        exitIcon.setOnMouseClicked(event -> System.exit(0));
 
-        // Load the Home page by default
+        // Ensure home is initialized
+
         loadPage("Home.fxml");
 
-        // Set navigation button actions
-        btnHome.setOnAction(event -> {
-            loadPage("Home.fxml");
-            setTopButtonsVisibility(false); // Hide buttons on Home
-        });
+
+        // Apply role-based restrictions
+        applyRolePermissions();
+
+        // Sidebar initially hidden
+        sideMenu.setVisible(false);
+        sideMenu.setManaged(false);
+
+        // Attach menu toggle
+        btnMenuToggle.setOnAction(event -> toggleSidebar());
+
+        // Attach Home button action
+        btnHome.setOnAction(event -> loadPage("Home.fxml"));
+
+        // Navigation button actions
         btnAgents.setOnAction(event -> loadPage("Agents.fxml"));
         btnAgencies.setOnAction(event -> loadPage("Agencies.fxml"));
         btnPackages.setOnAction(event -> loadPage("Packages.fxml"));
         btnSuppliers.setOnAction(event -> loadPage("Suppliers.fxml"));
         btnCustomers.setOnAction(event -> loadPage("Customers.fxml"));
+        btnProducts.setOnAction(event -> loadPage("Products.fxml"));
 
-        // Initially hide the top buttons
+        // Attach CRUD button actions
+        btnAdd.setOnAction(event -> handleAdd());
+        btnEdit.setOnAction(event -> handleEdit());
+        btnDelete.setOnAction(event -> handleDelete());
+
+        // Hide top buttons initially
         setTopButtonsVisibility(false);
+
+        applyStylesheet();
     }
 
-    // Sidebar toggle function with layout adjustment
-    private void toggleSidebar() {
-        TranslateTransition slide = new TranslateTransition(Duration.seconds(0.4), sideMenu);
+    @FXML
+    public void toggleSidebar() {
+        isSidebarVisible = !isSidebarVisible;
+        sideMenu.setVisible(isSidebarVisible);
+        sideMenu.setManaged(isSidebarVisible);
+    }
 
-        if (isMenuOpen) {
-            slide.setToX(-200); // Hide sidebar
-            slide.setOnFinished(event -> sideMenu.setVisible(false));
-            mainContent.setLayoutX(0); // Adjust main content position
-        } else {
-            sideMenu.setVisible(true);
-            slide.setToX(0); // Show sidebar
-            mainContent.setLayoutX(200); // Push content when sidebar is visible
+    private void applyRolePermissions() {
+        if (userRole != null && userRole.equalsIgnoreCase("agent")) {
+            btnAgents.setVisible(false);
+            btnAgents.setManaged(false);
+            btnAgencies.setVisible(false);
+            btnAgencies.setManaged(false);
         }
-
-        slide.play();
-        isMenuOpen = !isMenuOpen;
     }
 
-    // Function to load a new FXML file inside `mainContent`
     private void loadPage(String fxmlFile) {
         try {
-            String fullPath = "/com/groupfour/travelexpertsfx/views/" + fxmlFile;
-            URL fileUrl = getClass().getResource(fullPath);
-
-            if (fileUrl == null) {
-                return;
-            }
-
-            FXMLLoader loader = new FXMLLoader(fileUrl);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/groupfour/travelexpertsfx/views/" + fxmlFile));
             Node page = loader.load();
-            mainContent.getChildren().clear(); // Clear previous content
-            mainContent.getChildren().add(page); // Load new content
+            mainContent.getChildren().clear();
+            mainContent.getChildren().add(page);
 
-            // Show buttons only when a section is selected
+            currentController = loader.getController();
+
             boolean isHome = fxmlFile.equals("Home.fxml");
             setTopButtonsVisibility(!isHome);
 
-        } catch (IOException e) {
+            if (userRole != null && userRole.equalsIgnoreCase("agent")) {
+                restrictCrudAccess();
+            }
+
+        } catch (Exception e) {
+            System.err.println("❌ Error loading " + fxmlFile + ": " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    // Function to show/hide top buttons
+    private void restrictCrudAccess() {
+        if (currentController instanceof AgentsController || currentController instanceof AgenciesController) {
+            setTopButtonsVisibility(false);
+        }
+    }
+
+    private void handleAdd() {
+        if (currentController instanceof AgentsController) {
+            ((AgentsController) currentController).addAgent();
+        } else if (currentController instanceof AgenciesController) {
+            // ((AgenciesController) currentController).addAgency();
+        }
+    }
+
+    private void handleEdit() {
+        if (currentController instanceof AgentsController) {
+            ((AgentsController) currentController).editAgent();
+        } else if (currentController instanceof AgenciesController) {
+            // ((AgenciesController) currentController).editAgency();
+        }
+    }
+
+    private void handleDelete() {
+        if (currentController instanceof AgentsController) {
+            ((AgentsController) currentController).deleteAgent();
+        } else if (currentController instanceof AgenciesController) {
+            // ((AgenciesController) currentController).deleteAgency();
+        }
+    }
+
     private void setTopButtonsVisibility(boolean visible) {
+        btnHome.setVisible(visible);
         btnAdd.setVisible(visible);
         btnEdit.setVisible(visible);
         btnDelete.setVisible(visible);
     }
+    private void applyStylesheet() {
+        if (mainContent.getScene() != null) {
+            Scene scene = mainContent.getScene();
+            scene.getStylesheets().add(getClass().getResource("/com/groupfour/travelexpertsfx/styles/dashboard.css").toExternalForm());
+        } else {
+            // Wait until the scene is available
+            mainContent.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    newScene.getStylesheets().add(getClass().getResource("/com/groupfour/travelexpertsfx/styles/dashboard.css").toExternalForm());
+                }
+            });
+        }
+    }
+
+
 }

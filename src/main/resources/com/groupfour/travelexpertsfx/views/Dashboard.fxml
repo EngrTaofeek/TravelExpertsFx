@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.Blend?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -12,130 +9,55 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" stylesheets="@../styles/dashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.DashboardController">  <!-- ✅ Ensure CSS is loaded -->
+
     <children>
-        <BorderPane layoutX="150.0" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <BorderPane prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <!-- Top Navigation Bar -->
             <top>
-                <AnchorPane prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: White;" BorderPane.alignment="CENTER">
-                    <children>
-                        <Pane layoutX="193.0" layoutY="-67.0" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #032d46;" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <children>
-                                <ImageView fx:id="exitIcon" fitHeight="22.0" fitWidth="22.0" layoutX="664.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../images/exit.png" />
-                                    </image>
-                                </ImageView>
-                            </children>
-                        </Pane>
-                        <HBox fx:id="topButtonContainer" layoutX="186.0" prefHeight="43.0" prefWidth="525.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="25.0">
-                            <children>
-                                <JFXButton fx:id="btnHome" prefHeight="38.0" prefWidth="136.0" text="Home">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../images/home.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton fx:id="btnAdd" prefHeight="38.0" prefWidth="136.0" text="Add">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../images/add.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton fx:id="btnEdit" prefHeight="38.0" prefWidth="136.0" text="Edit">
-                                    <graphic>
-                                        <ImageView fitHeight="20.0" fitWidth="22.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../images/edit.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton fx:id="btnDelete" prefHeight="38.0" prefWidth="136.0" text="Delete">
-                                    <graphic>
-                                        <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../images/bin.png" />
-                                            </image></ImageView>
-                                    </graphic>
-                                </JFXButton>
-                            </children>
-                        </HBox>
-                        <Label fx:id="lblMenu" layoutY="34.0" style="-fx-font-size: 16px; -fx-cursor: hand;" text="☰ Menu">
-                            <graphic>
-                                <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
-                            </graphic>
-                            <font>
-                                <Font name="System Bold" size="14.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </AnchorPane>
+                <VBox prefWidth="50.0">
+                    <!-- Dark Bar Above -->
+                    <Pane prefHeight="30.0" styleClass="top-bar" VBox.vgrow="NEVER" />
+
+                    <!-- White Navigation Bar -->
+                    <AnchorPane prefHeight="40.0" prefWidth="900.0" styleClass="top-nav" VBox.vgrow="NEVER">
+                        <children>
+                            <Button fx:id="btnMenuToggle" layoutX="15.0" layoutY="15.0" onAction="#toggleSidebar" prefHeight="44.0" prefWidth="74.0" styleClass="menu-button" text="☰ Menu">
+                        <font>
+                           <Font size="18.0" />
+                        </font></Button>
+
+                            <HBox fx:id="topButtonContainer" layoutX="443.0" layoutY="22.0" prefHeight="14.0" prefWidth="394.0" spacing="15.0" AnchorPane.rightAnchor="183.0">
+                                <children>
+                                    <JFXButton fx:id="btnHome" styleClass="top-button" text="Home" />
+                                    <JFXButton fx:id="btnAdd" styleClass="top-button" text="Add" visible="false" />
+                                    <JFXButton fx:id="btnEdit" styleClass="top-button" text="Edit" visible="false" />
+                                    <JFXButton fx:id="btnDelete" styleClass="top-button" text="Delete" visible="false" />
+                                </children>
+                            </HBox>
+                        </children>
+                    </AnchorPane>
+                </VBox>
             </top>
 
-
+            <!-- Sidebar -->
             <left>
-                <AnchorPane fx:id="sideMenu" prefHeight="362.0" prefWidth="176.0" style="-fx-background-color: #0A4969;" BorderPane.alignment="CENTER">
+                <VBox fx:id="sideMenu" prefHeight="570.0" prefWidth="180.0" styleClass="sidebar">
                     <children>
-                        <VBox layoutX="28.0" layoutY="32.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="53.0">
-                            <children>
-                                <JFXButton fx:id="btnAgents" alignment="BASELINE_LEFT" prefHeight="38.0" prefWidth="176.0" text="Agents" textFill="#e4e0e0">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <effect>
-                                                <Blend />
-                                            </effect></ImageView>
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton fx:id="btnAgencies" alignment="BASELINE_LEFT" prefHeight="38.0" prefWidth="176.0" text="Agencies" textFill="#e4e0e0">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" opacity="0.68" pickOnBounds="true" preserveRatio="true" />
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton fx:id="btnPackages" alignment="BASELINE_LEFT" prefHeight="38.0" prefWidth="176.0" text="Packages" textFill="#e4e0e0">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton fx:id="btnSuppliers" alignment="BASELINE_LEFT" prefHeight="38.0" prefWidth="176.0" text="Suppliers" textFill="#e4e0e0">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
-                                    </graphic>
-                                </JFXButton>
-                                <JFXButton fx:id="btnCustomers" alignment="BASELINE_LEFT" prefHeight="38.0" prefWidth="176.0" text="Customers" textFill="#e4e0e0">
-                                    <font>
-                                        <Font name="System Bold" size="15.0" />
-                                    </font>
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
-                                    </graphic>
-                                </JFXButton>
-                            </children>
-                        </VBox>
+                        <JFXButton fx:id="btnAgents" styleClass="sidebar-button" text="Agents" />
+                        <JFXButton fx:id="btnAgencies" styleClass="sidebar-button" text="Agencies" />
+                        <JFXButton fx:id="btnPackages" styleClass="sidebar-button" text="Packages" />
+                        <JFXButton fx:id="btnSuppliers" styleClass="sidebar-button" text="Suppliers" />
+                        <JFXButton fx:id="btnCustomers" styleClass="sidebar-button" text="Customers" />
+                        <JFXButton fx:id="btnProducts" styleClass="sidebar-button" text="Products" />
                     </children>
-                </AnchorPane>
-
+                </VBox>
             </left>
-            <!-- Main Content (Dynamically Updated) -->
+
+            <!-- Main Content -->
             <center>
-                <AnchorPane fx:id="mainContent" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #F8F9FA;" />
+                <AnchorPane fx:id="mainContent" prefHeight="600.0" prefWidth="700.0" styleClass="main-content" />
             </center>
 
         </BorderPane>
