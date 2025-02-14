@@ -1,0 +1,94 @@
+/* 🏆 Dark Top Bar */
+.top-bar {
+    -fx-background-color: #032d46;
+    -fx-pref-height: 35px;
+}
+
+/* 🏆 Light Navigation Bar  */
+.top-nav {
+    -fx-background-color: white;
+    -fx-padding: 10px 15px;
+    -fx-border-width: 0 0 1px 0;
+    -fx-border-color: #ddd;
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #0A4969;
+    -fx-padding: 10px;
+}
+
+/* 📌 Sidebar Button (Default) */
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-alignment: center-left;
+    -fx-border-radius: 5px;
+}
+
+/* 🔥 Sidebar Button Hover Effect */
+.sidebar-button:hover {
+    -fx-background-color: #1d6a8b;
+    -fx-text-fill: #add8e6;  /* Light blue text */
+}
+
+/* 🔴 Sidebar Button Selected (Now Working) */
+.sidebar-button:focused,
+.sidebar-button:selected {
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}
+
+/* Main Content */
+.main-content {
+    -fx-background-color: #F8F9FA;
+    -fx-padding: 15px;
+}
+
+/* 📌   Top Button Container */
+.top-button-container {
+    -fx-padding: 8px 10px;
+    -fx-spacing: 20px;
+}
+
+/* 📌 Professional & Readable Top Buttons */
+.top-button {
+    -fx-background-color: transparent;  /* No background */
+    -fx-text-fill: black;
+    -fx-font-size: 16px; /* Bigger font */
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px;  /* Proper padding for button spacing */
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+/* 🌟 Top Button Hover Effect */
+.top-button:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #666;  /* Subtle gray color */
+}
+
+/* 🔴 Top Button Clicked/Selected */
+.top-button:focused,
+.top-button:selected {
+    -fx-background-color: trans parent;
+    -fx-text-fill: red; /* Text turns red */
+}
+
+/* 📌 Menu Button */
+.menu-button {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 10px;  /* Reduced padding */
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+/* Menu Button Hover */
+.menu-button:hover {
+    -fx-background-color: #e0e0e0;
+}
