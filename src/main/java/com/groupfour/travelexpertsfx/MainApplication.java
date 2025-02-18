@@ -52,7 +52,7 @@ public class MainApplication extends Application {
             FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("/com/groupfour/travelexpertsfx/views/Dashboard.fxml"));
             AnchorPane root = loader.load();  // Load the main dashboard layout
 
-            Scene scene = new Scene(root, 1000, 600);
+            Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Travel Experts Dashboard");
             primaryStage.show();

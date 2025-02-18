@@ -1,7 +1,10 @@
+
 /* General Styling */
 .root {
     -fx-background-color: linear-gradient(to right, #0F172A, #1E293B);
+
 }
+
 
 /* Left Section (Branding & Support Info) */
 .left-section {
@@ -216,14 +219,8 @@
 }
 /* LOGO STYLING */
 #imgLogo {
-    -fx-background-color: transparent; /* Ensuring background matches */
+    -fx-background-color: transparent; /* Transparent background */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0.5, 0, 5); /* Soft shadow */
-    -fx-opacity: 1.0;  /* Ensure full visibility */
-    -fx-border-radius: 0; /* Remove border radius for better fit */
 
-    /* Ensuring it expands fully */
-    -fx-fit-height: 100%;
-    -fx-fit-width: 100%;
-    -fx-preserve-ratio: true;
 }
 

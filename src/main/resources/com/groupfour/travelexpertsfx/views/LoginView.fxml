@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -17,17 +18,20 @@
       <HBox prefHeight="450.0" prefWidth="750.0" spacing="0">
 
          <!-- Left Section -->
-         <VBox alignment="CENTER" minWidth="200.0" prefWidth="300.0" spacing="20.0" styleClass="left-section" stylesheets="@../styles/login.css" HBox.hgrow="ALWAYS">
+         <VBox fx:id="leftSection" alignment="CENTER" minWidth="200.0" prefWidth="300.0" styleClass="left-section" HBox.hgrow="ALWAYS">
 
-            <!-- Logo -->
-            <ImageView id="imgLogo" fx:id="imgLogo" fitHeight="308.0" fitWidth="282.0" pickOnBounds="true" preserveRatio="true" styleClass="imgLogo">
+         <!-- Logo -->
+            <ImageView id="imgLogo" fx:id="imgLogo" cache="true" fitHeight="220.0" fitWidth="238.0" pickOnBounds="true" preserveRatio="true" smooth="false" styleClass="imgLogo">
                <image>
                   <Image url="@../images/logo.png" />
                </image>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </ImageView>
 
             <!-- Welcome Message -->
-            <Label prefHeight="30.0" prefWidth="249.0" styleClass="welcome-message" text="Welcome to Travel Experts!" wrapText="true" />
+            <Label prefHeight="30.0" prefWidth="234.0" styleClass="welcome-message" text="Welcome to Travel Experts!" wrapText="true" />
 
             <!-- Support Info -->
             <Label styleClass="support-info" text="For technical support, call +1-800-123-4567 or email support@travelexperts.com" wrapText="true" />
@@ -59,14 +63,14 @@
                      <TextField fx:id="txtVisiblePassword" managed="false" prefHeight="38.0" prefWidth="310.0" promptText="Enter your password" styleClass="login-input" visible="false" />
 
                      <!-- Eye Button to Toggle Visibility -->
-                     <Button fx:id="btnShowPassword" onAction="#togglePasswordVisibility" prefHeight="38.0" prefWidth="40.0" styleClass="show-password-btn" text="👁" />
+                     <Button fx:id="btnShowPassword" onAction="#togglePasswordVisibility" prefHeight="30.0" prefWidth="48.0" styleClass="show-password-btn" text="👁" />
                   </HBox>
                </VBox>
 
             </VBox>
 
             <!-- 🔹 Added Error Message Label Below -->
-            <Label fx:id="lblMessage" alignment="CENTER" styleClass="error-message" text="" />
+            <Label fx:id="lblMessage" alignment="CENTER" styleClass="error-message" text="" wrapText="true" />
 
             <!-- Login Button -->
             <Button fx:id="btnLogin" onAction="#handleLogin" prefHeight="37.0" prefWidth="350.0" styleClass="login-button" text="Log In" />

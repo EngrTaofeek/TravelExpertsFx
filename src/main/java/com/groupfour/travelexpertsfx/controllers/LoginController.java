@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 public class LoginController {
@@ -20,6 +21,8 @@ public class LoginController {
     @FXML private Button btnRegister;
     @FXML private Label lblMessage;
     @FXML private ImageView imgLogo;
+    @FXML private VBox leftSection;  // Reference to the left section VBox
+
 
     private boolean isPasswordVisible = false;
 
@@ -55,7 +58,7 @@ public class LoginController {
         txtPassword.setManaged(!isPasswordVisible);
         txtPassword.setVisible(!isPasswordVisible);
 
-        btnShowPassword.setText(isPasswordVisible ? "👁‍🗨" : "👁"); // Update button icon
+        btnShowPassword.setText(isPasswordVisible ? "\uD83D\uDC41\uFE0F" : "\uD83D\uDC40"); // Update button icon
     }
 
     @FXML
