@@ -1,0 +1,14 @@
+/* Background */
+.root {
+    -fx-background-color: #F9FAFB;
+}
+
+/* Welcome Message */
+.welcome-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E293B;
+    -fx-padding: 10px;
+}
+
+

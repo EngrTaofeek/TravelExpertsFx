@@ -23,7 +23,7 @@
                     <!-- White Navigation Bar -->
                     <AnchorPane maxHeight="67.0" minHeight="20.0" prefHeight="48.0" prefWidth="900.0" styleClass="top-nav" VBox.vgrow="NEVER">
                         <children>
-                            <Button fx:id="btnMenuToggle" layoutX="15.0" layoutY="6.0" onAction="#toggleSidebar" prefHeight="44.0" prefWidth="74.0" styleClass="menu-button" text="☰ Menu">
+                            <Button fx:id="btnMenuToggle" layoutX="15.0" layoutY="1.0" onAction="#toggleSidebar" prefHeight="44.0" prefWidth="74.0" styleClass="menu-button" text="☰ Menu">
                         <font>
                            <Font size="18.0" />
                         </font></Button>

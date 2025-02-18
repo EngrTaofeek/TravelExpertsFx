@@ -59,7 +59,7 @@ public class DashboardController implements Initializable {
         btnPackages.setOnAction(event -> loadPage("Packages.fxml"));
         btnSuppliers.setOnAction(event -> loadPage("Suppliers.fxml"));
         btnCustomers.setOnAction(event -> loadPage("Customers.fxml"));
-        btnProducts.setOnAction(event -> loadPage("Products.fxml"));
+
 
 
 
