@@ -6,63 +6,83 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.groupfour.travelexpertsfx.controllers.LoginController">  <!-- 🔹 ADDED THIS LINE -->
+<BorderPane stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.LoginController">
 
-   <!-- Left Side (Image/Logo) -->
-   <left>
-      <AnchorPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #292929;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="25.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+   <center>
+      <HBox prefHeight="450.0" prefWidth="750.0" spacing="0">
+
+         <!-- Left Section -->
+         <VBox alignment="CENTER" prefWidth="300.0" spacing="20.0" styleClass="left-section" HBox.hgrow="ALWAYS">
+
+            <!-- Logo -->
+            <ImageView fx:id="imgLogo" fitHeight="192.0" fitWidth="191.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <!--                  <Image url="@../images/logo.png" />  &lt;!&ndash; Change this to your logo path &ndash;&gt;-->
+                  <Image url="@../images/logo.png" />
                </image>
             </ImageView>
-         </children>
-      </AnchorPane>
-   </left>
 
-   <!-- Center (Login Form) -->
-   <center>
-      <AnchorPane prefHeight="400.0" prefWidth="400.0"
-                  styleClass="root"
-                  stylesheets="@../styles/login.css"
-                  BorderPane.alignment="CENTER">
-         <children>
+            <!-- Welcome Message -->
+            <Label prefHeight="60.0" prefWidth="244.0" styleClass="welcome-message" text="Welcome to Travel Experts!" wrapText="true" />
+
+            <!-- Support Info -->
+            <Label styleClass="support-info" text="For technical support, call +1-800-123-4567 or email support@travelexperts.com" wrapText="true" />
+
+         </VBox>
+
+         <!-- Right Section (Login Form) -->
+         <VBox alignment="CENTER" prefHeight="450.0" prefWidth="478.0" spacing="15.0" styleClass="right-section" HBox.hgrow="ALWAYS">
+
             <!-- Login Title -->
-            <Label layoutX="100.0" layoutY="60.0" prefHeight="40.0" prefWidth="200.0" text="Login" styleClass="label">
-               <font>
-                  <Font name="Arial Bold" size="24.0" />
-               </font>
-            </Label>
+            <Label styleClass="login-title" text="Log In to Your Account" />
 
-            <!-- Username Label -->
-            <Label layoutX="50.0" layoutY="130.0" text="Email:" styleClass="label" />
+            <VBox alignment="CENTER_LEFT" prefHeight="149.0" prefWidth="385.0" spacing="10.0">
 
-            <!-- Username Field -->
-            <TextField fx:id="txtEmail" layoutX="150.0" layoutY="125.0" promptText="Enter your email"
-                       styleClass="text-field" />
+               <!-- Email Field -->
+               <VBox alignment="CENTER_LEFT" maxWidth="350.0" spacing="5.0">
+                  <Label styleClass="login-label" text="Email:" />
+                  <TextField fx:id="txtEmail" maxWidth="343.0" minWidth="250.0" prefHeight="38.0" prefWidth="350.0" promptText="Enter your email" styleClass="login-input" />
+               </VBox>
 
-            <!-- Password Label -->
-            <Label layoutX="50.0" layoutY="180.0" text="Password:" styleClass="label" />
+               <!-- Password Field with Visibility Toggle -->
+               <VBox alignment="CENTER_LEFT" spacing="5">
+                  <Label styleClass="login-label" text="Password:" />
+                  <HBox alignment="CENTER_LEFT" spacing="5">
+                     <!-- Password Field (Hidden when visibility is toggled) -->
+                     <PasswordField fx:id="txtPassword" prefHeight="38.0" prefWidth="310.0" promptText="Enter your password" styleClass="login-input" />
 
-            <!-- Password Field -->
-            <PasswordField fx:id="txtPassword" layoutX="150.0" layoutY="175.0" promptText="Enter your password"
-                           styleClass="password-field" />
+                     <!-- Visible TextField for Password Visibility -->
+                     <TextField fx:id="txtVisiblePassword" prefHeight="38.0" prefWidth="310.0" promptText="Enter your password" styleClass="login-input" visible="false" managed="false" />
 
-            <!-- Error Message -->
-            <Label fx:id="lblMessage" layoutX="150.0" layoutY="220.0" textFill="#df0a0a" />
+                     <!-- Eye Button to Toggle Visibility -->
+                     <Button fx:id="btnShowPassword" onAction="#togglePasswordVisibility" prefHeight="38.0" prefWidth="40.0" styleClass="show-password-btn" text="👁" />
+                  </HBox>
+               </VBox>
+
+            </VBox>
+
+            <!-- 🔹 Added Error Message Label Below -->
+            <Label fx:id="lblMessage" alignment="CENTER" styleClass="error-message" text="" />
 
             <!-- Login Button -->
-            <Button fx:id="btnlogin" layoutX="150.0" layoutY="260.0" mnemonicParsing="false" text="Log In"
-                    onAction="#handleLogin"
-                    styleClass="button"/>
-         </children>
-      </AnchorPane>
+            <Button fx:id="btnLogin" prefHeight="37.0" prefWidth="350.0" styleClass="login-button" text="Log In" onAction="#handleLogin" />
+
+            <!-- Forgot Password -->
+            <Label alignment="CENTER" styleClass="forgot-password" text="Forgot Password?" />
+
+            <!-- Register Button -->
+            <Button fx:id="btnRegister" prefHeight="30.0" prefWidth="350.0" styleClass="register-button" text="Create an Account" onAction="#handleRegister" />
+
+            <!-- Spacer for better layout -->
+            <Region prefHeight="10.0" />
+
+         </VBox>
+
+      </HBox>
    </center>
+
 </BorderPane>

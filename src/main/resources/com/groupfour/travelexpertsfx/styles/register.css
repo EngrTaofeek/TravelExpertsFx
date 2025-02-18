@@ -1,0 +1,74 @@
+/* Background */
+.root {
+    -fx-background-color: linear-gradient(to right, #ECE9E6, #FFFFFF);
+}
+
+/* Title */
+.register-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #222831;
+}
+
+/* Labels */
+.register-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #555;
+}
+
+/* Input Fields */
+.register-input {
+    -fx-pref-height: 38px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #00ADB5;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-text-fill: #222831;
+}
+
+/* ComboBox */
+.register-combo {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #00ADB5;
+    -fx-background-color: white;
+    -fx-padding: 5px;
+}
+
+/* Message Label */
+.register-message {
+    -fx-font-size: 12px;
+    -fx-text-fill: red;
+}
+
+/* Buttons */
+.register-button {
+    -fx-background-color: #00ADB5;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-pref-width: 130px;
+}
+
+.back-button {
+    -fx-background-color: #393E46;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-pref-width: 130px;
+}
+
+.register-button:hover {
+    -fx-background-color: #008A93;
+}
+
+.back-button:hover {
+    -fx-background-color: #2E3238;
+}

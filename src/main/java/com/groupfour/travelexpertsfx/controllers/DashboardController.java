@@ -61,10 +61,7 @@ public class DashboardController implements Initializable {
         btnCustomers.setOnAction(event -> loadPage("Customers.fxml"));
         btnProducts.setOnAction(event -> loadPage("Products.fxml"));
 
-        // Attach CRUD button actions
-        btnAdd.setOnAction(event -> handleAdd());
-        btnEdit.setOnAction(event -> handleEdit());
-        btnDelete.setOnAction(event -> handleDelete());
+
 
         // Hide top buttons initially
         setTopButtonsVisibility(false);
@@ -116,29 +113,7 @@ public class DashboardController implements Initializable {
         }
     }
 
-    private void handleAdd() {
-        if (currentController instanceof AgentsController) {
-            ((AgentsController) currentController).addAgent();
-        } else if (currentController instanceof AgenciesController) {
-            // ((AgenciesController) currentController).addAgency();
-        }
-    }
 
-    private void handleEdit() {
-        if (currentController instanceof AgentsController) {
-            ((AgentsController) currentController).editAgent();
-        } else if (currentController instanceof AgenciesController) {
-            // ((AgenciesController) currentController).editAgency();
-        }
-    }
-
-    private void handleDelete() {
-        if (currentController instanceof AgentsController) {
-            ((AgentsController) currentController).deleteAgent();
-        } else if (currentController instanceof AgenciesController) {
-            // ((AgenciesController) currentController).deleteAgency();
-        }
-    }
 
     private void setTopButtonsVisibility(boolean visible) {
         btnHome.setVisible(visible);

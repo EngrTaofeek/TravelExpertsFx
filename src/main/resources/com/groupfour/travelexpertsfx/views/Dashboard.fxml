@@ -21,7 +21,7 @@
                     <Pane prefHeight="30.0" styleClass="top-bar" VBox.vgrow="NEVER" />
 
                     <!-- White Navigation Bar -->
-                    <AnchorPane prefHeight="40.0" prefWidth="900.0" styleClass="top-nav" VBox.vgrow="NEVER">
+                    <AnchorPane maxHeight="67.0" minHeight="20.0" prefHeight="67.0" prefWidth="900.0" styleClass="top-nav" VBox.vgrow="NEVER">
                         <children>
                             <Button fx:id="btnMenuToggle" layoutX="15.0" layoutY="15.0" onAction="#toggleSidebar" prefHeight="44.0" prefWidth="74.0" styleClass="menu-button" text="☰ Menu">
                         <font>
@@ -57,7 +57,7 @@
 
             <!-- Main Content -->
             <center>
-                <AnchorPane fx:id="mainContent" prefHeight="600.0" prefWidth="700.0" styleClass="main-content" />
+                <AnchorPane fx:id="mainContent" prefHeight="526.0" prefWidth="720.0" styleClass="main-content" />
             </center>
 
         </BorderPane>
