@@ -18,17 +18,17 @@
             <top>
                 <VBox prefWidth="50.0">
                     <!-- Dark Bar Above -->
-                    <Pane prefHeight="30.0" styleClass="top-bar" VBox.vgrow="NEVER" />
+                    <Pane prefHeight="46.0" prefWidth="900.0" styleClass="top-bar" VBox.vgrow="NEVER" />
 
                     <!-- White Navigation Bar -->
-                    <AnchorPane maxHeight="67.0" minHeight="20.0" prefHeight="67.0" prefWidth="900.0" styleClass="top-nav" VBox.vgrow="NEVER">
+                    <AnchorPane maxHeight="67.0" minHeight="20.0" prefHeight="48.0" prefWidth="900.0" styleClass="top-nav" VBox.vgrow="NEVER">
                         <children>
-                            <Button fx:id="btnMenuToggle" layoutX="15.0" layoutY="15.0" onAction="#toggleSidebar" prefHeight="44.0" prefWidth="74.0" styleClass="menu-button" text="☰ Menu">
+                            <Button fx:id="btnMenuToggle" layoutX="15.0" layoutY="6.0" onAction="#toggleSidebar" prefHeight="44.0" prefWidth="74.0" styleClass="menu-button" text="☰ Menu">
                         <font>
                            <Font size="18.0" />
                         </font></Button>
 
-                            <HBox fx:id="topButtonContainer" layoutX="443.0" layoutY="22.0" prefHeight="14.0" prefWidth="394.0" spacing="15.0" AnchorPane.rightAnchor="183.0">
+                            <HBox fx:id="topButtonContainer" layoutX="252.0" layoutY="3.0" prefHeight="14.0" prefWidth="394.0" spacing="15.0" AnchorPane.rightAnchor="253.60000000000002">
                                 <children>
                                     <JFXButton fx:id="btnHome" styleClass="top-button" text="Home" />
                                     <JFXButton fx:id="btnAdd" styleClass="top-button" text="Add" visible="false" />
@@ -50,7 +50,6 @@
                         <JFXButton fx:id="btnPackages" styleClass="sidebar-button" text="Packages" />
                         <JFXButton fx:id="btnSuppliers" styleClass="sidebar-button" text="Suppliers" />
                         <JFXButton fx:id="btnCustomers" styleClass="sidebar-button" text="Customers" />
-                        <JFXButton fx:id="btnProducts" styleClass="sidebar-button" text="Products" />
                     </children>
                 </VBox>
             </left>

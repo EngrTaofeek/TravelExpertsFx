@@ -5,7 +5,9 @@ import com.groupfour.travelexpertsfx.models.UserDb;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class LoginController {
@@ -17,11 +19,18 @@ public class LoginController {
     @FXML private Button btnLogin;
     @FXML private Button btnRegister;
     @FXML private Label lblMessage;
+    @FXML private ImageView imgLogo;
 
     private boolean isPasswordVisible = false;
 
     @FXML
     public void initialize() {
+//        // Bind image width to the VBox width dynamically
+//        imgLogo.fitWidthProperty().bind(leftSection.widthProperty());
+//
+//        // Optionally, set height dynamically (e.g., 60% of VBox height)
+//        imgLogo.fitHeightProperty().bind(leftSection.heightProperty().multiply(0.6));
+
         // Ensure password fields sync
         txtVisiblePassword.setManaged(false);
         txtVisiblePassword.setVisible(false);
@@ -31,6 +40,9 @@ public class LoginController {
         btnLogin.setOnAction(e -> handleLogin());
         btnRegister.setOnAction(e -> handleRegister());
         btnShowPassword.setOnAction(e -> togglePasswordVisibility());
+
+
+
     }
 
     @FXML
