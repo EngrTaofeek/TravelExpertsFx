@@ -87,7 +87,7 @@ public class PackagesController {
         try {
             data = PackageDB.getPackages();
         } catch (SQLException e) {
-            throw new RuntimeException("Fail to load agents table", e);
+            throw new RuntimeException("Fail to load package table", e);
         }
         tvPackages.setItems(data);
     }
