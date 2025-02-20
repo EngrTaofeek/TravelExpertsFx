@@ -127,6 +127,14 @@
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
                                     </graphic>
                                 </JFXButton>
+                        <JFXButton fx:id="btnProducts" alignment="BASELINE_LEFT" prefHeight="38.0" prefWidth="176.0" text="Products" textFill="#e4e0e0">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </JFXButton>
                             </children>
                         </VBox>
                     </children>
