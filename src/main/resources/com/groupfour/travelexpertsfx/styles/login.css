@@ -1,226 +1,141 @@
-
-/* General Styling */
-.root {
-    -fx-background-color: linear-gradient(to right, #0F172A, #1E293B);
-
-}
-
-
-/* Left Section (Branding & Support Info) */
-.left-section {
-    -fx-background-color: linear-gradient(to bottom, #1E293B, #0F172A);
-    -fx-padding: 40px;
-    -fx-alignment: center;
-    -fx-spacing: 20px;
-}
-
-.welcome-message {
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-wrap-text: true;
-    -fx-alignment: center;
-}
-
-.support-info {
-    -fx-text-fill: #CCCCCC;
-    -fx-font-size: 14px;
-    -fx-wrap-text: true;
-    -fx-text-alignment: center;
-}
-
-/* Right Section (Login Form) */
-.right-section {
-    -fx-background-color: #F1F5F9;
-    -fx-padding: 40px;
-    -fx-alignment: center;
-    -fx-spacing: 15px;
-    -fx-border-radius: 15px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 5);
-}
-
-/* Login Title */
-.login-title {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #0F172A;
-}
-
-/* Input Labels */
-.login-label {
-    -fx-font-size: 16px;
-    -fx-text-fill: #374151;
-}
-
-/* Input Fields */
-.login-input {
-    -fx-pref-height: 40px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-border-color: #00ADB5;
-    -fx-border-width: 1px;
-    -fx-background-color: white;
-    -fx-text-fill: #222831;
-    -fx-pref-width: 350px; /* Ensuring both fields are the same */
-}
-
-/* Show Password Button */
-.show-password-btn {
-    -fx-background-color: transparent;
-    -fx-font-size: 14px;
-    -fx-border-width: 0;
-}
-
-/* Login Button */
-.login-button {
-    -fx-background-color: #00ADB5; /* Active color */
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px;
-    -fx-alignment: center;
-    -fx-translate-x: -20px;
-}
-.login-button:hover {
-    -fx-background-color: #008C9E;
-}
-
-/* Register Button */
-.register-button {
-    -fx-background-color: #059669;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px;
-    -fx-alignment: center;
-    -fx-translate-x: -20px;
-}
-.register-button:hover {
-    -fx-background-color: #047857;
-}
-
-/* Forgot Password */
-.forgot-password {
-    -fx-text-fill: #2563EB;
-    -fx-font-size: 12px;
-    -fx-cursor: hand;
-}
 /* General Styling */
 .root {
     -fx-background-color: linear-gradient(to right, #0F172A, #1E293B);
 }
 
-/* Left Section (Branding & Support Info) */
+/* Left Section  */
 .left-section {
     -fx-background-color: linear-gradient(to bottom, #1E293B, #0F172A);
     -fx-padding: 40px;
     -fx-alignment: center;
     -fx-spacing: 20px;
+    /*-fx-pref-height: 100%;*/
 }
 
-.welcome-message {
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-wrap-text: true;
-    -fx-alignment: center;
-}
-
-.support-info {
-    -fx-text-fill: #CCCCCC;
-    -fx-font-size: 14px;
-    -fx-wrap-text: true;
-    -fx-text-alignment: center;
-}
-
-/* Right Section (Login Form) */
-.right-section {
-    -fx-background-color: #F1F5F9;
-    -fx-padding: 40px;
-    -fx-alignment: center;
-    -fx-spacing: 15px;
-    -fx-border-radius: 15px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 5);
-}
-
-/* Login Title */
-.login-title {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #0F172A;
-}
-
-/* Input Labels */
-.login-label {
-    -fx-font-size: 16px;
-    -fx-text-fill: #374151;
-}
-
-/* Input Fields */
-.login-input {
-    -fx-pref-height: 40px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-border-color: #00ADB5;
-    -fx-border-width: 1px;
-    -fx-background-color: white;
-    -fx-text-fill: #222831;
-    -fx-pref-width: 350px; /* Ensuring both fields are the same */
-}
-
-/* Show Password Button */
-.show-password-btn {
-    -fx-background-color: transparent;
-    -fx-font-size: 14px;
-    -fx-border-width: 0;
-}
-
-/* Login Button */
-.login-button {
-    -fx-background-color: #00ADB5; /* Active color */
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px;
-    -fx-alignment: center;
-    -fx-translate-x: -20px;
-}
-.login-button:hover {
-    -fx-background-color: #008C9E;
-}
-
-/* Register Button */
-.register-button {
-    -fx-background-color: #059669;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-padding: 10px;
-    -fx-alignment: center;
-    -fx-translate-x: -20px;
-}
-.register-button:hover {
-    -fx-background-color: #047857;
-}
-
-/* Forgot Password */
-.forgot-password {
-    -fx-text-fill: #2563EB;
-    -fx-font-size: 12px;
-    -fx-cursor: hand;
-}
-/* LOGO STYLING */
+/* ✅ LOGO Styling */
 #imgLogo {
-    -fx-background-color: transparent; /* Transparent background */
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0.5, 0, 5); /* Soft shadow */
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0.5, 0, 5);
+    -fx-fit-width: 80%;
+    -fx-fit-height: 60%;
+}
+
+/* Welcome Message */
+.welcome-message {
+    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
+    -fx-font-weight: bold;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+}
+
+/* Support Info */
+.support-info {
+    -fx-text-fill: #CCCCCC;
+    -fx-font-size: 1em;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+}
+
+/* Right Section (Login Form) */
+.right-section {
+    -fx-background-color: #F1F5F9;
+    -fx-padding: 40px;
+    -fx-alignment: center;
+    -fx-spacing: 15px;
+    -fx-border-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 5);
+}
+
+/*  Login Title */
+
+.login-title {
+    -fx-font-size: 3em; /* Ensures text is scalable but not viewport-dependent */
+    -fx-font-weight: bold;
+    -fx-text-fill: #0F172A;
+    -fx-alignment: center;
+    /*-fx-wrap-text: false; !* Prevents the label from breaking into vertical layout *!*/
+    /*-fx-max-width: 200px; !* Ensure it doesn't stretch too much *!*/
+}
+
+
+/* Input Labels */
+.login-label {
+    -fx-font-size: 1.1em;
+    -fx-text-fill: #374151;
+}
+
+/* Input Fields */
+.login-input {
+    -fx-pref-height: 40px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #00ADB5;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-text-fill: #222831;
+    -fx-pref-width: 100%;  /* Ensure responsiveness */
 
 }
 
+
+/* Ensuring Password & Text Fields Are Same Size */
+#txtEmail, #txtPassword, #txtVisiblePassword {
+    -fx-pref-height: 40px;
+    -fx-pref-width: 100%;
+    -fx-border-radius: 5px;
+}
+
+
+/* Login Button */
+.login-button {
+    -fx-background-color: #00ADB5; /* Active color */
+    -fx-text-fill: white;
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+    -fx-max-width: 400px; /* Ensure it doesn't stretch too much */
+}
+.login-button:hover {
+    -fx-background-color: #008C9E;
+}
+
+/* Register Button */
+.register-button {
+    -fx-background-color: #059669;
+    -fx-text-fill: white;
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+    -fx-max-width: 400px;
+}
+.register-button:hover {
+    -fx-background-color: #047857;
+}
+
+/* Forgot Password */
+.forgot-password {
+    -fx-text-fill: #2563EB;
+    -fx-font-size: 1em;
+    -fx-cursor: hand;
+}
+/* Ensure password field and eye icon are inside the same container */
+StackPane {
+    -fx-padding: 0;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+/* Make sure the eye button sits properly inside */
+.eye-button {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-font-size: 16px;
+    -fx-padding: 0 5px; /* Moves button inside the field */
+    -fx-cursor: hand;
+}

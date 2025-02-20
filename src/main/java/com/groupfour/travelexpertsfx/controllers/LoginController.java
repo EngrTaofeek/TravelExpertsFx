@@ -5,9 +5,12 @@ import com.groupfour.travelexpertsfx.models.UserDb;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -21,31 +24,37 @@ public class LoginController {
     @FXML private Button btnRegister;
     @FXML private Label lblMessage;
     @FXML private ImageView imgLogo;
-    @FXML private VBox leftSection;  // Reference to the left section VBox
-
+    @FXML private VBox leftSection;
+    @FXML private HBox passwordContainer; // Holds password field + eye button
 
     private boolean isPasswordVisible = false;
 
     @FXML
     public void initialize() {
-//        // Bind image width to the VBox width dynamically
-//        imgLogo.fitWidthProperty().bind(leftSection.widthProperty());
-//
-//        // Optionally, set height dynamically (e.g., 60% of VBox height)
-//        imgLogo.fitHeightProperty().bind(leftSection.heightProperty().multiply(0.6));
 
-        // Ensure password fields sync
+        // Dynamically resize logo within the left section
+        imgLogo.fitWidthProperty().bind(leftSection.widthProperty().multiply(0.9));
+        imgLogo.fitHeightProperty().bind(leftSection.heightProperty().multiply(0.6));
+
+        // Ensure input fields & buttons stretch properly
+        txtEmail.setMaxWidth(Double.MAX_VALUE);
+        txtPassword.setMaxWidth(Double.MAX_VALUE);
+        txtVisiblePassword.setMaxWidth(Double.MAX_VALUE);
+        btnLogin.setMaxWidth(Double.MAX_VALUE);
+        btnRegister.setMaxWidth(Double.MAX_VALUE);
+
+        // Ensure password fields sync visibility
         txtVisiblePassword.setManaged(false);
         txtVisiblePassword.setVisible(false);
         txtVisiblePassword.textProperty().bindBidirectional(txtPassword.textProperty());
+
+        // Align the eye icon within the password field (no need for an external container)
+        StackPane.setMargin(btnShowPassword, new Insets(0, 10, 0, 0)); // Adjust right padding
 
         // Set button actions
         btnLogin.setOnAction(e -> handleLogin());
         btnRegister.setOnAction(e -> handleRegister());
         btnShowPassword.setOnAction(e -> togglePasswordVisibility());
-
-
-
     }
 
     @FXML
@@ -58,7 +67,10 @@ public class LoginController {
         txtPassword.setManaged(!isPasswordVisible);
         txtPassword.setVisible(!isPasswordVisible);
 
-        btnShowPassword.setText(isPasswordVisible ? "\uD83D\uDC41\uFE0F" : "\uD83D\uDC40"); // Update button icon
+        // Update the eye icon to show password visibility status
+        btnShowPassword.setText(isPasswordVisible ? "👁‍🗨" : "👁");
+        btnShowPassword.setStyle("-fx-font-size: 16px; -fx-font-family: 'Arial Unicode MS';");
+
     }
 
     @FXML
@@ -78,12 +90,7 @@ public class LoginController {
             showMessage("✅ Login successful!", "green");
 
             System.out.println("✅ User authenticated: " + email + " | Role: " + userRole);
-
-            // Pass user role to DashboardController
             DashboardController.setUserRole(userRole);
-
-            // Redirect to Dashboard
-            System.out.println("🔄 Redirecting to Dashboard...");
             MainApplication.showDashboardScreen();
         } else {
             showMessage("❌ Invalid email or password.", "red");
@@ -97,15 +104,9 @@ public class LoginController {
         MainApplication.showRegisterScreen();
     }
 
-    /**
-     * Displays a message in the label with a given color.
-     * The message disappears after 3 seconds.
-     */
     private void showMessage(String text, String color) {
         lblMessage.setText(text);
         lblMessage.setStyle("-fx-text-fill: " + color + ";");
-
-        // Remove message after 3 seconds
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), e -> lblMessage.setText("")));
         timeline.setCycleCount(1);
         timeline.play();
