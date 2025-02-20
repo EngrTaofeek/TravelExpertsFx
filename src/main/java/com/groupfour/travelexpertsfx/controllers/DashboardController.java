@@ -24,7 +24,7 @@ public class DashboardController implements Initializable {
     @FXML private Label lblMenu; // Menu toggle label
     @FXML private ImageView exitIcon; // Exit button icon
     @FXML private Button btnHome, btnAdd, btnEdit, btnDelete; // Top buttons
-    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers; // Sidebar buttons
+    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers, btnMyStatistics, btnManagerStatistics; // Sidebar buttons
 
     private boolean isMenuOpen = false; // Sidebar initially hidden
 
@@ -52,6 +52,8 @@ public class DashboardController implements Initializable {
         btnPackages.setOnAction(event -> loadPage("Packages.fxml"));
         btnSuppliers.setOnAction(event -> loadPage("Suppliers.fxml"));
         btnCustomers.setOnAction(event -> loadPage("Customers.fxml"));
+        btnMyStatistics.setOnAction(event -> loadPage("MyStatistics.fxml"));
+        btnManagerStatistics.setOnAction(event -> loadPage("ManagerStatistics.fxml"));
 
         // Initially hide the top buttons
         setTopButtonsVisibility(false);
