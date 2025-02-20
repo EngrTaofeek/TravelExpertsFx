@@ -30,7 +30,7 @@ public class StatisticsDB {
     public static long totalSalesUntilDatePerAgent(int agentId, LocalDate date) throws SQLException {
         // Declare long and extract date
         long salesUntil = 0;
-        String dateString = date.toString();
+        Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
 
         Connection conn = getConnection();
         String sql = "SELECT COUNT(*) FROM bookings" +
@@ -38,7 +38,7 @@ public class StatisticsDB {
                 " WHERE agentid = ? AND bookingdate <= ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, agentId);
-        stmt.setString(2, dateString);
+        stmt.setTimestamp(2, timestamp);
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
@@ -50,7 +50,7 @@ public class StatisticsDB {
 
     public static BigDecimal totalCommissionUntilDatePerAgent(int agentId, LocalDate date) throws SQLException {
         BigDecimal commission = BigDecimal.ZERO;
-        String dateString = date.toString();
+        Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
 
         Connection conn = getConnection();
         String sql = "SELECT SUM(agencycommission) FROM bookingdetails" +
@@ -59,7 +59,7 @@ public class StatisticsDB {
                 " WHERE agentid = ? AND bookingdate <= ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, agentId);
-        stmt.setString(2, dateString);
+        stmt.setTimestamp(2, timestamp);
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
