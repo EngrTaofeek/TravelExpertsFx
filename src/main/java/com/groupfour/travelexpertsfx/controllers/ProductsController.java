@@ -55,6 +55,7 @@ public class ProductsController {
 
     //private ObservableList<Product> productData = FXCollections.observableArrayList();
     private ObservableList<ProductSupplier> productData = FXCollections.observableArrayList();
+    String modeSetter;
 
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -99,25 +100,103 @@ public class ProductsController {
     void addProduct(MouseEvent event) {
 
         HBoxEdit.setVisible(true);
+        modeSetter = "ADD";
+        btnSaveChanges.setText("Add Product");
+    }
 
+    Product productToUpdate;
+    @FXML
+    void editProduct(MouseEvent event) {
+        if (tvProduct.getSelectionModel().getSelectedItem() != null) {
+            HBoxEdit.setVisible(true);
+            modeSetter = "EDIT";
+            btnSaveChanges.setText("Update Product");
+            int selectedId = tvProduct.getSelectionModel().getSelectedItem().getProductId();
+//            Product product = null;
+            try {
+                productToUpdate = ProductDB.getProductsById(selectedId);
+                tfProdName.setText(productToUpdate.getProductName());
+            } catch (SQLException e) {
+                alertUser(Alert.AlertType.ERROR, "Error Finding Product with ID: "+selectedId+"\n" + e.getMessage());
+            }
 
+        }
+        else {
+            alertUser(Alert.AlertType.ERROR, "Select a Product");
+        }
 
     }
 
-    public void addProductComplete(MouseEvent mouseEvent) {
-        int numRows=0;
-        try {
-            numRows = ProductDB.addProduct(tfProdName.getText());
-            Product product = ProductDB.getProductsByName(tfProdName.getText());
-            alertUser(Alert.AlertType.CONFIRMATION, "Product added successfully.\n" +
-                    "Details: \n" +
-                    "Product ID: "+product.getProductId()+"\n"+
-                    "Product Name: "+product.getProductName());
-            HBoxEdit.setVisible(false);
-            displayProduct();
-        } catch (SQLException e) {
-            alertUser(Alert.AlertType.ERROR, "An error occurred while adding New Product\n" + e.getMessage());
+    @FXML
+    void deleteProduct(MouseEvent event) {
+        if (tvProduct.getSelectionModel().getSelectedItem() != null) {
+            HBoxEdit.setVisible(true);
+
+            modeSetter = "DELETE";
+            btnSaveChanges.setText("Delete Product");
+            int selectedId = tvProduct.getSelectionModel().getSelectedItem().getProductId();
+//            Product product = null;
+            try {
+                productToUpdate = ProductDB.getProductsById(selectedId);
+                tfProdName.setText(productToUpdate.getProductName());
+                tfProdName.setDisable(true);
+            } catch (SQLException e) {
+                alertUser(Alert.AlertType.ERROR, "Error Finding Product with ID: "+selectedId+"\n" + e.getMessage());
+            }
+
         }
+        else {
+            alertUser(Alert.AlertType.ERROR, "Select a Product");
+        }
+
+    }
+
+    public void saveChangesProduct(MouseEvent mouseEvent) {
+        int numRows=0;
+        if (modeSetter.equalsIgnoreCase("ADD")) {
+            try {
+                numRows = ProductDB.addProduct(tfProdName.getText());
+                Product product = ProductDB.getProductsByName(tfProdName.getText());
+                alertUser(Alert.AlertType.CONFIRMATION, "Product added successfully.\n" +
+                        "Details: \n" +
+                        "Product ID: "+product.getProductId()+"\n"+
+                        "Product Name: "+product.getProductName());
+                HBoxEdit.setVisible(false);
+                displayProduct();
+            } catch (SQLException e) {
+                alertUser(Alert.AlertType.ERROR, "An error occurred while adding New Product\n" + e.getMessage());
+            }
+        } else if (modeSetter.equalsIgnoreCase("EDIT")) {
+
+
+            try {
+                productToUpdate.setProductName(tfProdName.getText());
+                numRows = ProductDB.updateProduct(productToUpdate);
+                alertUser(Alert.AlertType.CONFIRMATION, "Product updated successfully.\n" +
+                        "Details: \n" +
+                        "Product ID: "+productToUpdate.getProductId()+"\n"+
+                        "New Product Name: "+productToUpdate.getProductName());
+                HBoxEdit.setVisible(false);
+                displayProduct();
+
+            } catch (SQLException e) {
+                alertUser(Alert.AlertType.ERROR, "An error occurred while updating Product\n" + e.getMessage());
+            }
+
+        } else if (modeSetter.equalsIgnoreCase("DELETE")) {
+            try {
+                //productToUpdate.setProductName(tfProdName.getText());
+                numRows = ProductDB.deleteProduct(productToUpdate.getProductId());
+                alertUser(Alert.AlertType.CONFIRMATION, "Product deleted successfully.");
+                HBoxEdit.setVisible(false);
+                displayProduct();
+
+            } catch (SQLException e) {
+                alertUser(Alert.AlertType.ERROR, "An error occurred while updating Product\n" + e.getMessage());
+            }
+
+        }
+
 
 
     }

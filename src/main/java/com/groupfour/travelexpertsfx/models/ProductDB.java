@@ -45,6 +45,27 @@ public class ProductDB implements DBConnection {
         return product;
     }
 
+    public static Product getProductsById(int productId) throws SQLException {
+        //ObservableList<Product> products = FXCollections.observableArrayList();
+        //Product product;
+        Connection conn = DBConnection.getConnection();
+        Statement stmt = conn.createStatement();
+        String query = "select * from products where productid= ?";
+        PreparedStatement preparedStatement = conn.prepareStatement(query);
+        preparedStatement.setInt(1, productId);
+        ResultSet rs = preparedStatement.executeQuery();
+        Product product = null;
+        while (rs.next()) {
+            product = new Product(
+                    rs.getInt(1),
+                    rs.getString(2)
+            );
+
+        }
+
+        return product;
+    }
+
 
     // VIEW PRODUCTS AND SUPPLIERS (R)
     public static ObservableList<ProductSupplier> getProductsSuppliers() throws SQLException {
@@ -91,5 +112,36 @@ public class ProductDB implements DBConnection {
     }
 
     // DELETE PRODUCT (D)
+
+    public static int deleteProduct(int productId) throws SQLException {
+        int affectedRows = 0;
+        Connection conn = DBConnection.getConnection();
+        String sqlStatement = "DELETE FROM products WHERE productid=?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sqlStatement);
+        preparedStatement.setInt(1, productId);
+        affectedRows = preparedStatement.executeUpdate();
+        conn.close();
+        return affectedRows;
+    }
+
+    // EDIT PRODUCT (U)
+
+    public static int updateProduct(Product product) throws SQLException {
+        Connection conn = DBConnection.getConnection();
+        int affectedRows = 0;
+
+        String sqlStatement = "UPDATE products SET prodname=? WHERE productid=?";
+
+        PreparedStatement preparedStatement = conn.prepareStatement(sqlStatement);
+
+        preparedStatement.setString(1, product.getProductName());
+        preparedStatement.setInt(2, product.getProductId());
+
+
+        affectedRows = preparedStatement.executeUpdate();
+        conn.close();
+
+        return affectedRows;
+    }
 
 }

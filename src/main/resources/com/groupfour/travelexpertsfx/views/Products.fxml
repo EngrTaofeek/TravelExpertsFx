@@ -32,7 +32,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btnEdit" prefHeight="30.0" prefWidth="107.0" text="Edit">
+            <JFXButton fx:id="btnEdit" prefHeight="30.0" prefWidth="107.0" text="Edit" onMouseClicked="#editProduct">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="22.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -41,7 +41,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btnDelete" prefHeight="30.0" prefWidth="106.0" text="Delete">
+            <JFXButton fx:id="btnDelete" prefHeight="30.0" prefWidth="106.0" text="Delete" onMouseClicked="#deleteProduct">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -56,7 +56,7 @@
          <children>
             <Label text="Product Name:" />
             <TextField fx:id="tfProdName" promptText="Enter Product Name.." />
-            <Button fx:id="btnSaveChanges" mnemonicParsing="false"  onMouseClicked="#addProductComplete" text="Add" />
+            <Button fx:id="btnSaveChanges" mnemonicParsing="false" onMouseClicked="#saveChangesProduct" text="Add" />
          </children>
       </HBox>
    </children>
