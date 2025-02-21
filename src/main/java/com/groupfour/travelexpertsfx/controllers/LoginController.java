@@ -6,7 +6,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -32,9 +31,17 @@ public class LoginController {
     @FXML
     public void initialize() {
 
-        // Dynamically resize logo within the left section
-        imgLogo.fitWidthProperty().bind(leftSection.widthProperty().multiply(0.9));
-        imgLogo.fitHeightProperty().bind(leftSection.heightProperty().multiply(0.6));
+        // Make leftSection resize dynamically
+        MainApplication.getPrimaryStage().widthProperty().addListener((obs, oldVal, newVal) -> {
+            leftSection.setPrefWidth(newVal.doubleValue() * 0.35); // Adjust width dynamically
+        });
+
+        MainApplication.getPrimaryStage().heightProperty().addListener((obs, oldVal, newVal) -> {
+            leftSection.setPrefHeight(newVal.doubleValue() * 0.9); // Adjust height dynamically
+        });
+        // Make Logo Resize Properly
+        imgLogo.fitWidthProperty().bind(leftSection.widthProperty().multiply(0.8));
+        imgLogo.fitHeightProperty().bind(leftSection.heightProperty().multiply(0.5));
 
         // Ensure input fields & buttons stretch properly
         txtEmail.setMaxWidth(Double.MAX_VALUE);
@@ -101,14 +108,28 @@ public class LoginController {
     @FXML
     private void handleRegister() {
         System.out.println("🔄 Redirecting to Registration Page...");
-        MainApplication.showRegisterScreen();
+        MainApplication.showRegisterScreen();// Redirect to registration page
     }
+
 
     private void showMessage(String text, String color) {
         lblMessage.setText(text);
         lblMessage.setStyle("-fx-text-fill: " + color + ";");
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), e -> lblMessage.setText("")));
+
+        // Show background only when there is text
+        if (!text.isEmpty()) {
+            lblMessage.setStyle("-fx-text-fill: " + color + "; -fx-background-color: #FFEBEE;");
+        } else {
+            lblMessage.setStyle("-fx-background-color: transparent;");
+        }
+
+        // Remove message after 3 seconds
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), e -> {
+            lblMessage.setText("");
+            lblMessage.setStyle("-fx-background-color: transparent;"); // Reset background
+        }));
         timeline.setCycleCount(1);
         timeline.play();
     }
+
 }

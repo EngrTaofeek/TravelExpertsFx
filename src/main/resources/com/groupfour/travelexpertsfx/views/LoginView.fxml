@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -14,14 +13,15 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.LoginController">
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.groupfour.travelexpertsfx.controllers.LoginController">
 
    <center>
       <HBox spacing="0" HBox.hgrow="ALWAYS">
 
          <!-- Left Section -->
-         <VBox fx:id="leftSection" alignment="CENTER" spacing="20.0"
-               styleClass="left-section" HBox.hgrow="SOMETIMES" VBox.vgrow="ALWAYS">
+         <VBox fx:id="leftSection" alignment="CENTER" spacing="20" styleClass="left-section"
+               HBox.hgrow="SOMETIMES" VBox.vgrow="ALWAYS">
 
             <ImageView fx:id="imgLogo" pickOnBounds="true" preserveRatio="true" styleClass="imgLogo">
                <image>
@@ -30,31 +30,42 @@
             </ImageView>
 
             <Label styleClass="welcome-message" text="Welcome to Travel Experts!" wrapText="true" />
-            <Label styleClass="support-info" text="For technical support, call +1-800-123-4567 or email support@travelexperts.com" wrapText="true" />
+            <Label styleClass="support-info"
+                   text="For technical support, call +1-800-123-4567 or email support@travelexperts.com"
+                   wrapText="true" />
 
          </VBox>
 
          <!-- Right Section -->
-         <VBox alignment="CENTER" spacing="15.0" styleClass="right-section"
+         <VBox alignment="CENTER" spacing="5.0" styleClass="right-section"
                HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
 
-            <Label styleClass="login-title" text="Log In to Your Account" maxWidth="Infinity" alignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS"/>
+            <!-- Login Title -->
+            <Label alignment="CENTER" maxWidth="Infinity"
+                   styleClass="login-title" text="Log In to Your Account"
+                   wrapText="true" VBox.vgrow="NEVER" />
 
-            <VBox alignment="CENTER_LEFT" spacing="5" VBox.vgrow="ALWAYS">
+            <VBox alignment="CENTER_LEFT" spacing="5" VBox.vgrow="NEVER">
 
                <!-- Email Field -->
-               <VBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="ALWAYS">
+               <VBox alignment="CENTER_LEFT" spacing="5" VBox.vgrow="NEVER">
                   <Label styleClass="login-label" text="Email:" />
-                  <TextField fx:id="txtEmail" promptText="Enter your email" styleClass="login-input" maxWidth="Infinity" />
+                  <TextField fx:id="txtEmail" maxWidth="Infinity"
+                             promptText="Enter your email" styleClass="login-input" />
                </VBox>
 
                <!-- Password Field with Eye Icon Inside -->
-               <VBox alignment="CENTER_LEFT" spacing="5">
+               <VBox alignment="CENTER_LEFT" spacing="2">  <!-- VBox for Password Field -->
                   <Label styleClass="login-label" text="Password:" />
-                  <StackPane>
-                     <PasswordField fx:id="txtPassword" promptText="Enter your password" styleClass="login-input" />
-                     <TextField fx:id="txtVisiblePassword" managed="false" visible="false" promptText="Enter your password" styleClass="login-input" />
-                     <Button fx:id="btnShowPassword" onAction="#togglePasswordVisibility" styleClass="eye-button" text="👁"
+
+                  <StackPane maxWidth="Infinity">
+                     <PasswordField fx:id="txtPassword" promptText="Enter your password"
+                                    styleClass="login-input" StackPane.alignment="CENTER_LEFT"/>
+                     <TextField fx:id="txtVisiblePassword" managed="false"
+                                promptText="Enter your password" styleClass="login-input"
+                                visible="false" StackPane.alignment="CENTER_LEFT"/>
+                     <Button fx:id="btnShowPassword" onAction="#togglePasswordVisibility"
+                             styleClass="eye-button" text="👁"
                              StackPane.alignment="CENTER_RIGHT" />
                   </StackPane>
                </VBox>
@@ -63,11 +74,15 @@
 
             <Label fx:id="lblMessage" styleClass="error-message" text="" wrapText="true" />
 
-            <Button fx:id="btnLogin" onAction="#handleLogin" styleClass="login-button" text="Log In" maxWidth="Infinity" />
-            <Label alignment="CENTER" styleClass="forgot-password" text="Forgot Password?" />
-            <Button fx:id="btnRegister" onAction="#handleRegister" styleClass="register-button" text="Create an Account" maxWidth="Infinity" />
-            <Region prefHeight="10.0" />
+            <Button fx:id="btnLogin" maxWidth="Infinity" onAction="#handleLogin"
+                    styleClass="login-button" text="Log In" VBox.vgrow="NEVER" />
 
+            <Label alignment="CENTER" styleClass="forgot-password" text="Forgot Password?" VBox.vgrow="NEVER" />
+
+            <Button fx:id="btnRegister" maxWidth="Infinity" onAction="#handleRegister"
+                    styleClass="register-button" text="Create an Account" VBox.vgrow="NEVER" />
+
+            <Region prefHeight="5"/>
          </VBox>
 
       </HBox>
