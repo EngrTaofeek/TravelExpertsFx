@@ -19,6 +19,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
 
+/**
+ * @Author: Kazi Fattah
+ * @Date: 2/2025
+ * @Description: Controller for the performing CRUD on products
+ * @To-do-list:
+ * - Search bar
+ * - Validation
+ */
+
+
 public class ProductsController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader

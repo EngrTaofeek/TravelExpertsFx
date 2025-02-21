@@ -3,6 +3,11 @@ package com.groupfour.travelexpertsfx.models;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * @Author: Kazi Fattah
+ * @Date: 2/2025
+ * @Description: Connect to DB, Create specialized object that returns product along with its supplier details
+ */
 
 public class ProductSupplier {
     private SimpleIntegerProperty productId;

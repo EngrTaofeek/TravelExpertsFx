@@ -6,6 +6,12 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 
+/**
+ * @Author: Kazi Fattah
+ * @Date: 2/2025
+ * @Description: Connect to DB, Access Products table and perform CRUD
+ */
+
 public class ProductDB implements DBConnection {
 
     public static ObservableList<Product> getProducts() throws SQLException {
