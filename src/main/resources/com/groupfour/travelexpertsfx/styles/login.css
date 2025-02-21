@@ -86,6 +86,7 @@
     -fx-pref-height: 40px;
     -fx-pref-width: 100%;
     -fx-border-radius: 5px;
+    -fx-font-size: 1.1em;
 }
 
 /* Login Button */
@@ -97,7 +98,7 @@
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-padding: 10px;
-    -fx-max-width: 300px;
+    -fx-max-width: 450px;
 }
 
 .login-button:hover {
@@ -114,7 +115,7 @@
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-padding: 10px;
-    -fx-max-width: 300px;
+    -fx-max-width: 450px;
 }
 
 .register-button:hover {

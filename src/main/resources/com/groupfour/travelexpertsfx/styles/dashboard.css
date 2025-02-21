@@ -1,10 +1,18 @@
-/* 🏆 Dark Top Bar */
+/* 🏆 Apply Gold-Themed Background for Dashboard */
+.main-content {
+    -fx-background-color: white;
+    -fx-padding: 15px;
+}
+
+/* Dark Top Bar */
 .top-bar {
-    -fx-background-color: #032d46;
+    -fx-background-color: linear-gradient(to right, #D4AF37, #FFD700); /* Gold gradient *
+    /*-fx-background-color: linear-gradient(to right, #003366, #3399FF); !* Blue gradient *!*/
+    /*-fx-background-color: linear-gradient(to right, #6A0572, #E94560); !* Purple gradient *!*/
     -fx-pref-height: 35px;
 }
 
-/* 🏆 Light Navigation Bar  */
+/* Light Navigation Bar */
 .top-nav {
     -fx-background-color: white;
     -fx-padding: 10px 15px;
@@ -12,78 +20,71 @@
     -fx-border-color: #ddd;
 }
 
-/* Sidebar */
+/* Sidebar with Gold Gradient */
 .sidebar {
-    -fx-background-color: #0A4969;
-    -fx-padding: 10px;
-}
-
-/* 📌 Sidebar Button (Default) */
-.sidebar-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
-    -fx-alignment: center-left;
-    -fx-border-radius: 5px;
-}
-
-/* 🔥 Sidebar Button Hover Effect */
-.sidebar-button:hover {
-    -fx-background-color: #1d6a8b;
-    -fx-text-fill: #add8e6;  /* Light blue text */
-}
-
-/* 🔴 Sidebar Button Selected (Now Working) */
-.sidebar-button:focused,
-.sidebar-button:selected {
-    -fx-background-color: red;
-    -fx-text-fill: white;
-}
-
-/* Main Content */
-.main-content {
-    -fx-background-color: #F8F9FA;
+    -fx-background-color: linear-gradient(to bottom, #B8860B, #FFD700); /* Gold gradient sidebar */
+    /*-fx-background-color: linear-gradient(to right, #003366, #3399FF); !* Blue gradient *!*/
+    /*-fx-background-color: linear-gradient(to right, #6A0572, #E94560); !* Purple gradient *!*/
     -fx-padding: 15px;
 }
 
-/* 📌   Top Button Container */
-.top-button-container {
-    -fx-padding: 8px 10px;
-    -fx-spacing: 20px;
+/* Sidebar Button (Default) */
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 20px;
+    -fx-alignment: center-left;
+    -fx-border-radius: 5px;
+    -fx-transition: all 0.3s ease-in-out;
 }
 
-/* 📌 Professional & Readable Top Buttons */
+/* Sidebar Button Hover Effect */
+.sidebar-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15); /* Light hover effect */
+    -fx-text-fill: #222;  /* Dark text for contrast */
+}
+
+/*  Sidebar Button Selected */
+.sidebar-button:focused,
+.sidebar-button:selected {
+    -fx-background-color: #DAA520; /* Golden shade */
+    -fx-text-fill: white;
+    -fx-border-width: 2px;
+    -fx-border-color: white;
+}
+
+/* Top Buttons */
 .top-button {
-    -fx-background-color: transparent;  /* No background */
+    -fx-background-color: transparent;
     -fx-text-fill: black;
-    -fx-font-size: 16px; /* Bigger font */
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-padding: 8px 20px;  /* Proper padding for button spacing */
+    -fx-padding: 8px 20px;
     -fx-border-radius: 5px;
     -fx-cursor: hand;
 }
 
-/* 🌟 Top Button Hover Effect */
+/* Top Button Hover Effect */
 .top-button:hover {
-    -fx-background-color: transparent;
-    -fx-text-fill: #666;  /* Subtle gray color */
+    -fx-background-color: rgba(255, 255, 255, 0.2); /* Subtle effect */
+    -fx-text-fill: #222;
 }
 
-/* 🔴 Top Button Clicked/Selected */
+/* Top Button Clicked/Selected */
 .top-button:focused,
 .top-button:selected {
-    -fx-background-color: trans parent;
-    -fx-text-fill: red; /* Text turns red */
+    -fx-background-color: transparent;
+    -fx-text-fill: red;
 }
 
-/* 📌 Menu Button */
+/* Menu Button */
 .menu-button {
     -fx-background-color: white;
     -fx-text-fill: black;
     -fx-font-size: 14px;
-    -fx-padding: 8px 10px;  /* Reduced padding */
+    -fx-padding: 8px 10px;
     -fx-border-radius: 5px;
     -fx-cursor: hand;
 }
@@ -91,4 +92,15 @@
 /* Menu Button Hover */
 .menu-button:hover {
     -fx-background-color: #e0e0e0;
+}
+
+/* Sidebar Logo Styling */
+.sidebar-logo {
+    -fx-padding: 10px 0;
+    -fx-alignment: center;
+}
+
+/* Smooth Transition Effects */
+.sidebar-button, .top-button, .menu-button {
+    -fx-transition: all 0.3s ease-in-out;
 }

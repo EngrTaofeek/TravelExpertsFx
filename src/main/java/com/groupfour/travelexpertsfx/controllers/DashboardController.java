@@ -1,14 +1,15 @@
 package com.groupfour.travelexpertsfx.controllers;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,11 +17,11 @@ import java.util.ResourceBundle;
 public class DashboardController implements Initializable {
 
     @FXML private HBox topButtonContainer;
-    @FXML private AnchorPane mainContent;
-    @FXML private Button btnHome, btnAdd, btnEdit, btnDelete;
-    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers, btnProducts;
+    @FXML private Button btnHome;
+    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers;
     @FXML private VBox sideMenu;
-    @FXML private Button btnMenuToggle;  // Changed from Label to Button
+    @FXML private Button btnMenuToggle;
+    @FXML private StackPane mainContent;
 
     private Object currentController;
     private static String userRole;
@@ -32,13 +33,8 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
-
-        // Ensure home is initialized
-
-        loadPage("Home.fxml");
-
+        // Show the welcome message (as the default view)
+        showWelcomeMessage();
 
         // Apply role-based restrictions
         applyRolePermissions();
@@ -50,22 +46,18 @@ public class DashboardController implements Initializable {
         // Attach menu toggle
         btnMenuToggle.setOnAction(event -> toggleSidebar());
 
-        // Attach Home button action
-        btnHome.setOnAction(event -> loadPage("Home.fxml"));
+        // Attach Home button behavior
+        btnHome.setOnAction(event -> showWelcomeMessage());
+        btnHome.setVisible(false); // Initially hidden
 
         // Navigation button actions
-        btnAgents.setOnAction(event -> loadPage("Agents.fxml"));
-        btnAgencies.setOnAction(event -> loadPage("Agencies.fxml"));
-        btnPackages.setOnAction(event -> loadPage("Packages.fxml"));
-        btnSuppliers.setOnAction(event -> loadPage("Suppliers.fxml"));
-        btnCustomers.setOnAction(event -> loadPage("Customers.fxml"));
+        btnAgents.setOnAction(event -> { loadPage("Agents.fxml", btnAgents); toggleHomeButton(true); });
+        btnAgencies.setOnAction(event -> { loadPage("Agencies.fxml", btnAgencies); toggleHomeButton(true); });
+        btnPackages.setOnAction(event -> { loadPage("Packages.fxml", btnPackages); toggleHomeButton(true); });
+        btnSuppliers.setOnAction(event -> { loadPage("Suppliers.fxml", btnSuppliers); toggleHomeButton(true); });
+        btnCustomers.setOnAction(event -> { loadPage("Customers.fxml", btnCustomers); toggleHomeButton(true); });
 
-
-
-
-        // Hide top buttons initially
-        setTopButtonsVisibility(false);
-
+        // Apply default styles
         applyStylesheet();
     }
 
@@ -74,6 +66,11 @@ public class DashboardController implements Initializable {
         isSidebarVisible = !isSidebarVisible;
         sideMenu.setVisible(isSidebarVisible);
         sideMenu.setManaged(isSidebarVisible);
+
+        // Restore welcome message only if no page is open
+        if (!isSidebarVisible && mainContent.getChildren().isEmpty()) {
+            showWelcomeMessage();
+        }
     }
 
     private void applyRolePermissions() {
@@ -85,21 +82,26 @@ public class DashboardController implements Initializable {
         }
     }
 
-    private void loadPage(String fxmlFile) {
+    private void loadPage(String fxmlFile, Button clickedButton) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/groupfour/travelexpertsfx/views/" + fxmlFile));
             Node page = loader.load();
+
+            //  Ensure the main content is cleared before loading a new page
             mainContent.getChildren().clear();
             mainContent.getChildren().add(page);
 
             currentController = loader.getController();
 
-            boolean isHome = fxmlFile.equals("Home.fxml");
-            setTopButtonsVisibility(!isHome);
+            // Highlight the clicked button
+            highlightSidebarButton(clickedButton);
 
             if (userRole != null && userRole.equalsIgnoreCase("agent")) {
                 restrictCrudAccess();
             }
+
+            // Show Home button when loading a new page
+            btnHome.setVisible(true);
 
         } catch (Exception e) {
             System.err.println("❌ Error loading " + fxmlFile + ": " + e.getMessage());
@@ -107,26 +109,39 @@ public class DashboardController implements Initializable {
         }
     }
 
+
     private void restrictCrudAccess() {
         if (currentController instanceof AgentsController || currentController instanceof AgenciesController) {
-            setTopButtonsVisibility(false);
+            // If needed, restrict certain actions based on role
         }
     }
 
-
-
-    private void setTopButtonsVisibility(boolean visible) {
-        btnHome.setVisible(visible);
-        btnAdd.setVisible(visible);
-        btnEdit.setVisible(visible);
-        btnDelete.setVisible(visible);
+    private void showWelcomeMessage() {
+        mainContent.getChildren().clear();
+        Label welcomeLabel = new Label("Welcome to Travel Experts Dashboard!");
+        welcomeLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #222831;");
+        mainContent.getChildren().add(welcomeLabel);
     }
+
+    private void highlightSidebarButton(Button clickedButton) {
+        btnAgents.setStyle("");
+        btnAgencies.setStyle("");
+        btnPackages.setStyle("");
+        btnSuppliers.setStyle("");
+        btnCustomers.setStyle("");
+
+        clickedButton.setStyle("-fx-background-color: #FFA000; -fx-text-fill: white;");
+    }
+
+    private void toggleHomeButton(boolean visible) {
+        btnHome.setVisible(visible);
+    }
+
     private void applyStylesheet() {
         if (mainContent.getScene() != null) {
             Scene scene = mainContent.getScene();
             scene.getStylesheets().add(getClass().getResource("/com/groupfour/travelexpertsfx/styles/dashboard.css").toExternalForm());
         } else {
-            // Wait until the scene is available
             mainContent.sceneProperty().addListener((obs, oldScene, newScene) -> {
                 if (newScene != null) {
                     newScene.getStylesheets().add(getClass().getResource("/com/groupfour/travelexpertsfx/styles/dashboard.css").toExternalForm());
@@ -134,6 +149,4 @@ public class DashboardController implements Initializable {
             });
         }
     }
-
-
 }

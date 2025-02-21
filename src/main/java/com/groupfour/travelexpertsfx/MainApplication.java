@@ -63,17 +63,28 @@ public class MainApplication extends Application {
     public static void showDashboardScreen() {
         try {
             FXMLLoader loader = new FXMLLoader(MainApplication.class.getResource("/com/groupfour/travelexpertsfx/views/Dashboard.fxml"));
-            AnchorPane root = loader.load();  // Load the main dashboard layout
+            AnchorPane root = loader.load();
 
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root,primaryStage.getWidth(),primaryStage.getHeight());
             primaryStage.setScene(scene);
             primaryStage.setTitle("Travel Experts Dashboard");
+
+            // Open in maximized mode
+            primaryStage.setMaximized(true);
+
+
             primaryStage.show();
         } catch (Exception e) {
             System.err.println("❌ Error loading Dashboard.fxml: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
 
     public static Stage getPrimaryStage() {
         return primaryStage;
