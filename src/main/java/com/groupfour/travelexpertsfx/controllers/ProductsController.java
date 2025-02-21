@@ -24,7 +24,7 @@ import javafx.scene.layout.HBox;
  * @Date: 2/2025
  * @Description: Controller for the performing CRUD on products
  * @To-do-list:
- * - Search bar
+ *
  * - Validation
  */
 
@@ -53,19 +53,20 @@ public class ProductsController {
     private TableView<ProductSupplier> tvProduct; // Value injected by FXMLLoader
 
     @FXML
-    private Button btnAdd, btnEdit, btnDelete, btnSaveChanges;
+    private Button btnAdd, btnEdit, btnDelete, btnSaveChanges, btnSearch;
 
     @FXML
     private HBox HBoxEdit;
 
     @FXML
-    private TextField tfProdName;
+    private TextField tfProdName, tfSearchBar;
 
 
 
     //private ObservableList<Product> productData = FXCollections.observableArrayList();
     private ObservableList<ProductSupplier> productData = FXCollections.observableArrayList();
     String modeSetter;
+    Product productToUpdate;
 
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -73,6 +74,8 @@ public class ProductsController {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Products.fxml'.";
         assert btnDelete != null : "fx:id=\"btnDelete\" was not injected: check your FXML file 'Products.fxml'.";
         assert btnEdit != null : "fx:id=\"btnEdit\" was not injected: check your FXML file 'Products.fxml'.";
+        assert btnSearch != null : "fx:id=\"btnSearch\" was not injected: check your FXML file 'Products.fxml'.";
+        assert tfSearchBar != null : "fx:id=\"tfSearchBar\" was not injected: check your FXML file 'Products.fxml'.";
         assert colProductId != null : "fx:id=\"colProductId\" was not injected: check your FXML file 'Products.fxml'.";
         assert colProductName != null : "fx:id=\"colProductName\" was not injected: check your FXML file 'Products.fxml'.";
         assert colSupplierId != null : "fx:id=\"colSupplierId\" was not injected: check your FXML file 'Products.fxml'.";
@@ -106,6 +109,27 @@ public class ProductsController {
         tvProduct.setItems(productData);
     }
 
+    public void displayProduct(String searchword){
+        productData.clear();
+        try {
+            productData = ProductDB.getProductsBySearch(searchword);
+        } catch (SQLException e) {
+            throw new RuntimeException("Fail to load Products table", e);
+        }
+        tvProduct.setItems(productData);
+    }
+
+    @FXML
+    void searchProduct(MouseEvent event) {
+        if (tfSearchBar.getText().equals("")) {
+            displayProduct();
+        } else {
+            displayProduct(tfSearchBar.getText());
+        }
+
+    }
+
+
     @FXML
     void addProduct(MouseEvent event) {
 
@@ -114,7 +138,7 @@ public class ProductsController {
         btnSaveChanges.setText("Add Product");
     }
 
-    Product productToUpdate;
+
     @FXML
     void editProduct(MouseEvent event) {
         if (tvProduct.getSelectionModel().getSelectedItem() != null) {
@@ -220,6 +244,9 @@ public class ProductsController {
     }
 
 
-
+    public void clearSearch(MouseEvent mouseEvent) {
+        displayProduct();
+        tfSearchBar.setText("");
+    }
 }
 

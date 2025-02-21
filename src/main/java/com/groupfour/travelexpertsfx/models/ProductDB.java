@@ -97,6 +97,32 @@ public class ProductDB implements DBConnection {
         return productSuppliers;
     }
 
+    // SEARCH FUNCTION
+
+    public static ObservableList<ProductSupplier> getProductsBySearch(String searchword) throws SQLException {
+        ObservableList<ProductSupplier> productSuppliers = FXCollections.observableArrayList();
+        ProductSupplier productSupplier;
+        String query = "SELECT products.productid, products.prodname, suppliers.supplierid, suppliers.supname " +
+                "FROM products_suppliers " +
+                "full outer join products on products_suppliers.productid = products.productid " +
+                "left join suppliers on products_suppliers.supplierid = suppliers.supplierid " +
+                "where products.prodname ilike '%"+searchword+"%' "+
+                "ORDER BY products.productid ASC";
+        Connection conn = DBConnection.getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            productSupplier = new ProductSupplier(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getInt(3),
+                    rs.getString(4)
+            );
+            productSuppliers.add(productSupplier);
+        }
+        return productSuppliers;
+    }
+
     // ADD NEW PRODUCTS (C)
 
     public static int addProduct(String prodName) throws SQLException {
