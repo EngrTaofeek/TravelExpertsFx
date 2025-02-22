@@ -27,25 +27,25 @@
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/add.png" />
+                        <Image url="@../images/add2.png" />
                      </image>
                   </ImageView>
                </graphic>
             </JFXButton>
             <JFXButton fx:id="btnEdit" onMouseClicked="#editProduct" prefHeight="30.0" prefWidth="107.0" text="Edit">
                <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="22.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/edit.png" />
+                        <Image url="@../images/edit2.png" />
                      </image>
                   </ImageView>
                </graphic>
             </JFXButton>
             <JFXButton fx:id="btnDelete" onMouseClicked="#deleteProduct" prefHeight="30.0" prefWidth="106.0" text="Delete">
                <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/bin.png" />
+                        <Image url="@../images/bin2.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -63,8 +63,24 @@
          <children>
             <Label text="Find Product:" />
             <TextField fx:id="tfSearchBar" promptText="Enter Product Name.." />
-            <Button fx:id="btnSearch" mnemonicParsing="false" onMouseClicked="#searchProduct" prefHeight="30.0" prefWidth="84.0" text="Search" />
-            <Button fx:id="btnClearSearch" mnemonicParsing="false" onMouseClicked="#clearSearch" prefHeight="30.0" prefWidth="84.0" text="Clear Results" />
+            <JFXButton fx:id="btnSearch" onMouseClicked="#searchProduct" prefHeight="30.0" prefWidth="84.0" text="Search">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/search.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnClearSearch" onMouseClicked="#clearSearch" prefHeight="30.0" prefWidth="84.0" text="Clear">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/clear.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
 
          </children>
       </HBox>

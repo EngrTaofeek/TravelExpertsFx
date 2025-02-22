@@ -26,6 +26,7 @@ import javafx.scene.layout.HBox;
  * @To-do-list:
  *
  * - Validation
+ * - Message: are you sure you want to delete? before deleting
  */
 
 

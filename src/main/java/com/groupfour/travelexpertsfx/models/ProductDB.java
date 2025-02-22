@@ -14,6 +14,8 @@ import java.sql.*;
 
 public class ProductDB implements DBConnection {
 
+
+/*
     public static ObservableList<Product> getProducts() throws SQLException {
         ObservableList<Product> products = FXCollections.observableArrayList();
         Product product;
@@ -29,6 +31,8 @@ public class ProductDB implements DBConnection {
         }
         return products;
     }
+
+ */
 
     public static Product getProductsByName(String prodName) throws SQLException {
         //ObservableList<Product> products = FXCollections.observableArrayList();
