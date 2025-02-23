@@ -1,9 +1,11 @@
+
 package com.groupfour.travelexpertsfx.controllers;
 
 import com.groupfour.travelexpertsfx.models.UserDb;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class RegisterController {
 
@@ -31,39 +33,43 @@ public class RegisterController {
         boolean isVisible = visibleTextField.isVisible();
 
         if (!isVisible) {
-            // Show text field (plain text) and hide password field
+            // Show plain text field and hide password field
             visibleTextField.setText(passwordField.getText());
             visibleTextField.setVisible(true);
             visibleTextField.setManaged(true);
             passwordField.setVisible(false);
             passwordField.setManaged(false);
-            toggleButton.setText("👁‍🗨"); // Change icon to indicate hiding
-            toggleButton.setStyle("-fx-font-size: 16px; -fx-font-family: 'Arial Unicode MS';"); // Change icon to indicate hiding
-
+            toggleButton.setText("👁‍🗨");
         } else {
-            // Show password field and hide text field
+            // Ensure password field gets updated with the latest value
             passwordField.setText(visibleTextField.getText());
+
+            // Show password field and hide plain text field
             passwordField.setVisible(true);
             passwordField.setManaged(true);
             visibleTextField.setVisible(false);
             visibleTextField.setManaged(false);
-            toggleButton.setText("👁"); // Change icon back
-            toggleButton.setStyle("-fx-font-size: 16px; -fx-font-family: 'Arial Unicode MS';");
+            toggleButton.setText("👁");
         }
     }
-
 
 
 
     @FXML
     private void handleRegister() {
         String email = txtEmail.getText().trim();
-        String password = txtPassword.getText().trim();
-        String confirmPassword = txtConfirmPassword.getText().trim();
-        String role = comboRole.getValue();
+        String password = txtPassword.isVisible() ? txtPassword.getText().trim() : txtVisiblePassword.getText().trim();
+        String confirmPassword = txtConfirmPassword.isVisible() ? txtConfirmPassword.getText().trim() : txtVisibleConfirmPassword.getText().trim();
+        String role = comboRole.getValue().trim().toLowerCase();
 
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || role == null) {
             lblMessage.setText("⚠ All fields are required!");
+            lblMessage.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        if (!role.equals("agent") && !role.equals("manager")) {
+            lblMessage.setText("❌ Invalid role selected!");
             lblMessage.setStyle("-fx-text-fill: red;");
             return;
         }
@@ -74,24 +80,28 @@ public class RegisterController {
             return;
         }
 
-        // Get agent ID from email
-        int agentId = UserDb.getAgentIdByEmail(email);
-        if (agentId == -1) {
-            lblMessage.setText("❌ Registration failed. No agent found with this email.");
+        if (UserDb.isEmailTaken(email)) {
+            lblMessage.setText("❌ Registration failed: Email is already in use.");
             lblMessage.setStyle("-fx-text-fill: red;");
             return;
         }
 
-        // Attempt registration
-        boolean success = UserDb.registerUser(email, password, role);
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
+        // Register user and capture possible failures
+        boolean success = UserDb.registerUser(email, hashedPassword, role);
         if (success) {
             lblMessage.setText("✅ Registration successful!");
             lblMessage.setStyle("-fx-text-fill: green;");
         } else {
-            lblMessage.setText("❌ Registration failed. Email may already be in use.");
+            lblMessage.setText("❌ Registration failed due to an internal error. Check logs for details.");
             lblMessage.setStyle("-fx-text-fill: red;");
         }
     }
+
+
+
+
 
     @FXML
     private void handleBack() {

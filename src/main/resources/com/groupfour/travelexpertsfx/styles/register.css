@@ -1,6 +1,7 @@
 /* Root Pane with Gold-Themed Background */
 .root {
     -fx-background-color: linear-gradient(to right, #D4AF37, #FFD700); /* Gold gradient */
+    /*-fx-background-color: linear-gradient(to right, #6A0572, #E94560); !* Purple gradient *!*/
 }
 
 /* Centered VBox */
@@ -68,12 +69,14 @@ VBox {
 /* Register Button (Brighter Gold for Visibility) */
 .register-button {
     -fx-background-color: #FFA500; /* Bright Gold */
+    /*-fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); !* Pink-Red Gradient *!*/
     -fx-border-color: #DAA520; /* Darker Gold Border */
 }
 
 /* Hover Effects */
 .register-button:hover {
     -fx-background-color: #FF8C00; /* Slightly Darker Gold */
+    /*-fx-background-color: linear-gradient(to right, #C62828, #E57373); !* Slightly Darker Pink *!*/
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 5);
 }
 

@@ -79,26 +79,23 @@ public class UserDb {
 
     // Register a new user
     public static boolean registerUser(String agentEmail, String password, String role) {
-        // Step 1: Retrieve agent ID using the email
         int agentId = getAgentIdByEmail(agentEmail);
         if (agentId == -1) {
-            System.out.println("❌ Error: No agent found with this email.");
+            System.out.println("❌ Registration failed: No agent found with this email.");
             return false;
         }
 
-        // Step 2: Check if the email is already registered in the users table
         if (isEmailTaken(agentEmail)) {
-            System.out.println("❌ Email already registered!");
+            System.out.println("❌ Registration failed: Email is already in use.");
             return false;
         }
 
         Connection conn = getConnection();
         if (conn == null) {
-            System.out.println("❌ Database connection failed!");
+            System.out.println("❌ Registration failed: Database connection error.");
             return false;
         }
 
-        // Step 3: Insert new user
         String query = "INSERT INTO Users (agentid, email, password_hash, role) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, agentId);
@@ -111,13 +108,18 @@ public class UserDb {
                 System.out.println("✅ Registration successful for: " + agentEmail);
                 return true;
             } else {
-                System.out.println("❌ Registration failed.");
+                System.out.println("❌ Registration failed: No rows inserted.");
+                return false;
             }
         } catch (Exception e) {
+            System.out.println("❌ Registration failed due to SQL error: " + e.getMessage());
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
+
+
+
 
     // Retrieve agent ID by email
     public static int getAgentIdByEmail(String email) {
