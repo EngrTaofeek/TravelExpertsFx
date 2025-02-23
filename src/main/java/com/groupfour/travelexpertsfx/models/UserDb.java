@@ -142,4 +142,27 @@ public class UserDb {
         }
         return -1; // Return -1 if no agent found
     }
+
+    public static String getAgentRoleByEmail(String email) {
+        Connection conn = getConnection();
+        if (conn == null) {
+            return null; // Database connection failed
+        }
+
+        String query = "SELECT role FROM agents WHERE agtemail = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("role"); // Return the agent's role
+            } else {
+                System.out.println("❌ No agent found with this email: " + email);
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

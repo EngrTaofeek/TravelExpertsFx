@@ -16,6 +16,7 @@ public class RegisterController {
     @FXML private PasswordField txtConfirmPassword;
     @FXML private ComboBox<String> comboRole;
     @FXML private Label lblMessage;
+    @FXML private Label lblRole;
     @FXML private Button btnBack;
     @FXML private TextField txtVisiblePassword;
     @FXML private Button btnShowPassword;
@@ -24,8 +25,30 @@ public class RegisterController {
     public void initialize() {
         btnShowPassword.setOnAction(e -> togglePasswordVisibility(txtPassword, txtVisiblePassword, btnShowPassword));
         btnShowConfirmPassword.setOnAction(e -> togglePasswordVisibility(txtConfirmPassword, txtVisibleConfirmPassword, btnShowConfirmPassword));
+
+        // Fetch role dynamically when email is entered
+        txtEmail.textProperty().addListener((observable, oldValue, newValue) -> {
+            updateRoleDisplay(newValue);
+        });
     }
 
+    // Method to fetch role and update label
+    private void updateRoleDisplay(String email) {
+        if (email.isEmpty()) {
+            lblRole.setText("Enter email to fetch role");
+            lblRole.setStyle("-fx-text-fill: gray;");
+            return;
+        }
+
+        String role = UserDb.getAgentRoleByEmail(email);
+        if (role == null) {
+            lblRole.setText("❌ No agent found");
+            lblRole.setStyle("-fx-text-fill: red;");
+        } else {
+            lblRole.setText("Role: " + role.substring(0, 1).toUpperCase() + role.substring(1)); // Capitalize first letter
+            lblRole.setStyle("-fx-text-fill: blue;");
+        }
+    }
 
 
     @FXML
@@ -60,16 +83,9 @@ public class RegisterController {
         String email = txtEmail.getText().trim();
         String password = txtPassword.isVisible() ? txtPassword.getText().trim() : txtVisiblePassword.getText().trim();
         String confirmPassword = txtConfirmPassword.isVisible() ? txtConfirmPassword.getText().trim() : txtVisibleConfirmPassword.getText().trim();
-        String role = comboRole.getValue().trim().toLowerCase();
 
-        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || role == null) {
+        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             lblMessage.setText("⚠ All fields are required!");
-            lblMessage.setStyle("-fx-text-fill: red;");
-            return;
-        }
-
-        if (!role.equals("agent") && !role.equals("manager")) {
-            lblMessage.setText("❌ Invalid role selected!");
             lblMessage.setStyle("-fx-text-fill: red;");
             return;
         }
@@ -86,9 +102,17 @@ public class RegisterController {
             return;
         }
 
+        // ✅ Fetch the role from the agents table
+        String role = UserDb.getAgentRoleByEmail(email);
+        if (role == null) {
+            lblMessage.setText("❌ Registration failed: No agent found with this email.");
+            lblMessage.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        // Register user and capture possible failures
+        // ✅ Register user with fetched role
         boolean success = UserDb.registerUser(email, hashedPassword, role);
         if (success) {
             lblMessage.setText("✅ Registration successful!");
@@ -98,6 +122,7 @@ public class RegisterController {
             lblMessage.setStyle("-fx-text-fill: red;");
         }
     }
+
 
 
 

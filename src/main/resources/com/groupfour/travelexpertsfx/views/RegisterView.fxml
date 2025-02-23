@@ -29,6 +29,13 @@
                 <TextField fx:id="txtEmail" prefWidth="350.0" promptText="Enter your email" styleClass="register-input" />
             </VBox>
 
+            <!-- Role Display (Automatically Fetched) -->
+            <VBox alignment="CENTER_LEFT" spacing="5.0">
+                <Label styleClass="register-label" text="Your Role:" />
+                <Label fx:id="lblRole" styleClass="register-role-label" text="Fetching role..." />
+            </VBox>
+
+
             <!-- Password Input with Eye Button Inside -->
             <VBox alignment="CENTER_LEFT" spacing="5.0">
                 <Label styleClass="register-label" text="Password:" />
@@ -50,18 +57,7 @@
             </VBox>
 
 
-            <!-- Role Selection -->
-            <VBox alignment="CENTER_LEFT" spacing="5.0">
-                <Label styleClass="register-label" text="Role:" />
-                <ComboBox fx:id="comboRole" prefWidth="350.0" styleClass="register-combo">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Agent" />
-                            <String fx:value="Manager" />
-                        </FXCollections>
-                    </items>
-                </ComboBox>
-            </VBox>
+
 
             <!-- Error / Success Message -->
             <Label fx:id="lblMessage" styleClass="register-message" text="" />
