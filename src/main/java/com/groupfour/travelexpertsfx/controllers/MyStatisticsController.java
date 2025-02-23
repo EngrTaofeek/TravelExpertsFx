@@ -16,8 +16,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
-import javax.xml.stream.Location;
-
 public class MyStatisticsController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -60,8 +58,8 @@ public class MyStatisticsController {
 
         // Need to update methods to pull id from currently logged-in user
         try {
-            bookings = StatisticsDB.totalSalesUntilDatePerAgent(1, date);
-            commissions = StatisticsDB.totalCommissionUntilDatePerAgent(1, date);
+            bookings = StatisticsDB.totalSalesPerAgent(1, date);
+            commissions = StatisticsDB.totalCommissionPerAgent(1, date);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

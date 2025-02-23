@@ -1,15 +1,18 @@
 package com.groupfour.travelexpertsfx.models;
 
 import com.groupfour.travelexpertsfx.database.DbConfig;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.Instant;
 import java.time.LocalDate;
 
 /**
  * @Author RyanOOSD
  * @Date 2/19/2025
- * @Description Gather statistics from the database
+ * @Description Gather statistics from the database as well as lists for combo boxes
  */
 
 public class StatisticsDB {
@@ -27,7 +30,7 @@ public class StatisticsDB {
         return conn;
     }
 
-    public static long totalSalesUntilDatePerAgent(int agentId, LocalDate date) throws SQLException {
+    public static long totalSalesPerAgent(int agentId, LocalDate date) throws SQLException {
         // Declare long and extract date
         long salesUntil = 0;
         Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
@@ -48,7 +51,30 @@ public class StatisticsDB {
         return salesUntil;
     }
 
-    public static BigDecimal totalCommissionUntilDatePerAgent(int agentId, LocalDate date) throws SQLException {
+    public static LocalDate agentFirstSaleDate(int agentId) throws SQLException {
+        Timestamp firstSale = Timestamp.from(Instant.now());
+
+        Connection conn = getConnection();
+        String sql = "SELECT bookingdate FROM bookingdetails" +
+                " INNER JOIN bookings ON bookingdetails.bookingid = bookings.bookingid" +
+                " INNER JOIN customers ON bookings.customerid = customers.customerid" +
+                " WHERE agentid = ?" +
+                " ORDER BY bookingdate ASC" +
+                " LIMIT 1";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, agentId);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            firstSale = rs.getTimestamp(1);
+        }
+        stmt.close();
+
+        // Convert to LocalDate before returning
+        return firstSale.toLocalDateTime().toLocalDate();
+    }
+
+    public static BigDecimal totalCommissionPerAgent(int agentId, LocalDate date) throws SQLException {
         BigDecimal commission = BigDecimal.ZERO;
         Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
 
@@ -118,5 +144,30 @@ public class StatisticsDB {
         }
         stmt.close();
         return salesPerCustomer;
+    }
+
+    public static ObservableList<AgentDTO> agentsList() throws SQLException {
+        ObservableList<AgentDTO> agents = FXCollections.observableArrayList();
+        AgentDTO agent;
+
+        Connection conn = getConnection();
+        String sql = "SELECT agentid, agtfirstname, agtmiddleinitial, agtlastname, agncycity FROM agents" +
+                " INNER JOIN agencies ON agents.agencyid = agencies.agencyid" +
+                " ORDER BY agents.agencyid ASC";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            agent = new AgentDTO(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5)
+            );
+            agents.add(agent);
+        }
+        stmt.close();
+        return agents;
     }
 }
