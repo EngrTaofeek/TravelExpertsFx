@@ -1,6 +1,5 @@
 package com.groupfour.travelexpertsfx.controllers;
 
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
