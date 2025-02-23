@@ -11,6 +11,16 @@ public class Agency {
     private SimpleStringProperty  agencyprov;
     private SimpleStringProperty agencypostal;
     private SimpleStringProperty agencycountry;
+
+    @Override
+    public String toString() {
+        return
+                agencyaddress.getValue() + "," +
+                agencycity.getValue() + "," +
+                agencyprov.getValue() + "," +
+                agencycountry.getValue();
+    }
+
     private SimpleStringProperty agencyphone;
     private SimpleStringProperty agencyfax;
 

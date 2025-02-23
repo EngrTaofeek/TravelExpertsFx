@@ -7,14 +7,11 @@ package com.groupfour.travelexpertsfx.controllers;
  */
 
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import com.groupfour.travelexpertsfx.models.Agency;
 import com.groupfour.travelexpertsfx.models.AgencyDB;
-import com.groupfour.travelexpertsfx.models.Package;
-import com.groupfour.travelexpertsfx.models.PackageDB;
 import com.groupfour.travelexpertsfx.utils.AlertMessage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
