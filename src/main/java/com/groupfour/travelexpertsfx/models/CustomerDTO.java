@@ -8,6 +8,12 @@ public class CustomerDTO {
     private SimpleStringProperty customerFirstName;
     private SimpleStringProperty customerLastName;
 
+    public CustomerDTO(int customerId, String customerFirstName, String customerLastName) {
+        this.customerId = new SimpleIntegerProperty(customerId);
+        this.customerFirstName = new SimpleStringProperty(customerFirstName);
+        this.customerLastName = new SimpleStringProperty(customerLastName);
+    }
+
     public int getCustomerId() {
         return customerId.get();
     }

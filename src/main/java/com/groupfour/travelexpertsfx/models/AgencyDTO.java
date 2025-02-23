@@ -8,6 +8,12 @@ public class AgencyDTO {
     private SimpleStringProperty agencyAddress;
     private SimpleStringProperty agencyCity;
 
+    public AgencyDTO(int agencyid, String agencyAddress, String agencyCity) {
+        this.agencyid = new SimpleIntegerProperty(agencyid);
+        this.agencyAddress = new SimpleStringProperty(agencyAddress);
+        this.agencyCity = new SimpleStringProperty(agencyCity);
+    }
+
     public int getAgencyid() {
         return agencyid.get();
     }

@@ -95,6 +95,27 @@ public class StatisticsDB {
         return commission;
     }
 
+    public static BigDecimal agentFirstCommissionValue(int agentId) throws SQLException {
+        BigDecimal commission = BigDecimal.ZERO;
+
+        Connection conn = getConnection();
+        String sql = "SELECT agencycommission FROM bookingdetails" +
+                " INNER JOIN bookings ON bookingdetails.bookingid = bookings.bookingid" +
+                " INNER JOIN customers ON bookings.customerid = customers.customerid" +
+                " WHERE agentid = ?" +
+                " ORDER BY bookingdate ASC" +
+                " LIMIT 1";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, agentId);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            commission = rs.getBigDecimal(1);
+        }
+        stmt.close();
+        return commission;
+    }
+
     public static long totalSalesPerAgency(int agencyId) throws SQLException {
         long salesPerAgency = 0;
 
@@ -169,5 +190,47 @@ public class StatisticsDB {
         }
         stmt.close();
         return agents;
+    }
+
+    public static ObservableList<AgencyDTO> agenciesList() throws SQLException {
+        ObservableList<AgencyDTO> agencies = FXCollections.observableArrayList();
+        AgencyDTO agency;
+
+        Connection conn = getConnection();
+        String sql = "SELECT agencyid, agncyaddress, agncycity FROM agencies";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            agency = new AgencyDTO(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3)
+            );
+            agencies.add(agency);
+        }
+        stmt.close();
+        return agencies;
+    }
+
+    public static ObservableList<CustomerDTO> customersList() throws SQLException {
+        ObservableList<CustomerDTO> customers = FXCollections.observableArrayList();
+        CustomerDTO customer;
+
+        Connection conn = getConnection();
+        String sql = "SELECT customerid, custfirstname, custlastname FROM customers";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            customer = new CustomerDTO(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3)
+            );
+            customers.add(customer);
+        }
+        stmt.close();
+        return customers;
     }
 }

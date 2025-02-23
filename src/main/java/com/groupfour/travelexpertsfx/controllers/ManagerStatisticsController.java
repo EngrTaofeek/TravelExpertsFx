@@ -4,13 +4,13 @@
 
 package com.groupfour.travelexpertsfx.controllers;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
-import com.groupfour.travelexpertsfx.models.AgentDTO;
-import com.groupfour.travelexpertsfx.models.StatisticsDB;
+import com.groupfour.travelexpertsfx.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -39,13 +39,13 @@ public class ManagerStatisticsController {
     private Button btnChartClear; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbSelectAgencies"
-    private ComboBox<?> cmbSelectAgencies; // Value injected by FXMLLoader
+    private ComboBox<AgencyDTO> cmbSelectAgencies; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbSelectAgents"
     private ComboBox<AgentDTO> cmbSelectAgents; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbSelectCustomers"
-    private ComboBox<?> cmbSelectCustomers; // Value injected by FXMLLoader
+    private ComboBox<CustomerDTO> cmbSelectCustomers; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbStatsView"
     private ComboBox<Map.Entry<String, Integer>> cmbStatsView; // Value injected by FXMLLoader
@@ -63,7 +63,7 @@ public class ManagerStatisticsController {
     private Label lblSelect; // Value injected by FXMLLoader
 
     @FXML // fx:id="linStats"
-    private LineChart<?, ?> linStats; // Value injected by FXMLLoader
+    private LineChart<String, Number> linStats; // Value injected by FXMLLoader
 
     @FXML // fx:id="pieStats"
     private PieChart pieStats; // Value injected by FXMLLoader
@@ -106,6 +106,16 @@ public class ManagerStatisticsController {
         cmbStatsView.setConverter(formatStatList());
         cmbStatsView.setValue(showList.getFirst());
 
+        // Initialize combo boxes for selecting agents, agencies and customers
+        loadAgents();
+        loadAgencies();
+        loadCustomers();
+
+        // Disable chart animations to prevent errors with data display
+        brcStats.setAnimated(false);
+        pieStats.setAnimated(false);
+        linStats.setAnimated(false);
+
         // Format the view to show agent sales on load
         dtpMaxDate.setValue(LocalDate.now());
         formatView(cmbStatsView.getSelectionModel().getSelectedItem().getValue());
@@ -113,6 +123,8 @@ public class ManagerStatisticsController {
         // Create event listener for stat view combobox
         cmbStatsView.setOnAction(event -> {
             Map.Entry<String, Integer> selectedStat = cmbStatsView.getSelectionModel().getSelectedItem();
+            // Clear charts and combobox on change
+            clearCharts();
             formatView(selectedStat.getValue());
         });
 
@@ -124,62 +136,139 @@ public class ManagerStatisticsController {
         });
 
         // Create event listener for clear chart button
-        btnChartClear.setOnAction(event -> {
-            brcStats.getData().clear();
-            pieStats.getData().clear();
-            linStats.getData().clear();
-        });
+        btnChartClear.setOnAction(event -> clearCharts());
+    }
+
+    private void clearCharts() {
+        brcStats.getData().clear();
+        pieStats.getData().clear();
+        linStats.getData().clear();
     }
 
     private void addToChart(Integer value) {
         switch (value) {
             case 1:
+                break;
             case 2:
+                break;
             case 3:
+                break;
             case 4:
+                break;
             case 5:
+                break;
         }
     }
 
     private void formatView(Integer value) {
         switch (value) {
             case 1:
-                // Hide other comboboxes and charts
+                // Hide other combo boxes and charts
+                brcStats.setVisible(true);
                 pieStats.setVisible(false);
                 linStats.setVisible(false);
                 cmbSelectAgencies.setVisible(false);
                 cmbSelectCustomers.setVisible(false);
                 // Update labels
                 lblSelect.setText("Select Agent:");
-                // Populate and format selection combobox
+                // Reset date picker to today
+                dtpMaxDate.setValue(LocalDate.now());
                 try {
-                    ObservableList<AgentDTO> agentList = FXCollections.observableArrayList(StatisticsDB.agentsList());
                     // Get first agent
-                    AgentDTO agent = agentList.getFirst();
+                    cmbSelectAgents.setValue(cmbSelectAgents.getItems().getFirst());
+                    AgentDTO agent = cmbSelectAgents.getItems().getFirst();
+                    // Get agent's sales until today's date
                     long agentSales = StatisticsDB.totalSalesPerAgent(agent.getAgentId(), dtpMaxDate.getValue());
-                    cmbSelectAgents.setItems(agentList);
-                    cmbSelectAgents.setValue(agent);
-                    // Get date and convert to String
+                    // Convert date to string
                     String selectedDate = dtpMaxDate.getValue().toString();
                     // Format the chart
                     haxBarStats.setLabel("Date");
                     vaxBarStats.setLabel("Sales Per Agent");
-                    XYChart.Series<String, Number> series = new XYChart.Series<>();
-                    series.setName(agent.getAgentFirstName() + " " + agent.getAgentLastName());
+                    XYChart.Series<String, Number> totalSalesSeries = new XYChart.Series<>();
+                    totalSalesSeries.setName(agent.getAgentFirstName() + " " + agent.getAgentLastName());
                     // Add datapoint for agent's first sale
                     LocalDate firstSale = StatisticsDB.agentFirstSaleDate(agent.getAgentId());
-                    series.getData().add(new XYChart.Data<>(firstSale.toString(), 1));
-                    // Add datapoint for date in datetimepicker
-                    series.getData().add(new XYChart.Data<>(selectedDate, agentSales));
-                    brcStats.getData().add(series);
+                    totalSalesSeries.getData().add(new XYChart.Data<>(firstSale.toString(), 1));
+                    // Add datapoint for today's date in datetimepicker
+                    totalSalesSeries.getData().add(new XYChart.Data<>(selectedDate, agentSales));
+                    brcStats.getData().add(totalSalesSeries);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                break;
             case 2:
+                // Hide other combo boxes and charts
+                linStats.setVisible(true);
+                brcStats.setVisible(false);
+                pieStats.setVisible(false);
+                cmbSelectAgencies.setVisible(false);
+                cmbSelectCustomers.setVisible(false);
+                // Update labels
+                lblSelect.setText("Select Agent:");
+                // Reset date picker to today's date
+                dtpMaxDate.setValue(LocalDate.now());
+                try {
+                    // Get first agent
+                    cmbSelectAgents.setValue(cmbSelectAgents.getItems().getFirst());
+                    AgentDTO agent = cmbSelectAgents.getItems().getFirst();
+                    // Convert date to string
+                    String today = dtpMaxDate.getValue().toString();
+                    // Get agent's commission value until today's date
+                    BigDecimal agentCommission = StatisticsDB.totalCommissionPerAgent(agent.getAgentId(), dtpMaxDate.getValue());
+                    // Format the chart
+                    haxLineStats.setLabel("Date");
+                    vaxLineStats.setLabel("Commission Value Per Agent");
+                    XYChart.Series<String, Number> totalCommissionSeries = new XYChart.Series<>();
+                    totalCommissionSeries.setName(agent.getAgentFirstName() + " " + agent.getAgentLastName());
+                    // Add datapoint for agent's first sale
+                    LocalDate firstSale = StatisticsDB.agentFirstSaleDate(agent.getAgentId());
+                    String convertFirst = firstSale.toString();
+                    BigDecimal firstCommission = StatisticsDB.agentFirstCommissionValue(agent.getAgentId());
+                    totalCommissionSeries.getData().add(new XYChart.Data<>(convertFirst, firstCommission));
+                    // Add datapoint for today's date
+                    totalCommissionSeries.getData().add(new XYChart.Data<>(today, agentCommission));
+                    linStats.getData().add(totalCommissionSeries);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
             case 3:
+                break;
             case 4:
+                break;
             case 5:
+                break;
         }
+    }
+
+    private void loadCustomers() {
+        ObservableList<CustomerDTO> customerList = null;
+        try {
+            customerList = FXCollections.observableArrayList(StatisticsDB.customersList());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        cmbSelectCustomers.setItems(customerList);
+    }
+
+    private void loadAgencies() {
+        ObservableList<AgencyDTO> agencyList = null;
+        try {
+            agencyList = FXCollections.observableArrayList(StatisticsDB.agenciesList());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        cmbSelectAgencies.setItems(agencyList);
+    }
+
+    private void loadAgents() {
+        ObservableList<AgentDTO> agentList = null;
+        try {
+            agentList = FXCollections.observableArrayList(StatisticsDB.agentsList());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        cmbSelectAgents.setItems(agentList);
     }
 
     private StringConverter<Map.Entry<String, Integer>> formatStatList() {
