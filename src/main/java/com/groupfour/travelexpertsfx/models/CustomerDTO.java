@@ -52,6 +52,6 @@ public class CustomerDTO {
 
     @Override
     public String toString() {
-        return "#" + customerId + " " + customerFirstName + " " + customerLastName;
+        return getCustomerFirstName() + " " + getCustomerLastName();
     }
 }

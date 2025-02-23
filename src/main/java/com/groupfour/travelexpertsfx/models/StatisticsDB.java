@@ -116,19 +116,22 @@ public class StatisticsDB {
         return commission;
     }
 
-    public static long numberOfAgencies() throws SQLException {
-        long numAgencies = 0;
+    public static long totalSales(LocalDate date) throws SQLException {
+        long sales = 0;
+        Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
 
         Connection conn = getConnection();
-        String sql = "SELECT COUNT(*) FROM agencies";
+        String sql = "SELECT COUNT(*) FROM bookings" +
+                " WHERE bookingdate <= ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setTimestamp(1, timestamp);
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
-            numAgencies = rs.getLong(1);
+            sales = rs.getLong(1);
         }
         stmt.close();
-        return numAgencies;
+        return sales;
     }
 
     public static long totalSalesPerAgency(int agencyId, LocalDate date) throws SQLException {
@@ -139,7 +142,7 @@ public class StatisticsDB {
         String sql = "SELECT COUNT(*) FROM bookings" +
                 " INNER JOIN customers ON bookings.customerid = customers.customerid" +
                 " INNER JOIN agents ON customers.agentid = agents.agentid" +
-                " WHERE agents.agentid = ? AND bookingdate <= ?";
+                " WHERE agents.agencyid = ? AND bookingdate <= ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, agencyId);
         stmt.setTimestamp(2, timestamp);
@@ -152,14 +155,16 @@ public class StatisticsDB {
         return salesPerAgency;
     }
 
-    public static long totalSalesPerCustomer(int customerId) throws SQLException {
+    public static long totalSalesPerCustomer(int customerId, LocalDate date) throws SQLException {
         long salesPerCustomer = 0;
+        Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
 
         Connection conn = getConnection();
         String sql = "SELECT COUNT(*) FROM bookings" +
-                " WHERE customerid = ?";
+                " WHERE customerid = ? AND bookingdate <= ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, customerId);
+        stmt.setTimestamp(2, timestamp);
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
@@ -167,6 +172,27 @@ public class StatisticsDB {
         }
         stmt.close();
         return salesPerCustomer;
+    }
+
+    public static LocalDate customerFirstSaleDate(int customerId) throws SQLException {
+        Timestamp firstSale = Timestamp.from(Instant.now());
+
+        Connection conn = getConnection();
+        String sql = "SELECT bookingdate FROM bookings" +
+                " WHERE bookings.customerid = ?" +
+                " ORDER BY bookingdate ASC" +
+                " LIMIT 1";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, customerId);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            firstSale = rs.getTimestamp(1);
+        }
+        stmt.close();
+
+        // Convert to LocalDate before returning
+        return firstSale.toLocalDateTime().toLocalDate();
     }
 
     public static ObservableList<AgentDTO> agentsList() throws SQLException {
@@ -220,7 +246,8 @@ public class StatisticsDB {
         CustomerDTO customer;
 
         Connection conn = getConnection();
-        String sql = "SELECT customerid, custfirstname, custlastname FROM customers";
+        String sql = "SELECT customerid, custfirstname, custlastname FROM customers" +
+                " ORDER BY custfirstname ASC";
         PreparedStatement stmt = conn.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
 

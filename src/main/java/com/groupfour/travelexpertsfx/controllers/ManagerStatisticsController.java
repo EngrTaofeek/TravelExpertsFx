@@ -59,6 +59,9 @@ public class ManagerStatisticsController {
     @FXML // fx:id="lblSelect"
     private Label lblSelect; // Value injected by FXMLLoader
 
+    @FXML // fx:id="lblTotalSales"
+    private Label lblCumulativeSales; // Value injected by FXMLLoader
+
     @FXML // fx:id="linStats"
     private LineChart<String, Number> linStats; // Value injected by FXMLLoader
 
@@ -85,6 +88,7 @@ public class ManagerStatisticsController {
         assert haxBarStats != null : "fx:id=\"haxBarStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
         assert haxLineStats != null : "fx:id=\"haxLineStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
         assert lblSelect != null : "fx:id=\"lblSelect\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
+        assert lblCumulativeSales != null : "fx:id=\"lblCumulativeSales\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
         assert linStats != null : "fx:id=\"linStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
         assert pieStats != null : "fx:id=\"pieStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
         assert vaxBarStats != null : "fx:id=\"vaxBarStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
@@ -96,7 +100,7 @@ public class ManagerStatisticsController {
         statList.add(new AbstractMap.SimpleEntry<>("Commissions Per Agent", 2));
         statList.add(new AbstractMap.SimpleEntry<>("Sales Per Agency", 3));
         statList.add(new AbstractMap.SimpleEntry<>("Sales Per Customer", 4));
-        statList.add(new AbstractMap.SimpleEntry<>("Total Bookings", 5));
+        statList.add(new AbstractMap.SimpleEntry<>("Total Sales", 5));
         ObservableList<Map.Entry<String, Integer>> showList = FXCollections.observableArrayList(statList);
         // Use AbstractMap to store key value pairs and format, set default statistic view
         cmbStatsView.setItems(showList);
@@ -138,9 +142,11 @@ public class ManagerStatisticsController {
         // Create event listener for DatePicker to only trigger when viewing pie graph
         dtpMaxDate.setOnAction(event -> {
             Map.Entry<String, Integer> selectedStat = cmbStatsView.getSelectionModel().getSelectedItem();
+            LocalDate date = dtpMaxDate.getValue();
             if (selectedStat.getValue() == 3) {
                 pieStats.getData().clear();
-                pieStats.setTitle("Sales Per Agency (" + dtpMaxDate.getValue() + ")");
+                pieStats.setTitle("Sales Per Agency (Until " + date + ")");
+                updateCumulativeLabel(date);
             }
         });
     }
@@ -176,6 +182,7 @@ public class ManagerStatisticsController {
                 linStats.setVisible(false);
                 cmbSelectAgencies.setVisible(false);
                 cmbSelectCustomers.setVisible(false);
+                lblCumulativeSales.setVisible(false);
                 // Update labels
                 lblSelect.setText("Select Agent:");
                 // Reset date picker to today
@@ -211,6 +218,7 @@ public class ManagerStatisticsController {
                 pieStats.setVisible(false);
                 cmbSelectAgencies.setVisible(false);
                 cmbSelectCustomers.setVisible(false);
+                lblCumulativeSales.setVisible(false);
                 // Update labels
                 lblSelect.setText("Select Agent:");
                 // Reset date picker to today's date
@@ -244,6 +252,7 @@ public class ManagerStatisticsController {
                 // Hide other controls
                 pieStats.setVisible(true);
                 cmbSelectAgencies.setVisible(true);
+                lblCumulativeSales.setVisible(true);
                 linStats.setVisible(false);
                 brcStats.setVisible(false);
                 cmbSelectAgents.setVisible(false);
@@ -256,10 +265,11 @@ public class ManagerStatisticsController {
                     cmbSelectAgencies.setValue(cmbSelectAgencies.getItems().getFirst());
                     AgencyDTO agency = cmbSelectAgencies.getValue();
                     String agencyName = agency.toString();
+                    LocalDate date = dtpMaxDate.getValue();
                     // Get sales of first agency
-                    long agencySales = StatisticsDB.totalSalesPerAgency(agency.getAgencyid(), dtpMaxDate.getValue());
+                    long agencySales = StatisticsDB.totalSalesPerAgency(agency.getAgencyid(), date);
                     // Format and add data to the chart
-                    pieStats.setTitle("Sales Per Agency (" + dtpMaxDate.getValue() + ")");
+                    pieStats.setTitle("Sales Per Agency (Until " + date + ")");
                     List<Map.Entry<String, Long>> sales = new ArrayList<>();
                     sales.add(new AbstractMap.SimpleEntry<>(agencyName, agencySales));
                     PieChart.Data firstAgency = new PieChart.Data(agencyName, agencySales);
@@ -268,15 +278,58 @@ public class ManagerStatisticsController {
                     Tooltip tooltip = new Tooltip(agencyName + ": " + agencySales);
                     tooltip.setStyle("-fx-font-size: 14px");
                     Tooltip.install(firstAgency.getNode(), tooltip);
+                    // Update cumulative sales label
+                    updateCumulativeLabel(date);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
                 break;
             case 4:
+                // Hide other controls
+                brcStats.setVisible(true);
+                cmbSelectCustomers.setVisible(true);
+                linStats.setVisible(false);
+                pieStats.setVisible(false);
+                cmbSelectAgencies.setVisible(false);
+                cmbSelectAgents.setVisible(false);
+                lblCumulativeSales.setVisible(false);
+                // Update label
+                lblSelect.setText("Select Customer: ");
+                // Reset date picker
+                dtpMaxDate.setValue(LocalDate.now());
+                try {
+                    cmbSelectCustomers.setValue(cmbSelectCustomers.getItems().getFirst());
+                    CustomerDTO customer = cmbSelectCustomers.getValue();
+                    // Get number of bookings for first customer until today's date
+                    long customerBookings = StatisticsDB.totalSalesPerCustomer(customer.getCustomerId(), dtpMaxDate.getValue());
+                    String selectedDate = dtpMaxDate.getValue().toString();
+                    // Update bar chart vertical label and load data
+                    vaxBarStats.setLabel("Sales Per Customer");
+                    XYChart.Series<String, Number> customerSales = new XYChart.Series<>();
+                    customerSales.setName(customer.getCustomerFirstName() + " " + customer.getCustomerLastName());
+                    // Add datapoint for customer's first booking
+                    LocalDate firstSale = StatisticsDB.customerFirstSaleDate(customer.getCustomerId());
+                    customerSales.getData().add(new XYChart.Data<>(firstSale.toString(), 1));
+                    // Add datapoint for customer's total sales
+                    customerSales.getData().add(new XYChart.Data<>(selectedDate, customerBookings));
+                    brcStats.getData().add(customerSales);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 5:
                 break;
         }
+    }
+
+    private void updateCumulativeLabel(LocalDate date) {
+        long cumulativeSales = 0;
+        try {
+            cumulativeSales = StatisticsDB.totalSales(date);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        lblCumulativeSales.setText("Cumulative Sales: " + cumulativeSales);
     }
 
     private void loadCustomers() {
