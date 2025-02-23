@@ -116,16 +116,33 @@ public class StatisticsDB {
         return commission;
     }
 
-    public static long totalSalesPerAgency(int agencyId) throws SQLException {
+    public static long numberOfAgencies() throws SQLException {
+        long numAgencies = 0;
+
+        Connection conn = getConnection();
+        String sql = "SELECT COUNT(*) FROM agencies";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            numAgencies = rs.getLong(1);
+        }
+        stmt.close();
+        return numAgencies;
+    }
+
+    public static long totalSalesPerAgency(int agencyId, LocalDate date) throws SQLException {
         long salesPerAgency = 0;
+        Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
 
         Connection conn = getConnection();
         String sql = "SELECT COUNT(*) FROM bookings" +
                 " INNER JOIN customers ON bookings.customerid = customers.customerid" +
                 " INNER JOIN agents ON customers.agentid = agents.agentid" +
-                " WHERE agentid = ?";
+                " WHERE agents.agentid = ? AND bookingdate <= ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, agencyId);
+        stmt.setTimestamp(2, timestamp);
         ResultSet rs = stmt.executeQuery();
 
         if (rs.next()) {
@@ -133,21 +150,6 @@ public class StatisticsDB {
         }
         stmt.close();
         return salesPerAgency;
-    }
-
-    public static long totalSales() throws SQLException {
-        long bookings = 0;
-
-        Connection conn = getConnection();
-        String sql = "SELECT COUNT(*) FROM bookings";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            bookings = rs.getLong(1);
-        }
-        stmt.close();
-        return bookings;
     }
 
     public static long totalSalesPerCustomer(int customerId) throws SQLException {

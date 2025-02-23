@@ -52,6 +52,6 @@ public class AgencyDTO {
 
     @Override
     public String toString() {
-        return agencyAddress + ", " + agencyCity;
+        return getAgencyAddress() + ", " + getAgencyCity();
     }
 }

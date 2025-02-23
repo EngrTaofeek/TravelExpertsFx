@@ -15,10 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.util.StringConverter;
 
 public class ManagerStatisticsController {
@@ -137,6 +134,15 @@ public class ManagerStatisticsController {
 
         // Create event listener for clear chart button
         btnChartClear.setOnAction(event -> clearCharts());
+
+        // Create event listener for DatePicker to only trigger when viewing pie graph
+        dtpMaxDate.setOnAction(event -> {
+            Map.Entry<String, Integer> selectedStat = cmbStatsView.getSelectionModel().getSelectedItem();
+            if (selectedStat.getValue() == 3) {
+                pieStats.getData().clear();
+                pieStats.setTitle("Sales Per Agency (" + dtpMaxDate.getValue() + ")");
+            }
+        });
     }
 
     private void clearCharts() {
@@ -165,6 +171,7 @@ public class ManagerStatisticsController {
             case 1:
                 // Hide other combo boxes and charts
                 brcStats.setVisible(true);
+                cmbSelectAgents.setVisible(true);
                 pieStats.setVisible(false);
                 linStats.setVisible(false);
                 cmbSelectAgencies.setVisible(false);
@@ -176,7 +183,7 @@ public class ManagerStatisticsController {
                 try {
                     // Get first agent
                     cmbSelectAgents.setValue(cmbSelectAgents.getItems().getFirst());
-                    AgentDTO agent = cmbSelectAgents.getItems().getFirst();
+                    AgentDTO agent = cmbSelectAgents.getValue();
                     // Get agent's sales until today's date
                     long agentSales = StatisticsDB.totalSalesPerAgent(agent.getAgentId(), dtpMaxDate.getValue());
                     // Convert date to string
@@ -199,6 +206,7 @@ public class ManagerStatisticsController {
             case 2:
                 // Hide other combo boxes and charts
                 linStats.setVisible(true);
+                cmbSelectAgents.setVisible(true);
                 brcStats.setVisible(false);
                 pieStats.setVisible(false);
                 cmbSelectAgencies.setVisible(false);
@@ -210,7 +218,7 @@ public class ManagerStatisticsController {
                 try {
                     // Get first agent
                     cmbSelectAgents.setValue(cmbSelectAgents.getItems().getFirst());
-                    AgentDTO agent = cmbSelectAgents.getItems().getFirst();
+                    AgentDTO agent = cmbSelectAgents.getValue();
                     // Convert date to string
                     String today = dtpMaxDate.getValue().toString();
                     // Get agent's commission value until today's date
@@ -233,6 +241,36 @@ public class ManagerStatisticsController {
                 }
                 break;
             case 3:
+                // Hide other controls
+                pieStats.setVisible(true);
+                cmbSelectAgencies.setVisible(true);
+                linStats.setVisible(false);
+                brcStats.setVisible(false);
+                cmbSelectAgents.setVisible(false);
+                cmbSelectCustomers.setVisible(false);
+                // Update label
+                lblSelect.setText("Select Agency: ");
+                // Reset date picker
+                dtpMaxDate.setValue(LocalDate.now());
+                try {
+                    cmbSelectAgencies.setValue(cmbSelectAgencies.getItems().getFirst());
+                    AgencyDTO agency = cmbSelectAgencies.getValue();
+                    String agencyName = agency.toString();
+                    // Get sales of first agency
+                    long agencySales = StatisticsDB.totalSalesPerAgency(agency.getAgencyid(), dtpMaxDate.getValue());
+                    // Format and add data to the chart
+                    pieStats.setTitle("Sales Per Agency (" + dtpMaxDate.getValue() + ")");
+                    List<Map.Entry<String, Long>> sales = new ArrayList<>();
+                    sales.add(new AbstractMap.SimpleEntry<>(agencyName, agencySales));
+                    PieChart.Data firstAgency = new PieChart.Data(agencyName, agencySales);
+                    pieStats.getData().add(firstAgency);
+                    // Add a tooltip to show the value of the pie slice
+                    Tooltip tooltip = new Tooltip(agencyName + ": " + agencySales);
+                    tooltip.setStyle("-fx-font-size: 14px");
+                    Tooltip.install(firstAgency.getNode(), tooltip);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 4:
                 break;
