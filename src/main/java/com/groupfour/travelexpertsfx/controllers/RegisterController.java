@@ -1,4 +1,3 @@
-
 package com.groupfour.travelexpertsfx.controllers;
 
 import com.groupfour.travelexpertsfx.models.UserDb;
@@ -7,20 +6,30 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
+/**
+ * Controller for the Register View.
+ * Handles user registration by validating inputs, checking database constraints, 
+ * and registering new users if they meet all criteria.
+ */
 public class RegisterController {
 
-    public Button btnShowConfirmPassword;
-    public TextField txtVisibleConfirmPassword;
     @FXML private TextField txtEmail;
     @FXML private PasswordField txtPassword;
     @FXML private PasswordField txtConfirmPassword;
-    @FXML private ComboBox<String> comboRole;
     @FXML private Label lblMessage;
     @FXML private Label lblRole;
     @FXML private Button btnBack;
+    @FXML private Button btnRegister;
     @FXML private TextField txtVisiblePassword;
+    @FXML private TextField txtVisibleConfirmPassword;
     @FXML private Button btnShowPassword;
+    @FXML private Button btnShowConfirmPassword;
 
+    /**
+     * Initializes the controller after the FXML is loaded.
+     * - Sets up password visibility toggling.
+     * - Listens for changes in email field to fetch role dynamically.
+     */
     @FXML
     public void initialize() {
         btnShowPassword.setOnAction(e -> togglePasswordVisibility(txtPassword, txtVisiblePassword, btnShowPassword));
@@ -32,31 +41,48 @@ public class RegisterController {
         });
     }
 
-    // Method to fetch role and update label
+    /**
+     * Fetches the agent's role based on the entered email and updates the label accordingly.
+     * @param email The email input used to retrieve the role.
+     */
+    @FXML
     private void updateRoleDisplay(String email) {
         if (email.isEmpty()) {
             lblRole.setText("Enter email to fetch role");
-            lblRole.setStyle("-fx-text-fill: gray;");
+            lblRole.setStyle("-fx-text-fill: gray; -fx-font-style: italic;");
             return;
         }
 
         String role = UserDb.getAgentRoleByEmail(email);
         if (role == null) {
             lblRole.setText("❌ No agent found");
-            lblRole.setStyle("-fx-text-fill: red;");
+            lblRole.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
         } else {
-            lblRole.setText("Role: " + role.substring(0, 1).toUpperCase() + role.substring(1)); // Capitalize first letter
-            lblRole.setStyle("-fx-text-fill: blue;");
+            lblRole.setText("Role: " + role.substring(0, 1).toUpperCase() + role.substring(1));
+
+            // Set color based on role
+            if (role.equalsIgnoreCase("agent")) {
+                lblRole.setStyle("-fx-text-fill: #007bff; -fx-font-weight: bold;"); // Blue for Agent
+            } else {
+                lblRole.setStyle("-fx-text-fill: #800080; -fx-font-weight: bold;"); // Purple for Manager
+            }
         }
     }
 
-
+    /**
+     * Toggles the visibility of a password field.
+     * - If hidden, it shows the plain text field.
+     * - If visible, it restores the PasswordField.
+     *
+     * @param passwordField The hidden password field.
+     * @param visibleTextField The visible text field (plain text version of the password).
+     * @param toggleButton The button that toggles visibility.
+     */
     @FXML
     private void togglePasswordVisibility(PasswordField passwordField, TextField visibleTextField, Button toggleButton) {
         boolean isVisible = visibleTextField.isVisible();
 
         if (!isVisible) {
-            // Show plain text field and hide password field
             visibleTextField.setText(passwordField.getText());
             visibleTextField.setVisible(true);
             visibleTextField.setManaged(true);
@@ -64,10 +90,7 @@ public class RegisterController {
             passwordField.setManaged(false);
             toggleButton.setText("👁‍🗨");
         } else {
-            // Ensure password field gets updated with the latest value
             passwordField.setText(visibleTextField.getText());
-
-            // Show password field and hide plain text field
             passwordField.setVisible(true);
             passwordField.setManaged(true);
             visibleTextField.setVisible(false);
@@ -76,8 +99,14 @@ public class RegisterController {
         }
     }
 
-
-
+    /**
+     * Handles user registration process.
+     * - Validates required fields.
+     * - Ensures password and confirm password match.
+     * - Checks if the email is already registered.
+     * - Fetches role dynamically from the database.
+     * - Registers the user and provides feedback.
+     */
     @FXML
     private void handleRegister() {
         String email = txtEmail.getText().trim();
@@ -102,7 +131,7 @@ public class RegisterController {
             return;
         }
 
-        // ✅ Fetch the role from the agents table
+        // Fetch role from agents table
         String role = UserDb.getAgentRoleByEmail(email);
         if (role == null) {
             lblMessage.setText("❌ Registration failed: No agent found with this email.");
@@ -110,9 +139,10 @@ public class RegisterController {
             return;
         }
 
+        // Hash the password securely
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        // ✅ Register user with fetched role
+        // Register user with fetched role
         boolean success = UserDb.registerUser(email, hashedPassword, role);
         if (success) {
             lblMessage.setText("✅ Registration successful!");
@@ -123,20 +153,22 @@ public class RegisterController {
         }
     }
 
-
-
-
-
-
+    /**
+     * Closes the registration window and returns the user to the login screen.
+     */
     @FXML
     private void handleBack() {
         System.out.println("🔄 Closing Register Page and Returning to Login...");
-
-        // Get the current stage (Register window) and close it
         Stage stage = (Stage) btnBack.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Displays a message to the user.
+     *
+     * @param message The message to display.
+     * @param color The color of the message (red for errors, green for success).
+     */
     private void showMessage(String message, String color) {
         lblMessage.setText(message);
         lblMessage.setStyle("-fx-text-fill: " + color + ";");

@@ -23,39 +23,62 @@ public class UserDb {
         }
     }
 
-    // Authenticate user by checking email and password hash
+    /**
+     * Authenticates a user by verifying the email and password hash.
+     *
+     * @param email    The email address of the user.
+     * @param password The entered password to be checked against the stored hash.
+     * @return The user's role ("agent" or "manager") if authentication succeeds.
+     *         Returns "email-not-found" if the email does not exist.
+     *         Returns "wrong-password" if the password is incorrect.
+     *         Returns null if there is an internal error (e.g., database connection failure).
+     */
     public static String authenticateUser(String email, String password) {
         Connection conn = getConnection();
         if (conn == null) {
             System.out.println("❌ Database connection failed!");
-            return null;
+            return null; // Internal error
         }
 
         String query = "SELECT password_hash, role FROM Users WHERE email = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, email);
-            ResultSet rs = stmt.executeQuery();
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String storedHash = rs.getString("password_hash");
+                    String role = rs.getString("role");
 
-            if (rs.next()) {
-                String storedHash = rs.getString("password_hash");
-                String role = rs.getString("role");
+                    // Check for null or empty values
+                    if (storedHash == null || storedHash.trim().isEmpty()) {
+                        System.out.println("❌ Stored password hash is null or empty.");
+                        return null; // Internal error
+                    }
+                    if (role == null || role.trim().isEmpty()) {
+                        System.out.println("❌ Role is null or empty.");
+                        return null; // Internal error
+                    }
 
-                System.out.println("🔍 Stored Hash: " + storedHash);
-                boolean passwordMatch = PasswordUtils.verifyPassword(password, storedHash);
+                    // Verify password
+                    boolean passwordMatch = PasswordUtils.verifyPassword(password, storedHash);
 
-                if (passwordMatch) {
-                    System.out.println("✅ Login successful for: " + email);
-                    return role; // Return role (either 'agent' or 'manager')
+                    if (passwordMatch) {
+                        System.out.println("✅ Login successful for: " + email);
+                        return role; // Return role ("agent" or "manager")
+                    } else {
+                        System.out.println("❌ Incorrect password for: " + email);
+                        return "wrong-password"; // Explicitly indicate incorrect password
+                    }
+                } else {
+                    System.out.println("❌ No user found with this email: " + email);
+                    return "email-not-found"; // Explicitly indicate email does not exist
                 }
-            } else {
-                System.out.println("❌ No user found with this email!");
             }
         } catch (Exception e) {
+            System.out.println("❌ Internal error during authentication: " + e.getMessage());
             e.printStackTrace();
+            return null; // Internal error
         }
-        return null;
     }
-
     // Check if email is already registered
     public static boolean isEmailTaken(String email) {
         Connection conn = getConnection();
