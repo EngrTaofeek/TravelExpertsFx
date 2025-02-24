@@ -132,6 +132,7 @@ public class DashboardController implements Initializable {
         btnPackages.setStyle("");
         btnSuppliers.setStyle("");
         btnCustomers.setStyle("");
+        btnProducts.setStyle("");
 
         clickedButton.setStyle("-fx-background-color: #FFA000; -fx-text-fill: white;");
     }
