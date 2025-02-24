@@ -1,21 +1,25 @@
 package com.groupfour.travelexpertsfx.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.groupfour.travelexpertsfx.models.Customer;
 import com.groupfour.travelexpertsfx.models.CustomerDB;
 import com.groupfour.travelexpertsfx.models.CustomerDTO;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * @Author: Kazi Fattah
@@ -66,8 +70,13 @@ public class CustomersController {
     @FXML // fx:id="tvCustomer"
     private TableView<CustomerDTO> tvCustomer; // Value injected by FXMLLoader
 
+    String pageMode;
+
     @FXML
-    void addProduct(MouseEvent event) {
+    void addCustomer(MouseEvent event) {
+        pageMode = "ADD";
+        Customer newCustomer = null;
+        openCustomerDetailsPage(newCustomer,  pageMode);
 
     }
 
@@ -77,18 +86,52 @@ public class CustomersController {
     }
 
     @FXML
-    void deleteProduct(MouseEvent event) {
+    void deleteCustomer(MouseEvent event) {
 
     }
 
     @FXML
-    void editProduct(MouseEvent event) {
+    void editCustomer(MouseEvent event) {
+        if (tvCustomer.getSelectionModel().getSelectedItem() != null) {
+            int selectedId = tvCustomer.getSelectionModel().getSelectedItem().getCustomerId();
+            pageMode = "EDIT";
+            Customer selectedCustomer;
+            try {
+                selectedCustomer = CustomerDB.getCustomerById(selectedId);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            openCustomerDetailsPage(selectedCustomer,  pageMode);
+        } else
+        {
+            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Select a Customer");
+        }
 
     }
 
     @FXML
     void searchCustomer(MouseEvent event) {
 
+    }
+
+    @FXML
+    void viewCustomerDetails(MouseEvent event) {
+        if (tvCustomer.getSelectionModel().getSelectedItem() != null) {
+            int selectedId = tvCustomer.getSelectionModel().getSelectedItem().getCustomerId();
+            pageMode = "DETAILS";
+            Customer selectedCustomer;
+            try {
+                selectedCustomer = CustomerDB.getCustomerById(selectedId);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            openCustomerDetailsPage(selectedCustomer,  pageMode);
+        } else
+        {
+            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Select a Customer");
+        }
     }
 
     private ObservableList<CustomerDTO> customerData = FXCollections.observableArrayList();
@@ -134,6 +177,41 @@ public class CustomersController {
         }
         tvCustomer.setItems(customerData);
     }
+
+    private void openCustomerDetailsPage(Customer passedCustomerDetails, String pageMode){
+
+        String fullPath = "/com/groupfour/travelexpertsfx/views/CustomerDetails.fxml";
+
+        URL fileUrl = getClass().getResource(fullPath);
+        if (fileUrl == null) {
+            return;
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader(fileUrl);
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new  RuntimeException("Fail to load CustomerDetailsPage.fxml", e);
+        }
+
+        // CONTROLLER
+        CustomerDetailsController controller = fxmlLoader.getController();
+
+        controller.setCustomerDetails(passedCustomerDetails);
+        controller.setPageMode(pageMode);
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Customer Details");
+        stage.setScene(scene);
+        stage.showAndWait();
+
+    }
+
+
+
+
+
 }
 
 /*
@@ -143,11 +221,13 @@ TASKS:
 Status: INCOMPLETE
 
     * CREATE - add new customer
+    * details page
     * UPDATE - edit customer details
     * DELETE - delete customer
     * view past trips
     * search customer
     * need new form for add/edit/delete
+    * validation (yuck)
 
  Status: COMPLETE
     * READ - view customer details in a table

@@ -152,12 +152,12 @@ public class ProductsController {
                 productToUpdate = ProductDB.getProductsById(selectedId);
                 tfProdName.setText(productToUpdate.getProductName());
             } catch (SQLException e) {
-                alertUser(Alert.AlertType.ERROR, "Error Finding Product with ID: "+selectedId+"\n" + e.getMessage());
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error Finding Product with ID: "+selectedId+"\n" + e.getMessage());
             }
 
         }
         else {
-            alertUser(Alert.AlertType.ERROR, "Select a Product");
+            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Select a Product");
         }
 
     }
@@ -176,12 +176,12 @@ public class ProductsController {
                 tfProdName.setText(productToUpdate.getProductName());
                 tfProdName.setDisable(true);
             } catch (SQLException e) {
-                alertUser(Alert.AlertType.ERROR, "Error Finding Product with ID: "+selectedId+"\n" + e.getMessage());
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error Finding Product with ID: "+selectedId+"\n" + e.getMessage());
             }
 
         }
         else {
-            alertUser(Alert.AlertType.ERROR, "Select a Product");
+            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Select a Product");
         }
 
     }
@@ -192,14 +192,14 @@ public class ProductsController {
             try {
                 numRows = ProductDB.addProduct(tfProdName.getText());
                 Product product = ProductDB.getProductsByName(tfProdName.getText());
-                alertUser(Alert.AlertType.CONFIRMATION, "Product added successfully.\n" +
+                ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Product added successfully.\n" +
                         "Details: \n" +
                         "Product ID: "+product.getProductId()+"\n"+
                         "Product Name: "+product.getProductName());
                 HBoxEdit.setVisible(false);
                 displayProduct();
             } catch (SQLException e) {
-                alertUser(Alert.AlertType.ERROR, "An error occurred while adding New Product\n" + e.getMessage());
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, "An error occurred while adding New Product\n" + e.getMessage());
             }
         } else if (modeSetter.equalsIgnoreCase("EDIT")) {
 
@@ -207,7 +207,7 @@ public class ProductsController {
             try {
                 productToUpdate.setProductName(tfProdName.getText());
                 numRows = ProductDB.updateProduct(productToUpdate);
-                alertUser(Alert.AlertType.CONFIRMATION, "Product updated successfully.\n" +
+                ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Product updated successfully.\n" +
                         "Details: \n" +
                         "Product ID: "+productToUpdate.getProductId()+"\n"+
                         "New Product Name: "+productToUpdate.getProductName());
@@ -215,19 +215,19 @@ public class ProductsController {
                 displayProduct();
 
             } catch (SQLException e) {
-                alertUser(Alert.AlertType.ERROR, "An error occurred while updating Product\n" + e.getMessage());
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, "An error occurred while updating Product\n" + e.getMessage());
             }
 
         } else if (modeSetter.equalsIgnoreCase("DELETE")) {
             try {
                 //productToUpdate.setProductName(tfProdName.getText());
                 numRows = ProductDB.deleteProduct(productToUpdate.getProductId());
-                alertUser(Alert.AlertType.CONFIRMATION, "Product deleted successfully.");
+                ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Product deleted successfully.");
                 HBoxEdit.setVisible(false);
                 displayProduct();
 
             } catch (SQLException e) {
-                alertUser(Alert.AlertType.ERROR, "An error occurred while updating Product\n" + e.getMessage());
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, "An error occurred while updating Product\n" + e.getMessage());
             }
 
         }
@@ -236,13 +236,7 @@ public class ProductsController {
 
     }
 
-    public static void alertUser(Alert.AlertType alertType, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(alertType.toString());
-        alert.setHeaderText("STATUS: " + alertType.toString());
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 
 
     public void clearSearch(MouseEvent mouseEvent) {
