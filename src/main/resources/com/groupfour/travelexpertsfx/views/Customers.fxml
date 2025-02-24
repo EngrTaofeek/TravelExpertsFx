@@ -1,14 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.groupfour.travelexpertsfx.controllers.CustomersController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.CustomersController">
+   <children>
+      <TableView fx:id="tvCustomer" layoutX="29.0" layoutY="71.0" prefHeight="200.0" prefWidth="539.0">
+        <columns>
+            <TableColumn fx:id="colCustID" prefWidth="48.79998779296875" text="ID" />
+          <TableColumn fx:id="colCustName" prefWidth="148.0" text="Customer Name" />
+          <TableColumn fx:id="colPhone" minWidth="0.0" prefWidth="123.99998474121094" text="Phone Number" />
+            <TableColumn fx:id="colEmail" prefWidth="91.99993896484375" text="Email" />
+           <TableColumn fx:id="colAddress" prefWidth="91.99993896484375" text="Address" />
+            <TableColumn fx:id="colAgent" minWidth="7.199951171875" prefWidth="125.60002441406255" text="Assigned Agent" />
+        </columns>
+      </TableView>
+      <HBox layoutX="59.0" layoutY="299.0">
+         <children>
+            <JFXButton fx:id="btnDetails" onMouseClicked="#viewCustomerDetails" prefHeight="30.0" prefWidth="106.0" text="Details">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/data2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnAdd" onMouseClicked="#addCustomer" prefHeight="30.0" prefWidth="84.0" text="Add">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/add2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnEdit" onMouseClicked="#editCustomer" prefHeight="30.0" prefWidth="107.0" text="Edit">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/edit2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnTrips" onMouseClicked="#deleteCustomer" prefHeight="30.0" prefWidth="106.0" text="Past Trips">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/airplane.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" onMouseClicked="#deleteCustomer" prefHeight="30.0" prefWidth="106.0" text="Delete">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/bin2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+      <HBox fx:id="HBoxSearchBar" alignment="CENTER" layoutX="58.0" layoutY="27.0" prefHeight="30.0" prefWidth="483.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="120.0" text="Find Customer:" />
+            <TextField fx:id="tfSearchBar" promptText="Enter Customer Details.." />
+            <JFXButton fx:id="btnSearch" onMouseClicked="#searchCustomer" prefHeight="30.0" prefWidth="84.0" text="Search">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/search.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnClearSearch" onMouseClicked="#clearSearch" prefHeight="30.0" prefWidth="84.0" text="Clear">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/clear.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>

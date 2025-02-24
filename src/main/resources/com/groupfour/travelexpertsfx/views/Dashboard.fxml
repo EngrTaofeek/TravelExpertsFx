@@ -66,6 +66,7 @@
                         <JFXButton fx:id="btnPackages" styleClass="sidebar-button" text="Packages" />
                         <JFXButton fx:id="btnSuppliers" styleClass="sidebar-button" text="Suppliers" />
                         <JFXButton fx:id="btnCustomers" styleClass="sidebar-button" text="Customers" />
+                        <JFXButton fx:id="btnProducts" styleClass="sidebar-button" text="Products" />
                     </children>
                 </VBox>
             </left>
