@@ -3,12 +3,12 @@ package com.groupfour.travelexpertsfx.models;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class CustomerDTO {
+public class CustomerStatsDTO {
     private SimpleIntegerProperty customerId;
     private SimpleStringProperty customerFirstName;
     private SimpleStringProperty customerLastName;
 
-    public CustomerDTO(int customerId, String customerFirstName, String customerLastName) {
+    public CustomerStatsDTO(int customerId, String customerFirstName, String customerLastName) {
         this.customerId = new SimpleIntegerProperty(customerId);
         this.customerFirstName = new SimpleStringProperty(customerFirstName);
         this.customerLastName = new SimpleStringProperty(customerLastName);

@@ -3,14 +3,14 @@ package com.groupfour.travelexpertsfx.models;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class AgentDTO {
+public class AgentStatsDTO {
     private SimpleIntegerProperty agentId;
     private SimpleStringProperty agentFirstName;
     private SimpleStringProperty agentMiddleInitial;
     private SimpleStringProperty agentLastName;
     private SimpleStringProperty agency;
 
-    public AgentDTO(int agentId, String agentFirstName, String agentMiddleInitial, String agentLastName, String agency) {
+    public AgentStatsDTO(int agentId, String agentFirstName, String agentMiddleInitial, String agentLastName, String agency) {
         this.agentId = new SimpleIntegerProperty(agentId);
         this.agentFirstName = new SimpleStringProperty(agentFirstName);
         this.agentMiddleInitial = new SimpleStringProperty(agentMiddleInitial);

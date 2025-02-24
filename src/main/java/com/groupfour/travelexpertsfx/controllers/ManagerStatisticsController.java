@@ -36,13 +36,13 @@ public class ManagerStatisticsController {
     private Button btnChartClear; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbSelectAgencies"
-    private ComboBox<AgencyDTO> cmbSelectAgencies; // Value injected by FXMLLoader
+    private ComboBox<AgencyStatsDTO> cmbSelectAgencies; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbSelectAgents"
-    private ComboBox<AgentDTO> cmbSelectAgents; // Value injected by FXMLLoader
+    private ComboBox<AgentStatsDTO> cmbSelectAgents; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbSelectCustomers"
-    private ComboBox<CustomerDTO> cmbSelectCustomers; // Value injected by FXMLLoader
+    private ComboBox<CustomerStatsDTO> cmbSelectCustomers; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbStatsView"
     private ComboBox<Map.Entry<String, Integer>> cmbStatsView; // Value injected by FXMLLoader
@@ -190,7 +190,7 @@ public class ManagerStatisticsController {
                 try {
                     // Get first agent
                     cmbSelectAgents.setValue(cmbSelectAgents.getItems().getFirst());
-                    AgentDTO agent = cmbSelectAgents.getValue();
+                    AgentStatsDTO agent = cmbSelectAgents.getValue();
                     // Get agent's sales until today's date
                     long agentSales = StatisticsDB.totalSalesPerAgent(agent.getAgentId(), dtpMaxDate.getValue());
                     // Convert date to string
@@ -226,7 +226,7 @@ public class ManagerStatisticsController {
                 try {
                     // Get first agent
                     cmbSelectAgents.setValue(cmbSelectAgents.getItems().getFirst());
-                    AgentDTO agent = cmbSelectAgents.getValue();
+                    AgentStatsDTO agent = cmbSelectAgents.getValue();
                     // Convert date to string
                     String today = dtpMaxDate.getValue().toString();
                     // Get agent's commission value until today's date
@@ -263,7 +263,7 @@ public class ManagerStatisticsController {
                 dtpMaxDate.setValue(LocalDate.now());
                 try {
                     cmbSelectAgencies.setValue(cmbSelectAgencies.getItems().getFirst());
-                    AgencyDTO agency = cmbSelectAgencies.getValue();
+                    AgencyStatsDTO agency = cmbSelectAgencies.getValue();
                     String agencyName = agency.toString();
                     LocalDate date = dtpMaxDate.getValue();
                     // Get sales of first agency
@@ -299,7 +299,7 @@ public class ManagerStatisticsController {
                 dtpMaxDate.setValue(LocalDate.now());
                 try {
                     cmbSelectCustomers.setValue(cmbSelectCustomers.getItems().getFirst());
-                    CustomerDTO customer = cmbSelectCustomers.getValue();
+                    CustomerStatsDTO customer = cmbSelectCustomers.getValue();
                     // Get number of bookings for first customer until today's date
                     long customerBookings = StatisticsDB.totalSalesPerCustomer(customer.getCustomerId(), dtpMaxDate.getValue());
                     String selectedDate = dtpMaxDate.getValue().toString();
@@ -318,6 +318,34 @@ public class ManagerStatisticsController {
                 }
                 break;
             case 5:
+                // Hide controls
+                brcStats.setVisible(true);
+                linStats.setVisible(false);
+                pieStats.setVisible(false);
+                cmbSelectAgencies.setVisible(false);
+                cmbSelectAgents.setVisible(false);
+                cmbSelectCustomers.setVisible(false);
+                lblSelect.setVisible(false);
+                lblCumulativeSales.setVisible(false);
+                // Reset date picker and store the date as string
+                dtpMaxDate.setValue(LocalDate.now());
+                String selectedDate = dtpMaxDate.getValue().toString();
+                try {
+                    // Get total number of sales until today's date
+                    long totalSales = StatisticsDB.totalSales(dtpMaxDate.getValue());
+                    // Update bar chart vertical label
+                    vaxBarStats.setLabel("Number of Sales");
+                    XYChart.Series<String, Number> sales = new XYChart.Series<>();
+                    sales.setName("Total Sales");
+                    // Add datapoint for the agency's first sale
+                    LocalDate date = StatisticsDB.firstSaleDate();
+                    sales.getData().add(new XYChart.Data<>(date.toString(), 1));
+                    // Add datapoint for all sales until today's date
+                    sales.getData().add(new XYChart.Data<>(selectedDate, totalSales));
+                    brcStats.getData().add(sales);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
         }
     }
@@ -333,7 +361,7 @@ public class ManagerStatisticsController {
     }
 
     private void loadCustomers() {
-        ObservableList<CustomerDTO> customerList = null;
+        ObservableList<CustomerStatsDTO> customerList = null;
         try {
             customerList = FXCollections.observableArrayList(StatisticsDB.customersList());
         } catch (SQLException e) {
@@ -343,7 +371,7 @@ public class ManagerStatisticsController {
     }
 
     private void loadAgencies() {
-        ObservableList<AgencyDTO> agencyList = null;
+        ObservableList<AgencyStatsDTO> agencyList = null;
         try {
             agencyList = FXCollections.observableArrayList(StatisticsDB.agenciesList());
         } catch (SQLException e) {
@@ -353,7 +381,7 @@ public class ManagerStatisticsController {
     }
 
     private void loadAgents() {
-        ObservableList<AgentDTO> agentList = null;
+        ObservableList<AgentStatsDTO> agentList = null;
         try {
             agentList = FXCollections.observableArrayList(StatisticsDB.agentsList());
         } catch (SQLException e) {

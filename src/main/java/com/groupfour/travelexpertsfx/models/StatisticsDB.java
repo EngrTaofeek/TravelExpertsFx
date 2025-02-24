@@ -195,9 +195,28 @@ public class StatisticsDB {
         return firstSale.toLocalDateTime().toLocalDate();
     }
 
-    public static ObservableList<AgentDTO> agentsList() throws SQLException {
-        ObservableList<AgentDTO> agents = FXCollections.observableArrayList();
-        AgentDTO agent;
+    public static LocalDate firstSaleDate() throws SQLException {
+        Timestamp firstSale = Timestamp.from(Instant.now());
+
+        Connection conn = getConnection();
+        String sql = "SELECT bookingdate FROM bookings" +
+                " ORDER BY bookingdate ASC" +
+                " LIMIT 1";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            firstSale = rs.getTimestamp(1);
+        }
+        stmt.close();
+
+        // Convert to LocalDate before returning
+        return firstSale.toLocalDateTime().toLocalDate();
+    }
+
+    public static ObservableList<AgentStatsDTO> agentsList() throws SQLException {
+        ObservableList<AgentStatsDTO> agents = FXCollections.observableArrayList();
+        AgentStatsDTO agent;
 
         Connection conn = getConnection();
         String sql = "SELECT agentid, agtfirstname, agtmiddleinitial, agtlastname, agncycity FROM agents" +
@@ -207,7 +226,7 @@ public class StatisticsDB {
         ResultSet rs = stmt.executeQuery();
 
         while (rs.next()) {
-            agent = new AgentDTO(
+            agent = new AgentStatsDTO(
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3),
@@ -220,9 +239,9 @@ public class StatisticsDB {
         return agents;
     }
 
-    public static ObservableList<AgencyDTO> agenciesList() throws SQLException {
-        ObservableList<AgencyDTO> agencies = FXCollections.observableArrayList();
-        AgencyDTO agency;
+    public static ObservableList<AgencyStatsDTO> agenciesList() throws SQLException {
+        ObservableList<AgencyStatsDTO> agencies = FXCollections.observableArrayList();
+        AgencyStatsDTO agency;
 
         Connection conn = getConnection();
         String sql = "SELECT agencyid, agncyaddress, agncycity FROM agencies";
@@ -230,7 +249,7 @@ public class StatisticsDB {
         ResultSet rs = stmt.executeQuery();
 
         while (rs.next()) {
-            agency = new AgencyDTO(
+            agency = new AgencyStatsDTO(
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3)
@@ -241,9 +260,9 @@ public class StatisticsDB {
         return agencies;
     }
 
-    public static ObservableList<CustomerDTO> customersList() throws SQLException {
-        ObservableList<CustomerDTO> customers = FXCollections.observableArrayList();
-        CustomerDTO customer;
+    public static ObservableList<CustomerStatsDTO> customersList() throws SQLException {
+        ObservableList<CustomerStatsDTO> customers = FXCollections.observableArrayList();
+        CustomerStatsDTO customer;
 
         Connection conn = getConnection();
         String sql = "SELECT customerid, custfirstname, custlastname FROM customers" +
@@ -252,7 +271,7 @@ public class StatisticsDB {
         ResultSet rs = stmt.executeQuery();
 
         while (rs.next()) {
-            customer = new CustomerDTO(
+            customer = new CustomerStatsDTO(
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3)
