@@ -30,7 +30,7 @@ public class MainApplication extends Application {
             // Create a new stage for Register Page
             Stage registerStage = new Stage();
             registerStage.setTitle("Register - Travel Experts");
-            registerStage.setScene(new Scene(root, 600, 800)); // Set pop-up size
+            registerStage.setScene(new Scene(root, 600, 650)); // Set pop-up size
 
             // Make it a modal pop-up (blocks interaction with login window)
             registerStage.initModality(Modality.APPLICATION_MODAL);

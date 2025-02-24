@@ -1,18 +1,30 @@
-/* Root Pane with Gold-Themed Background */
-.root {
-    -fx-background-color: linear-gradient(to right, #D4AF37, #FFD700); /* Gold gradient */
+/* Background color and effect*/
+.background {
+    /* Option 1: Softer Gold */
+    /*-fx-background-color: linear-gradient(to right, #f6c342, #ffcc5c);*/
+   /* Option 2: Softer Blue */
+    /*-fx-background-color: linear-gradient(to right, #2193b0, #6dd5ed); !* Softer Blue *!*/
+    /* Option 3: Purple Gradient */
+    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
+     /* Option 4: cool blue */
+    /* -fx-background-color: linear-gradient(to right, #6dd5ed, #2193b0); */
+    -fx-pref-width: 800px;
+    -fx-pref-height: 600px;
 }
 
-/* Centered VBox */
-VBox {
+/* Register Form Box */
+.register-form {
+    -fx-background-color: white;
+    -fx-border-radius: 20px; /* More rounded */
+    -fx-background-radius: 20px;
     -fx-padding: 30px;
-    -fx-alignment: center;
-    -fx-spacing: 12px; /* Reduce space between form elements */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 12, 0, 0, 5); /* Better shadow */
 }
+
 
 /* Title */
 .register-title {
-    -fx-font-size: 26px;
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: #222831;
 }
@@ -23,118 +35,71 @@ VBox {
     -fx-text-fill: #333;
 }
 
+/* Role Label Styling */
+.register-role-label {
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+    -fx-text-fill: #5A5A5A; /* Default gray */
+    -fx-opacity: 0.8; /* Lighter */
+}
+
 /* Input Fields */
 .register-input {
-    -fx-pref-height: 34px;  /* Slightly reduced height for consistency */
-    -fx-pref-width: 280px;  /* Match Login Page */
+    -fx-pref-height: 44px;
+    -fx-pref-width: 100%;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
     -fx-border-color: #00ADB5;
     -fx-border-width: 1.5px;
-    -fx-background-color: white;
+    -fx-background-color: #f5f5f5; /* Light gray */
     -fx-text-fill: #222831;
-    -fx-font-size: 14px;
+    -fx-font-size: 16px;
     -fx-padding: 6px;
-}
-
-/* ComboBox (Role Selection) */
-.register-combo {
-    -fx-pref-width: 280px; /* Match input fields */
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-    -fx-border-color: #00ADB5;;
-    -fx-background-color: white;
-    -fx-padding: 6px;
-    -fx-font-size: 14px;
-}
-
-/* Message Label */
-.register-message {
-    -fx-font-size: 13px;
-    -fx-text-fill: red;
 }
 
 /* Buttons */
-.register-button, .back-button {
+
+.register-button {
+    /*-fx-background-color: linear-gradient(to bottom, #FFC107, #FF8C00); !* Deeper orange *!*/
+    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    -fx-border-radius: 10px;
     -fx-text-fill: white;
-    -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
-    -fx-padding: 10px;
+    -fx-font-size: 16px;
     -fx-pref-width: 140px;
 }
 
-/* Register Button (Brighter Gold for Visibility) */
-.register-button {
-    -fx-background-color: #FFA500; /* Bright Gold */
-    -fx-border-color: #DAA520; /* Darker Gold Border */
-}
 
-/* Hover Effects */
 .register-button:hover {
-    -fx-background-color: #FF8C00; /* Slightly Darker Gold */
+    /*-fx-background-color: #FF8C00;*/
+    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 5);
 }
 
-/* Spacing Before Buttons */
-HBox {
-    -fx-padding: 15px 0 0 0; /* Add spacing before buttons */
-}
-
-/* Transparent Back to Login Button */
+/* Back to Login Button */
 .back-button {
-    -fx-background-color: transparent;  /* Fully transparent background */
-    -fx-border-color: transparent;      /* Remove border */
-    -fx-text-fill: black;               /* Keep text black */
-    -fx-font-size: 16px;
+    /*-fx-background-color: linear-gradient(to bottom, #FFD700, #FFA500); !* Gold-Orange *!*/
+    -fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); /* Pink-Red Gradient */
+    -fx-border-radius: 10px;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-padding: 10px;
-    -fx-pref-width: 180px;
-    -fx-alignment: center;
-    -fx-opacity: 0.8; /* Default opacity slightly faded */
-    -fx-transition: opacity 0.3s ease-in-out;
+    -fx-font-size: 16px;
+    -fx-pref-width: 140px;
 }
 
-/* Ensure icon and text alignment */
-.back-button > HBox {
-    -fx-alignment: center;
-    -fx-spacing: 8px;
-}
-
-/* Hover Effect (Optional: Light Fade) */
 .back-button:hover {
+    /*-fx-background-color: #FF8C00;*/
+    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    -fx-text-fill: white;
     -fx-opacity: 1;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 5);
-}
-
-/* Focus Effect  */
-.back-button:focused {
-    -fx-opacity: 1;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 3);
 }
 
 /* Eye Button */
 .eye-button {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-border-width: 0;
     -fx-font-size: 16px;
-    -fx-padding: 0 5px; /* Adjust padding to move the icon inside */
+    -fx-padding: 0 5px;
     -fx-cursor: hand;
-    -fx-translate-x: -10px; /* Shift left slightly for better fit */
 }
-
-
-.eye-button:hover {
-    -fx-text-fill: black;
-}
-
-
-/* Adjust StackPane to Keep Eye Button Inside */
-StackPane {
-    -fx-padding: 0;
-    -fx-alignment: CENTER_RIGHT;
-    -fx-pref-width: 350px; /* Ensure it doesn't shrink */
-}
-

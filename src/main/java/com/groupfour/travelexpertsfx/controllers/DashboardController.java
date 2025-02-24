@@ -18,7 +18,7 @@ public class DashboardController implements Initializable {
 
     @FXML private HBox topButtonContainer;
     @FXML private Button btnHome;
-    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers;
+    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers, btnProducts;
     @FXML private VBox sideMenu;
     @FXML private Button btnMenuToggle;
     @FXML private StackPane mainContent;
@@ -56,9 +56,12 @@ public class DashboardController implements Initializable {
         btnPackages.setOnAction(event -> { loadPage("Packages.fxml", btnPackages); toggleHomeButton(true); });
         btnSuppliers.setOnAction(event -> { loadPage("Suppliers.fxml", btnSuppliers); toggleHomeButton(true); });
         btnCustomers.setOnAction(event -> { loadPage("Customers.fxml", btnCustomers); toggleHomeButton(true); });
+        btnProducts.setOnAction(event -> { loadPage("Products.fxml", btnProducts); toggleHomeButton(true); });
+        
 
         // Apply default styles
         applyStylesheet();
+
     }
 
     @FXML
@@ -129,6 +132,7 @@ public class DashboardController implements Initializable {
         btnPackages.setStyle("");
         btnSuppliers.setStyle("");
         btnCustomers.setStyle("");
+        btnProducts.setStyle("");
 
         clickedButton.setStyle("-fx-background-color: #FFA000; -fx-text-fill: white;");
     }
