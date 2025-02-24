@@ -110,7 +110,6 @@ public class LoginController {
             return;
         }
 
-        System.out.println("🔍 Attempting to authenticate user: " + email);
         String authResult = UserDb.authenticateUser(email, password);
 
         // Handle authentication result
@@ -127,7 +126,6 @@ public class LoginController {
             default:
                 // Successful login
                 showMessage("✅ Login successful!", "green");
-                System.out.println("✅ User authenticated: " + email + " | Role: " + authResult);
                 DashboardController.setUserRole(authResult);
                 MainApplication.showDashboardScreen();
                 break;
@@ -139,7 +137,6 @@ public class LoginController {
      */
     @FXML
     private void handleRegister() {
-        System.out.println("🔄 Redirecting to Registration Page...");
         MainApplication.showRegisterScreen(); // Redirect to registration page
     }
 
