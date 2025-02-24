@@ -13,6 +13,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+/**
+ * Controller for handling the login functionality in the Travel Experts application.
+ * Provides user authentication, input validation, and UI enhancements.
+ */
 public class LoginController {
 
     @FXML private TextField txtEmail;
@@ -28,22 +32,26 @@ public class LoginController {
 
     private boolean isPasswordVisible = false;
 
+    /**
+     * Initializes the login screen, sets up UI responsiveness, and binds event listeners.
+     */
     @FXML
     public void initialize() {
 
-        // Make leftSection resize dynamically
+        // Make leftSection resize dynamically with window size
         MainApplication.getPrimaryStage().widthProperty().addListener((obs, oldVal, newVal) -> {
-            leftSection.setPrefWidth(newVal.doubleValue() * 0.35); // Adjust width dynamically
+            leftSection.setPrefWidth(newVal.doubleValue() * 0.35);
         });
 
         MainApplication.getPrimaryStage().heightProperty().addListener((obs, oldVal, newVal) -> {
-            leftSection.setPrefHeight(newVal.doubleValue() * 0.9); // Adjust height dynamically
+            leftSection.setPrefHeight(newVal.doubleValue() * 0.9);
         });
-        // Make Logo Resize Properly
+
+        // Ensure logo resizes properly within the left section
         imgLogo.fitWidthProperty().bind(leftSection.widthProperty().multiply(0.8));
         imgLogo.fitHeightProperty().bind(leftSection.heightProperty().multiply(0.5));
 
-        // Ensure input fields & buttons stretch properly
+        // Stretch input fields & buttons
         txtEmail.setMaxWidth(Double.MAX_VALUE);
         txtPassword.setMaxWidth(Double.MAX_VALUE);
         txtVisiblePassword.setMaxWidth(Double.MAX_VALUE);
@@ -55,15 +63,18 @@ public class LoginController {
         txtVisiblePassword.setVisible(false);
         txtVisiblePassword.textProperty().bindBidirectional(txtPassword.textProperty());
 
-        // Align the eye icon within the password field (no need for an external container)
-        StackPane.setMargin(btnShowPassword, new Insets(0, 10, 0, 0)); // Adjust right padding
+        // Adjust eye button alignment
+        StackPane.setMargin(btnShowPassword, new Insets(0, 10, 0, 0));
 
-        // Set button actions
+        // Attach button actions
         btnLogin.setOnAction(e -> handleLogin());
         btnRegister.setOnAction(e -> handleRegister());
         btnShowPassword.setOnAction(e -> togglePasswordVisibility());
     }
 
+    /**
+     * Toggles password visibility between hidden (PasswordField) and visible (TextField).
+     */
     @FXML
     private void togglePasswordVisibility() {
         isPasswordVisible = !isPasswordVisible;
@@ -74,44 +85,70 @@ public class LoginController {
         txtPassword.setManaged(!isPasswordVisible);
         txtPassword.setVisible(!isPasswordVisible);
 
-        // Update the eye icon to show password visibility status
+        // Update eye icon based on password visibility status
         btnShowPassword.setText(isPasswordVisible ? "👁‍🗨" : "👁");
         btnShowPassword.setStyle("-fx-font-size: 16px; -fx-font-family: 'Arial Unicode MS';");
-
     }
 
+    /**
+     * Handles user login by validating credentials and checking authentication from the database.
+     */
     @FXML
     private void handleLogin() {
         String email = txtEmail.getText().trim();
-        String password = isPasswordVisible ? txtVisiblePassword.getText().trim() : txtPassword.getText().trim();
+        String password = txtPassword.isVisible() ? txtPassword.getText().trim() : txtVisiblePassword.getText().trim();
 
+        // Validate if fields are empty
         if (email.isEmpty() || password.isEmpty()) {
             showMessage("⚠ Please enter email and password.", "red");
             return;
         }
 
+        // Validate email format
+        if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            showMessage("⚠ Invalid email format.", "red");
+            return;
+        }
+
         System.out.println("🔍 Attempting to authenticate user: " + email);
-        String userRole = UserDb.authenticateUser(email, password);
+        String authResult = UserDb.authenticateUser(email, password);
 
-        if (userRole != null) {
-            showMessage("✅ Login successful!", "green");
-
-            System.out.println("✅ User authenticated: " + email + " | Role: " + userRole);
-            DashboardController.setUserRole(userRole);
-            MainApplication.showDashboardScreen();
-        } else {
-            showMessage("❌ Invalid email or password.", "red");
-            System.out.println("❌ Login failed for: " + email);
+        // Handle authentication result
+        switch (authResult) {
+            case "email-not-found":
+                showMessage("❌ Email not found.", "red");
+                break;
+            case "wrong-password":
+                showMessage("❌ Incorrect password.", "red");
+                break;
+            case null:
+                showMessage("❌ An internal error occurred. Please try again later.", "red");
+                break;
+            default:
+                // Successful login
+                showMessage("✅ Login successful!", "green");
+                System.out.println("✅ User authenticated: " + email + " | Role: " + authResult);
+                DashboardController.setUserRole(authResult);
+                MainApplication.showDashboardScreen();
+                break;
         }
     }
 
+    /**
+     * Redirects user to the registration page.
+     */
     @FXML
     private void handleRegister() {
         System.out.println("🔄 Redirecting to Registration Page...");
-        MainApplication.showRegisterScreen();// Redirect to registration page
+        MainApplication.showRegisterScreen(); // Redirect to registration page
     }
 
-
+    /**
+     * Displays a temporary message to the user.
+     *
+     * @param text The message to be displayed.
+     * @param color The color of the message text.
+     */
     private void showMessage(String text, String color) {
         lblMessage.setText(text);
         lblMessage.setStyle("-fx-text-fill: " + color + ";");
@@ -126,10 +163,9 @@ public class LoginController {
         // Remove message after 3 seconds
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), e -> {
             lblMessage.setText("");
-            lblMessage.setStyle("-fx-background-color: transparent;"); // Reset background
+            lblMessage.setStyle("-fx-background-color: transparent;");
         }));
         timeline.setCycleCount(1);
         timeline.play();
     }
-
 }

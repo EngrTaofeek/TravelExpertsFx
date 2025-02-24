@@ -1,4 +1,4 @@
-/* 🏆 Apply Gold-Themed Background for Dashboard */
+
 .main-content {
     -fx-background-color: white;
     -fx-padding: 15px;
@@ -6,9 +6,9 @@
 
 /* Dark Top Bar */
 .top-bar {
-    -fx-background-color: linear-gradient(to right, #D4AF37, #FFD700); /* Gold gradient *
+    /*-fx-background-color: linear-gradient(to right, #D4AF37, #FFD700); !* Gold gradient **/
     /*-fx-background-color: linear-gradient(to right, #003366, #3399FF); !* Blue gradient *!*/
-    /*-fx-background-color: linear-gradient(to right, #6A0572, #E94560); !* Purple gradient *!*/
+    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
     -fx-pref-height: 35px;
 }
 
@@ -22,13 +22,12 @@
 
 /* Sidebar with Gold Gradient */
 .sidebar {
-    -fx-background-color: linear-gradient(to bottom, #B8860B, #FFD700); /* Gold gradient sidebar */
+    /*-fx-background-color: linear-gradient(to bottom, #B8860B, #FFD700); !* Gold gradient sidebar *!*/
     /*-fx-background-color: linear-gradient(to right, #003366, #3399FF); !* Blue gradient *!*/
-    /*-fx-background-color: linear-gradient(to right, #6A0572, #E94560); !* Purple gradient *!*/
+    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
     -fx-padding: 15px;
 }
-
-/* Sidebar Button (Default) */
+/* Sidebar Button Default State */
 .sidebar-button {
     -fx-background-color: transparent;
     -fx-text-fill: white;
@@ -42,18 +41,23 @@
 
 /* Sidebar Button Hover Effect */
 .sidebar-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.15); /* Light hover effect */
-    -fx-text-fill: #222;  /* Dark text for contrast */
+    -fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); /* Brighter pink gradient */
+    -fx-text-fill: white;
+    -fx-border-radius: 5px;
+    -fx-transition: all 0.3s ease-in-out;
 }
 
-/*  Sidebar Button Selected */
+/* Sidebar Button Focused & Selected */
 .sidebar-button:focused,
-.sidebar-button:selected {
-    -fx-background-color: #DAA520; /* Golden shade */
+.sidebar-button:selected,
+.sidebar-button:pressed {
+    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Darker red-pink */
     -fx-text-fill: white;
     -fx-border-width: 2px;
     -fx-border-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 3); /* Subtle glow */
 }
+
 
 /* Top Buttons */
 .top-button {
