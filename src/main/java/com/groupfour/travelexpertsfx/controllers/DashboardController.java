@@ -1,109 +1,155 @@
 package com.groupfour.travelexpertsfx.controllers;
 
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.util.Duration;
-
-import java.io.IOException;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
 
     @FXML private HBox topButtonContainer;
-    @FXML private AnchorPane mainContent; // Main content area for loading views
-    @FXML private AnchorPane sideMenu; // Sidebar for navigation
-    @FXML private Label lblMenu; // Menu toggle label
-    @FXML private ImageView exitIcon; // Exit button icon
-    @FXML private Button btnHome, btnAdd, btnEdit, btnDelete; // Top buttons
-    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers, btnProducts; // Sidebar buttons
+    @FXML private Button btnHome;
+    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers, btnProducts;
+    @FXML private VBox sideMenu;
+    @FXML private Button btnMenuToggle;
+    @FXML private StackPane mainContent;
 
-    private boolean isMenuOpen = false; // Sidebar initially hidden
+    private Object currentController;
+    private static String userRole;
+    private boolean isSidebarVisible = false;
+
+    public static void setUserRole(String role) {
+        userRole = role;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Ensure sidebar starts hidden
-        sideMenu.setLayoutX(-200);
+        // Show the welcome message (as the default view)
+        showWelcomeMessage();
 
-        // Set event listener for "☰ Menu" label
-        lblMenu.setOnMouseClicked(event -> toggleSidebar());
+        // Apply role-based restrictions
+        applyRolePermissions();
 
-        // Set event for Exit button
-        exitIcon.setOnMouseClicked(event -> System.exit(0));
+        // Sidebar initially hidden
+        sideMenu.setVisible(false);
+        sideMenu.setManaged(false);
 
-        // Load the Home page by default
-        loadPage("Home.fxml");
+        // Attach menu toggle
+        btnMenuToggle.setOnAction(event -> toggleSidebar());
 
-        // Set navigation button actions
-        btnHome.setOnAction(event -> {
-            loadPage("Home.fxml");
-            setTopButtonsVisibility(false); // Hide buttons on Home
-        });
-        btnAgents.setOnAction(event -> loadPage("Agents.fxml"));
-        btnAgencies.setOnAction(event -> loadPage("Agencies.fxml"));
-        btnPackages.setOnAction(event -> loadPage("Packages.fxml"));
-        btnSuppliers.setOnAction(event -> loadPage("Suppliers.fxml"));
-        btnCustomers.setOnAction(event -> loadPage("Customers.fxml"));
-        btnProducts.setOnAction(event -> loadPage("Products.fxml"));
+        // Attach Home button behavior
+        btnHome.setOnAction(event -> showWelcomeMessage());
+        btnHome.setVisible(false); // Initially hidden
 
-        // Initially hide the top buttons
-        setTopButtonsVisibility(false);
+        // Navigation button actions
+        btnAgents.setOnAction(event -> { loadPage("Agents.fxml", btnAgents); toggleHomeButton(true); });
+        btnAgencies.setOnAction(event -> { loadPage("Agencies.fxml", btnAgencies); toggleHomeButton(true); });
+        btnPackages.setOnAction(event -> { loadPage("Packages.fxml", btnPackages); toggleHomeButton(true); });
+        btnSuppliers.setOnAction(event -> { loadPage("Suppliers.fxml", btnSuppliers); toggleHomeButton(true); });
+        btnCustomers.setOnAction(event -> { loadPage("Customers.fxml", btnCustomers); toggleHomeButton(true); });
+        btnProducts.setOnAction(event -> { loadPage("Products.fxml", btnProducts); toggleHomeButton(true); });
+        
+
+        // Apply default styles
+        applyStylesheet();
+
     }
 
-    // Sidebar toggle function with layout adjustment
-    private void toggleSidebar() {
-        TranslateTransition slide = new TranslateTransition(Duration.seconds(0.4), sideMenu);
+    @FXML
+    public void toggleSidebar() {
+        isSidebarVisible = !isSidebarVisible;
+        sideMenu.setVisible(isSidebarVisible);
+        sideMenu.setManaged(isSidebarVisible);
 
-        if (isMenuOpen) {
-            slide.setToX(-200); // Hide sidebar
-            slide.setOnFinished(event -> sideMenu.setVisible(false));
-            mainContent.setLayoutX(0); // Adjust main content position
-        } else {
-            sideMenu.setVisible(true);
-            slide.setToX(0); // Show sidebar
-            mainContent.setLayoutX(200); // Push content when sidebar is visible
+        // Restore welcome message only if no page is open
+        if (!isSidebarVisible && mainContent.getChildren().isEmpty()) {
+            showWelcomeMessage();
         }
-
-        slide.play();
-        isMenuOpen = !isMenuOpen;
     }
 
-    // Function to load a new FXML file inside `mainContent`
-    private void loadPage(String fxmlFile) {
-        try {
-            String fullPath = "/com/groupfour/travelexpertsfx/views/" + fxmlFile;
-            URL fileUrl = getClass().getResource(fullPath);
+    private void applyRolePermissions() {
+        if (userRole != null && userRole.equalsIgnoreCase("agent")) {
+            btnAgents.setVisible(false);
+            btnAgents.setManaged(false);
+            btnAgencies.setVisible(false);
+            btnAgencies.setManaged(false);
+        }
+    }
 
-            if (fileUrl == null) {
-                return;
+    private void loadPage(String fxmlFile, Button clickedButton) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/groupfour/travelexpertsfx/views/" + fxmlFile));
+            Node page = loader.load();
+
+            //  Ensure the main content is cleared before loading a new page
+            mainContent.getChildren().clear();
+            mainContent.getChildren().add(page);
+
+            currentController = loader.getController();
+
+            // Highlight the clicked button
+            highlightSidebarButton(clickedButton);
+
+            if (userRole != null && userRole.equalsIgnoreCase("agent")) {
+                restrictCrudAccess();
             }
 
-            FXMLLoader loader = new FXMLLoader(fileUrl);
-            Node page = loader.load();
-            mainContent.getChildren().clear(); // Clear previous content
-            mainContent.getChildren().add(page); // Load new content
+            // Show Home button when loading a new page
+            btnHome.setVisible(true);
 
-            // Show buttons only when a section is selected
-            boolean isHome = fxmlFile.equals("Home.fxml");
-            setTopButtonsVisibility(!isHome);
-
-        } catch (IOException e) {
+        } catch (Exception e) {
+            System.err.println("❌ Error loading " + fxmlFile + ": " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    // Function to show/hide top buttons
-    private void setTopButtonsVisibility(boolean visible) {
-        btnAdd.setVisible(visible);
-        btnEdit.setVisible(visible);
-        btnDelete.setVisible(visible);
+
+    private void restrictCrudAccess() {
+        if (currentController instanceof AgentsController || currentController instanceof AgenciesController) {
+            // If needed, restrict certain actions based on role
+        }
+    }
+
+    private void showWelcomeMessage() {
+        mainContent.getChildren().clear();
+        Label welcomeLabel = new Label("Welcome to Travel Experts Dashboard!");
+        welcomeLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #222831;");
+        mainContent.getChildren().add(welcomeLabel);
+    }
+
+    private void highlightSidebarButton(Button clickedButton) {
+        btnAgents.setStyle("");
+        btnAgencies.setStyle("");
+        btnPackages.setStyle("");
+        btnSuppliers.setStyle("");
+        btnCustomers.setStyle("");
+
+        clickedButton.setStyle("-fx-background-color: #FFA000; -fx-text-fill: white;");
+    }
+
+    private void toggleHomeButton(boolean visible) {
+        btnHome.setVisible(visible);
+    }
+
+    private void applyStylesheet() {
+        if (mainContent.getScene() != null) {
+            Scene scene = mainContent.getScene();
+            scene.getStylesheets().add(getClass().getResource("/com/groupfour/travelexpertsfx/styles/dashboard.css").toExternalForm());
+        } else {
+            mainContent.sceneProperty().addListener((obs, oldScene, newScene) -> {
+                if (newScene != null) {
+                    newScene.getStylesheets().add(getClass().getResource("/com/groupfour/travelexpertsfx/styles/dashboard.css").toExternalForm());
+                }
+            });
+        }
     }
 }
