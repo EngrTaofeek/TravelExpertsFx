@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.groupfour.travelexpertsfx.controllers.PackagesController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.PackagesController">
+   <children>
+      <HBox layoutX="20.0" layoutY="2.0" prefHeight="30.0" prefWidth="559.0">
+         <children>
+            <JFXButton fx:id="btnAdd" prefHeight="30.0" prefWidth="84.0" text="Add">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/add.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnEdit" prefHeight="30.0" prefWidth="107.0" text="Edit">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="22.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/edit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" prefHeight="30.0" prefWidth="106.0" text="Delete">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/bin.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+      <TableView fx:id="tvPackages" layoutX="21.0" layoutY="41.0" prefHeight="353.0" prefWidth="559.0">
+        <columns>
+          <TableColumn fx:id="tcName" prefWidth="75.0" text="Name" />
+          <TableColumn fx:id="tcStartDate" prefWidth="77.0" text="StartDate" />
+            <TableColumn fx:id="tcEndDate" text="EndDate" />
+            <TableColumn fx:id="tcDescription" prefWidth="97.0" text="Description" />
+            <TableColumn fx:id="tcBasePrice" prefWidth="83.0" text="BasePrice" />
+            <TableColumn fx:id="tcAgencyCommission" prefWidth="146.0" text="AgencyCommission" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>
