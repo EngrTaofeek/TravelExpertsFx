@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import com.groupfour.travelexpertsfx.models.Customer;
 import com.groupfour.travelexpertsfx.models.CustomerDB;
+import com.groupfour.travelexpertsfx.utils.ControllerMethods;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -96,9 +97,7 @@ public class CustomerDetailsController {
 
     @FXML
     void editCustomer(MouseEvent event) {
-
         this.setPageMode("edit");
-
     }
 
 
@@ -147,7 +146,6 @@ public class CustomerDetailsController {
 
         // CLOSE WINDOW
         goBack(event);
-
 
     }
 
@@ -216,6 +214,7 @@ public class CustomerDetailsController {
             btnTrips.setVisible(false);
             lblHeader.setText("Add Customer Details: ");
             lblCustomerName.setText("");
+            btnSaveChanges.setText("Add Customer");
         }
     }
 

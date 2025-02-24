@@ -9,6 +9,7 @@ import com.groupfour.travelexpertsfx.models.Customer;
 import com.groupfour.travelexpertsfx.models.CustomerDB;
 import com.groupfour.travelexpertsfx.models.CustomerDTO;
 
+import com.groupfour.travelexpertsfx.utils.ControllerMethods;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,16 +28,14 @@ import javafx.stage.Stage;
  * @Description: Controller for the performing CRUD on Customers
  * @To-do-list:
  *
- * - READ - view customer details in a table
- * - CREATE - add new customer
- * - UPDATE - edit customer details
- * - DELETE - delete customer
+
  * - view past trips
  * - search customer
- * - need new form for add/edit/delete
+ *
  */
 
 public class CustomersController {
+
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -61,6 +60,9 @@ public class CustomersController {
     @FXML // fx:id="colEmail"
     private TableColumn<CustomerDTO, String> colEmail; // Value injected by FXMLLoader
 
+    @FXML
+    private TableColumn<CustomerDTO, String> colAddress; // Value injected by FXMLLoader
+
     @FXML // fx:id="colPhone"
     private TableColumn<CustomerDTO, String> colPhone; // Value injected by FXMLLoader
 
@@ -82,6 +84,8 @@ public class CustomersController {
 
     @FXML
     void clearSearch(MouseEvent event) {
+        displayCustomer();
+        tfSearchBar.clear();
 
     }
 
@@ -127,6 +131,19 @@ public class CustomersController {
     @FXML
     void searchCustomer(MouseEvent event) {
 
+        String searchword =  tfSearchBar.getText();
+
+        if (isInputInt(searchword)) {
+            int searchNum = Integer.parseInt(searchword);
+            displayCustomer(searchNum);
+        } else {
+            if (searchword.equals(""))
+            {
+                displayCustomer();
+            } else {
+                displayCustomer(searchword);
+            }
+        }
     }
 
     @FXML
@@ -164,6 +181,7 @@ public class CustomersController {
         assert colAgent != null : "fx:id=\"colAgent\" was not injected: check your FXML file 'Customers.fxml'.";
         assert colCustName != null : "fx:id=\"colCustName\" was not injected: check your FXML file 'Customers.fxml'.";
         assert colEmail != null : "fx:id=\"colEmail\" was not injected: check your FXML file 'Customers.fxml'.";
+        assert colAddress != null : "fx:id=\"colAddress\" was not injected: check your FXML file 'Customers.fxml'.";
         assert colPhone != null : "fx:id=\"colPhone\" was not injected: check your FXML file 'Customers.fxml'.";
         assert tfSearchBar != null : "fx:id=\"tfSearchBar\" was not injected: check your FXML file 'Customers.fxml'.";
         assert tvCustomer != null : "fx:id=\"tvCustomer\" was not injected: check your FXML file 'Customers.fxml'.";
@@ -178,6 +196,7 @@ public class CustomersController {
         colCustName.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("customerName"));
         colPhone.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("customerPhone"));
         colEmail.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("customerEmail"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("customerAddress"));
         colAgent.setCellValueFactory(new PropertyValueFactory<CustomerDTO, String>("customerAgent"));
 
     }
@@ -187,9 +206,41 @@ public class CustomersController {
         try {
             customerData = CustomerDB.getCustomer();
         } catch (SQLException e) {
-            throw new RuntimeException("Fail to load Products table", e);
+            throw new RuntimeException("Fail to load Customers table", e);
         }
         tvCustomer.setItems(customerData);
+    }
+
+    public void displayCustomer(String searchword){
+        customerData.clear();
+        try {
+            customerData = CustomerDB.getCustomerBySearch(searchword);
+        } catch (SQLException e) {
+            throw new RuntimeException("Fail to load Customers table", e);
+        }
+        tvCustomer.setItems(customerData);
+    }
+
+    public void displayCustomer(int searchNum){
+        customerData.clear();
+        try {
+            customerData = CustomerDB.getCustomerBySearch(searchNum);
+        } catch (SQLException e) {
+            throw new RuntimeException("Fail to load Customers table", e);
+        }
+        tvCustomer.setItems(customerData);
+    }
+
+    public static boolean isInputInt(String input) {
+        boolean isInt = false;
+        try {
+            Integer.parseInt(input);
+            isInt = true;
+        } catch (NumberFormatException e) {
+            isInt = false;
+        }
+
+        return isInt;
     }
 
     private void openCustomerDetailsPage(Customer passedCustomerDetails, String pageMode){
@@ -235,9 +286,7 @@ Notes for Kazi:
 TASKS:
 Status: INCOMPLETE
 
-
     * view past trips
-    * search customer
     * validation (yuck)
 
  Status: COMPLETE
@@ -247,5 +296,6 @@ Status: INCOMPLETE
     * CREATE - add new customer
     * UPDATE - edit customer details
     * DELETE - delete customer
+    * search customer
 
  */

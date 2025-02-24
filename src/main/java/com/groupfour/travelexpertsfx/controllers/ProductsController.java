@@ -4,6 +4,7 @@ package com.groupfour.travelexpertsfx.controllers;
 
 
 import com.groupfour.travelexpertsfx.models.Product;
+import com.groupfour.travelexpertsfx.utils.ControllerMethods;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;

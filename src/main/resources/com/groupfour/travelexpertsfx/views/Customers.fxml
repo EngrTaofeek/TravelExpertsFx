@@ -19,6 +19,7 @@
           <TableColumn fx:id="colCustName" prefWidth="148.0" text="Customer Name" />
           <TableColumn fx:id="colPhone" minWidth="0.0" prefWidth="123.99998474121094" text="Phone Number" />
             <TableColumn fx:id="colEmail" prefWidth="91.99993896484375" text="Email" />
+           <TableColumn fx:id="colAddress" prefWidth="91.99993896484375" text="Address" />
             <TableColumn fx:id="colAgent" minWidth="7.199951171875" prefWidth="125.60002441406255" text="Assigned Agent" />
         </columns>
       </TableView>

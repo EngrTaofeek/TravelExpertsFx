@@ -7,4 +7,5 @@ module com.groupfour.travelexpertsfx {
     opens com.groupfour.travelexpertsfx.controllers to javafx.fxml;
     opens com.groupfour.travelexpertsfx.models to javafx.base;
     exports com.groupfour.travelexpertsfx;
+    opens com.groupfour.travelexpertsfx.utils to javafx.fxml;
 }

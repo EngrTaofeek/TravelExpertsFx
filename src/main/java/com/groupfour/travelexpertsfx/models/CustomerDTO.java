@@ -8,13 +8,15 @@ public class CustomerDTO {
     private SimpleStringProperty customerName;
     private SimpleStringProperty customerPhone;
     private SimpleStringProperty customerEmail;
+    private SimpleStringProperty customerAddress;
     private SimpleStringProperty customerAgent;
 
-    public CustomerDTO(Integer customerId, String customerName, String customerPhone, String customerEmail, String customerAgent) {
+    public CustomerDTO(Integer customerId, String customerName, String customerPhone, String customerEmail, String customerAddress, String customerAgent) {
         this.customerId = new SimpleIntegerProperty(customerId);
         this.customerName = new SimpleStringProperty(customerName);
         this.customerPhone = new SimpleStringProperty(customerPhone);
         this.customerEmail = new SimpleStringProperty(customerEmail);
+        this.customerAddress = new SimpleStringProperty(customerAddress);
         this.customerAgent = new SimpleStringProperty(customerAgent);
 
     }
@@ -65,6 +67,18 @@ public class CustomerDTO {
 
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail.set(customerEmail);
+    }
+
+    public String getCustomerAddress() {
+        return customerAddress.get();
+    }
+
+    public SimpleStringProperty customerAddressProperty() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress.set(customerAddress);
     }
 
     public String getCustomerAgent() {

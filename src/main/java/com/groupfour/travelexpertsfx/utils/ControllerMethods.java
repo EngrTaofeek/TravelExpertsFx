@@ -1,4 +1,4 @@
-package com.groupfour.travelexpertsfx.controllers;
+package com.groupfour.travelexpertsfx.utils;
 
 import javafx.scene.control.Alert;
 

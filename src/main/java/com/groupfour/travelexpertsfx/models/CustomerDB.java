@@ -16,7 +16,7 @@ public class CustomerDB {
         String query = "select customerid, " +
                 "concat(custfirstname,' ',custlastname), " +
                 "custhomephone, " +
-                "custemail, " +
+                "custemail, concat(custaddress, ', ', custcity, ', ', custprov), "+
                 "concat(agtfirstname, ' ',agtlastname) " +
                 "from customers join agents on customers.agentid = agents.agentid " +
                 "order by customerid asc";
@@ -29,7 +29,8 @@ public class CustomerDB {
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
-                    rs.getString(5)
+                    rs.getString(5),
+                    rs.getString(6)
             );
             customers.add(customer);
         }
@@ -152,6 +153,80 @@ public class CustomerDB {
         affectedRows = preparedStatement.executeUpdate();
         conn.close();
         return affectedRows;
+    }
+
+    // SEARCH FUNCTION
+
+    public static ObservableList<CustomerDTO> getCustomerBySearch(String searchword) throws SQLException {
+        ObservableList<CustomerDTO> customers = FXCollections.observableArrayList();
+        CustomerDTO customer;
+        String query = "select customerid, " +
+                "concat(custfirstname,' ',custlastname), " +
+                "custhomephone, " +
+                "custemail, concat(custaddress, ', ', custcity, ', ', custprov), "+
+                "concat(agtfirstname, ' ',agtlastname) " +
+                "from customers join agents on customers.agentid = agents.agentid " +
+                "where custfirstname ilike '%" + searchword + "%' " +
+                "or custlastname ilike '%" + searchword + "%' " +
+                "or custaddress ilike '%" + searchword + "%' " +
+                "or custcity ilike '%" + searchword + "%' " +
+                "or custprov ilike '%" + searchword + "%' " +
+                "or custpostal ilike '%" + searchword + "%' " +
+                "or custemail ilike '%" + searchword + "%' " +
+                "or custcountry ilike '%" + searchword + "%' " +
+                "or custhomephone ilike '%" + searchword + "%' " +
+                "or custbusphone ilike '%" + searchword + "%' " +
+                "or agtfirstname ilike '%" + searchword + "%' " +
+                "or agtlastname ilike '%" + searchword + "%' " +
+
+                " order by customerid asc";
+        Connection conn = DBConnection.getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            customer = new CustomerDTO(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6)
+            );
+            customers.add(customer);
+        }
+        return customers;
+
+    }
+
+    public static ObservableList<CustomerDTO> getCustomerBySearch(int searchNum) throws SQLException {
+        ObservableList<CustomerDTO> customers = FXCollections.observableArrayList();
+        CustomerDTO customer;
+        String query = "select customerid, " +
+                "concat(custfirstname,' ',custlastname), " +
+                "custhomephone, " +
+                "custemail, concat(custaddress, ', ', custcity, ', ', custprov), "+
+                "concat(agtfirstname, ' ',agtlastname) " +
+                "from customers join agents on customers.agentid = agents.agentid " +
+                "where customerid = "+searchNum+
+                " or custhomephone ilike '%" + searchNum + "%' " +
+                "or custbusphone ilike '%" + searchNum + "%' " +
+                " order by customerid asc";
+        Connection conn = DBConnection.getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            customer = new CustomerDTO(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6)
+            );
+            customers.add(customer);
+        }
+        return customers;
+
     }
 
     /*
