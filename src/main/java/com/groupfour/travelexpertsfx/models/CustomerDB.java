@@ -64,6 +64,96 @@ public class CustomerDB {
         return customer;
     }
 
+    // ADD
+
+    public static int addCustomer(Customer customer) throws SQLException {
+        Connection conn = DBConnection.getConnection();
+        int affectedRows = 0;
+
+        String query = "INSERT INTO customers (custfirstname, " +
+                "custlastname, " +
+                "custaddress, " +
+                "custcity, " +
+                "custprov, " +
+                "custpostal, " +
+                "custcountry, " +
+                "custhomephone, " +
+                "custbusphone, " +
+                "custemail, " +
+                "agentid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+        preparedStatement.setString(1, customer.getCustfirstname());
+        preparedStatement.setString(2, customer.getCustlastname());
+        preparedStatement.setString(3, customer.getCustaddress());
+        preparedStatement.setString(4, customer.getCustcity());
+        preparedStatement.setString(5, customer.getCustprov());
+        preparedStatement.setString(6, customer.getCustpostal());
+        preparedStatement.setString(7, customer.getCustcountry());
+        preparedStatement.setString(8, customer.getCusthomephone());
+        preparedStatement.setString(9, customer.getCustbusphone());
+        preparedStatement.setString(10, customer.getCustemail());
+        preparedStatement.setInt(11, customer.getAgentid());
+
+        affectedRows = preparedStatement.executeUpdate();
+        conn.close();
+
+        return affectedRows;
+    }
+
+    // EDIT
+
+    public static int updateCustomer(Customer customer) throws SQLException {
+        Connection conn = DBConnection.getConnection();
+        int affectedRows = 0;
+        String query = "UPDATE customers SET " +
+                "custfirstname=?, " +
+                "custlastname=?, " +
+                "custaddress=?, " +
+                "custcity=?, " +
+                "custprov=?, " +
+                "custpostal=?, " +
+                "custcountry=?, " +
+                "custhomephone=?, " +
+                "custbusphone=?, " +
+                "custemail=?, " +
+                "agentid=? WHERE customerid=?";
+
+        PreparedStatement preparedStatement = conn.prepareStatement(query);
+
+        preparedStatement.setString(1, customer.getCustfirstname());
+        preparedStatement.setString(2, customer.getCustlastname());
+        preparedStatement.setString(3, customer.getCustaddress());
+        preparedStatement.setString(4, customer.getCustcity());
+        preparedStatement.setString(5, customer.getCustprov());
+        preparedStatement.setString(6, customer.getCustpostal());
+        preparedStatement.setString(7, customer.getCustcountry());
+        preparedStatement.setString(8, customer.getCusthomephone());
+        preparedStatement.setString(9, customer.getCustbusphone());
+        preparedStatement.setString(10, customer.getCustemail());
+        preparedStatement.setInt(11, customer.getAgentid());
+        preparedStatement.setInt(12, customer.getCustomerid());
+
+        affectedRows = preparedStatement.executeUpdate();
+        conn.close();
+
+
+        return affectedRows;
+    }
+
+    // DELETE
+
+    public static int deleteCustomer(int customerId) throws SQLException {
+        int affectedRows = 0;
+        Connection conn = DBConnection.getConnection();
+        String sqlStatement = "DELETE FROM customers WHERE customerid=?";
+        PreparedStatement preparedStatement = conn.prepareStatement(sqlStatement);
+        preparedStatement.setInt(1, customerId);
+        affectedRows = preparedStatement.executeUpdate();
+        conn.close();
+        return affectedRows;
+    }
+
     /*
 
      */

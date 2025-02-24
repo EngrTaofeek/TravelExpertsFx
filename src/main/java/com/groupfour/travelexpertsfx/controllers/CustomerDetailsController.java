@@ -12,6 +12,7 @@ import com.groupfour.travelexpertsfx.models.Customer;
 import com.groupfour.travelexpertsfx.models.CustomerDB;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -76,6 +77,20 @@ public class CustomerDetailsController {
 
     @FXML
     void deleteCustomer(MouseEvent event) {
+        int id = Integer.parseInt(tfCustomerId.getText());
+        int numRows = 0;
+        try {
+            numRows = CustomerDB.deleteCustomer(id);
+        } catch (SQLException e) {
+            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error deleting Customer\n" + e.getMessage());
+        }
+
+        if (numRows==1) {
+            ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Customer has been deleted successfully");
+        } else {
+            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error while deleting the customer");
+        }
+        goBack(event);
 
     }
 
@@ -83,7 +98,6 @@ public class CustomerDetailsController {
     void editCustomer(MouseEvent event) {
 
         this.setPageMode("edit");
-
 
     }
 
@@ -104,8 +118,40 @@ public class CustomerDetailsController {
 
     @FXML
     void saveChanges(MouseEvent event) {
+        int numRows = 0;
+        Customer enteredCustomer;
+        if (pageMode.equalsIgnoreCase("add")) {
+
+            try {
+                 enteredCustomer = enterCustomerDetails();
+                numRows = CustomerDB.addCustomer(enteredCustomer);
+            } catch (SQLException e) {
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error "+pageMode+"ing Customer\n" + e.getMessage());
+            }
+        } else if (pageMode.equalsIgnoreCase("edit")) {
+            try {
+                enteredCustomer = enterCustomerDetails(tfCustomerId.getText());
+                numRows = CustomerDB.updateCustomer(enteredCustomer);
+            } catch (SQLException e) {
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error "+pageMode+"ing Customer\n" + e.getMessage());
+
+            }
+        }
+
+        // SEND MESSAGE TO USER (SUCCESS/FAIL)
+        if(numRows==1) {
+            ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Customer details have been saved successfully");
+        } else {
+            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error while "+pageMode+ "ing the customer details");
+        }
+
+        // CLOSE WINDOW
+        goBack(event);
+
 
     }
+
+
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -131,15 +177,11 @@ public class CustomerDetailsController {
         assert tfCustomerId != null : "fx:id=\"tfCustomerId\" was not injected: check your FXML file 'CustomerDetails.fxml'.";
 
 
-
-
     }
 
     // VARIABLES
 
-
     String pageMode;
-
     Customer currentCustomer;
 
     // CUSTOM METHODS BY KAZI
@@ -162,10 +204,12 @@ public class CustomerDetailsController {
             btnSaveChanges.setVisible(true);
             btnEdit.setVisible(false);
             btnTrips.setVisible(false);
+            lblCustomerName.setText(currentCustomer.getCustfirstname()+" "+currentCustomer.getCustlastname());
             lblHeader.setText("Edit Customer Details: ");
 
         } else if (pageMode.equalsIgnoreCase("add")) {
             setFieldsEditable();
+            tfCustomerId.setDisable(true);
             btnSaveChanges.setVisible(true);
             btnEdit.setVisible(false);
             btnDelete.setVisible(false);
@@ -226,6 +270,42 @@ public class CustomerDetailsController {
             tfCustAgentId.setText(String.valueOf(customer.getAgentid()));
         } else this.currentCustomer = null;
 
+    }
+
+    private Customer enterCustomerDetails() {
+        Customer customerToAdd = new Customer(0,
+                tfCustFirstName.getText(),
+                tfCustLastName.getText(),
+                tfCustAddress.getText(),
+                tfCustCity.getText(),
+                tfCustProvince.getText(),
+                tfCustPostal.getText(),
+                tfCustCountry.getText(),
+                tfCustEmail.getText(),
+                tfCustHomePhone.getText(),
+                tfCustBusPhone.getText(),
+                Integer.parseInt(tfCustAgentId.getText())
+        );
+
+        return customerToAdd;
+    }
+
+    private Customer enterCustomerDetails(String customerId) {
+        Customer customerToEdit = new Customer(Integer.parseInt(customerId),
+                tfCustFirstName.getText(),
+                tfCustLastName.getText(),
+                tfCustAddress.getText(),
+                tfCustCity.getText(),
+                tfCustProvince.getText(),
+                tfCustPostal.getText(),
+                tfCustCountry.getText(),
+                tfCustEmail.getText(),
+                tfCustHomePhone.getText(),
+                tfCustBusPhone.getText(),
+                Integer.parseInt(tfCustAgentId.getText())
+        );
+
+        return customerToEdit;
     }
 
 

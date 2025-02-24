@@ -74,7 +74,7 @@ public class CustomersController {
 
     @FXML
     void addCustomer(MouseEvent event) {
-        pageMode = "ADD";
+        pageMode = "Add";
         Customer newCustomer = null;
         openCustomerDetailsPage(newCustomer,  pageMode);
 
@@ -87,6 +87,20 @@ public class CustomersController {
 
     @FXML
     void deleteCustomer(MouseEvent event) {
+        int id = tvCustomer.getSelectionModel().getSelectedItem().getCustomerId();
+        int numRows = 0;
+        try {
+            numRows = CustomerDB.deleteCustomer(id);
+        } catch (SQLException e) {
+            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error deleting Customer\n" + e.getMessage());
+        }
+
+        if (numRows==1) {
+            ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Customer has been deleted successfully");
+        } else {
+            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error while deleting the customer");
+        }
+        displayCustomer();
 
     }
 
@@ -94,7 +108,7 @@ public class CustomersController {
     void editCustomer(MouseEvent event) {
         if (tvCustomer.getSelectionModel().getSelectedItem() != null) {
             int selectedId = tvCustomer.getSelectionModel().getSelectedItem().getCustomerId();
-            pageMode = "EDIT";
+            pageMode = "Edit";
             Customer selectedCustomer;
             try {
                 selectedCustomer = CustomerDB.getCustomerById(selectedId);
@@ -119,7 +133,7 @@ public class CustomersController {
     void viewCustomerDetails(MouseEvent event) {
         if (tvCustomer.getSelectionModel().getSelectedItem() != null) {
             int selectedId = tvCustomer.getSelectionModel().getSelectedItem().getCustomerId();
-            pageMode = "DETAILS";
+            pageMode = "Details";
             Customer selectedCustomer;
             try {
                 selectedCustomer = CustomerDB.getCustomerById(selectedId);
@@ -202,9 +216,10 @@ public class CustomersController {
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Customer Details");
+        stage.setTitle("Customer "+pageMode);
         stage.setScene(scene);
         stage.showAndWait();
+        displayCustomer();
 
     }
 
@@ -220,16 +235,17 @@ Notes for Kazi:
 TASKS:
 Status: INCOMPLETE
 
-    * CREATE - add new customer
-    * details page
-    * UPDATE - edit customer details
-    * DELETE - delete customer
+
     * view past trips
     * search customer
-    * need new form for add/edit/delete
     * validation (yuck)
 
  Status: COMPLETE
     * READ - view customer details in a table
+    * details page
+    * need new form for add/edit/delete
+    * CREATE - add new customer
+    * UPDATE - edit customer details
+    * DELETE - delete customer
 
  */
