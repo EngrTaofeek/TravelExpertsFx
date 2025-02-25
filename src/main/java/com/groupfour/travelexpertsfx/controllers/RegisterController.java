@@ -131,7 +131,7 @@ public class RegisterController {
             return;
         }
 
-        // Fetch role from agents table
+        // Fetch role from database based on email
         String role = UserDb.getAgentRoleByEmail(email);
         if (role == null) {
             lblMessage.setText("❌ Registration failed: No agent found with this email.");
@@ -139,11 +139,9 @@ public class RegisterController {
             return;
         }
 
-        // Hash the password securely
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        // Pass raw password, role, and email to `registerUser()`
+        boolean success = UserDb.registerUser(email, password, role);
 
-        // Register user with fetched role
-        boolean success = UserDb.registerUser(email, hashedPassword, role);
         if (success) {
             lblMessage.setText("✅ Registration successful!");
             lblMessage.setStyle("-fx-text-fill: green;");
@@ -153,12 +151,12 @@ public class RegisterController {
         }
     }
 
+
     /**
      * Closes the registration window and returns the user to the login screen.
      */
     @FXML
     private void handleBack() {
-        System.out.println("🔄 Closing Register Page and Returning to Login...");
         Stage stage = (Stage) btnBack.getScene().getWindow();
         stage.close();
     }
