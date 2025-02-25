@@ -1,0 +1,105 @@
+/* Background color and effect*/
+.background {
+    /* Option 1: Softer Gold */
+    /*-fx-background-color: linear-gradient(to right, #f6c342, #ffcc5c);*/
+   /* Option 2: Softer Blue */
+    /*-fx-background-color: linear-gradient(to right, #2193b0, #6dd5ed); !* Softer Blue *!*/
+    /* Option 3: Purple Gradient */
+    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
+     /* Option 4: cool blue */
+    /* -fx-background-color: linear-gradient(to right, #6dd5ed, #2193b0); */
+    -fx-pref-width: 800px;
+    -fx-pref-height: 600px;
+}
+
+/* Register Form Box */
+.register-form {
+    -fx-background-color: white;
+    -fx-border-radius: 20px; /* More rounded */
+    -fx-background-radius: 20px;
+    -fx-padding: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 12, 0, 0, 5); /* Better shadow */
+}
+
+
+/* Title */
+.register-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #222831;
+}
+
+/* Labels */
+.register-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333;
+}
+
+/* Role Label Styling */
+.register-role-label {
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+    -fx-text-fill: #5A5A5A; /* Default gray */
+    -fx-opacity: 0.8; /* Lighter */
+}
+
+/* Input Fields */
+.register-input {
+    -fx-pref-height: 44px;
+    -fx-pref-width: 100%;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-border-color: #00ADB5;
+    -fx-border-width: 1.5px;
+    -fx-background-color: #f5f5f5; /* Light gray */
+    -fx-text-fill: #222831;
+    -fx-font-size: 16px;
+    -fx-padding: 6px;
+}
+
+/* Buttons */
+
+.register-button {
+    /*-fx-background-color: linear-gradient(to bottom, #FFC107, #FF8C00); !* Deeper orange *!*/
+    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    -fx-border-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-pref-width: 140px;
+}
+
+
+.register-button:hover {
+    /*-fx-background-color: #FF8C00;*/
+    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 5);
+}
+
+/* Back to Login Button */
+.back-button {
+    /*-fx-background-color: linear-gradient(to bottom, #FFD700, #FFA500); !* Gold-Orange *!*/
+    -fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); /* Pink-Red Gradient */
+    -fx-border-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-pref-width: 140px;
+}
+
+.back-button:hover {
+    /*-fx-background-color: #FF8C00;*/
+    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 3);
+}
+
+/* Eye Button */
+.eye-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 16px;
+    -fx-padding: 0 5px;
+    -fx-cursor: hand;
+}

@@ -1,0 +1,170 @@
+/* General Styling */
+.root {
+    /*-fx-background-color: linear-gradient(to right, #FFD700, #FFA500); !* Gold gradient *!*/
+    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
+}
+
+/* Left Section  */
+.left-section {
+    /*-fx-background-color: linear-gradient(to bottom, #FFD700, #FFA500); !* Gold gradient *!*/
+    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
+    -fx-padding: 50px;
+    -fx-alignment: center;
+    -fx-spacing: 20px;
+    -fx-border-color: #FFFFFF; /* White border */
+    -fx-border-width: 2px;
+}
+
+/* LOGO Styling */
+#imgLogo {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 5); /* Subtle shadow */
+    -fx-fit-width: 70%; /* Adjust as needed */
+    -fx-fit-height: 50%; /* Adjust as needed */
+}
+
+/* Welcome Message */
+.welcome-message {
+    -fx-text-fill: #333333; /* Darker text for contrast */
+    -fx-font-size: 1.5em;
+    -fx-font-weight: bold;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 2, 0.5, 0, 1); /* Subtle shadow */
+}
+
+/* Support Info */
+.support-info {
+    /*-fx-text-fill: #555555; !* Slightly lighter text *!*/
+    -fx-text-fill:#d3d3d3; /* Slightly lighter text */
+    -fx-font-size: 1.2em;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+}
+
+/* Right Section (Login Form) */
+.right-section {
+    -fx-background-color: #FFFFFF; /* White background for contrast */
+    -fx-padding: 40px;
+    -fx-alignment: center;
+    -fx-spacing: 15px;
+    -fx-border-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 5); /* Subtle shadow */
+}
+
+/* Login Title */
+.login-title {
+    -fx-font-size: 3em;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333; /* Darker text for contrast */
+    -fx-alignment: center;
+}
+
+/* Input Labels */
+.login-label {
+    -fx-font-size: 1.3em;
+    -fx-font-weight: semibold;
+    -fx-text-fill: #333333; /* Darker text for contrast */
+}
+
+/* Input Fields */
+.login-input {
+    -fx-pref-height: 40px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #00ADB5; /* Teal border */
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+    -fx-text-fill: #222831;
+    -fx-pref-width: 100%;
+}
+
+.login-input:focused {
+    -fx-border-color: #00ADB5; /* Teal border for focus */
+    -fx-border-width: 2px;
+}
+
+/* Ensure Password & Text Fields Are Same Size */
+#txtEmail, #txtPassword, #txtVisiblePassword {
+    -fx-pref-height: 40px;
+    -fx-pref-width: 100%;
+    -fx-border-radius: 5px;
+    -fx-font-size: 1.1em;
+}
+
+/* Login Button */
+.login-button {
+    /*-fx-background-color: linear-gradient(to bottom, #FFD700, #FFA500); !* Gold-Orange *!*/
+    -fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); /* Pink-Red Gradient */
+    /*-fx-background-color: linear-gradient(to right, #8E2DE2, #4A00E0); !* Deep Purple Gradient *!*/
+    -fx-text-fill: white;
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-max-width: 450px;
+    -fx-cursor: hand;
+}
+
+.login-button:hover {
+    /*-fx-background-color: linear-gradient(to bottom, #FFC107, #FF8C00); !* Deeper orange *!*/
+    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 5);
+}
+
+/* Register Button */
+.register-button {
+    /*-fx-background-color: linear-gradient(to bottom, #FFA500, #E65100); !* Deep Orange *!*/
+    -fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); /* Pink-Red Gradient */
+    -fx-text-fill: white;
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-max-width: 450px;
+    -fx-cursor: hand;
+}
+
+.register-button:hover {
+    /*-fx-background-color: linear-gradient(to bottom, #FF8C00, #B23A00); !* Deeper orange *!*/
+    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 5);
+}
+
+
+/* Forgot Password */
+.forgot-password {
+    /*-fx-text-fill: #2563EB; !* Blue for contrast *!*/
+    -fx-text-fill: #FF4081; /* Pink Highlight */
+    -fx-font-size: 1em;
+    -fx-cursor: hand;
+    -fx-padding: 5px 0; /* Add padding for better spacing */
+}
+
+/* Error Message */
+
+.error-message {
+    -fx-font-size: 1.2em;
+    -fx-text-fill: red; /* Default text color */
+    -fx-background-color: transparent; /* Initially transparent */
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* use stack pane to keep eye icon inside the password container */
+StackPane {
+    -fx-padding: 0;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+/* Make sure the eye button sits properly inside */
+.eye-button {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-font-size: 16px;
+    -fx-padding: 0 5px; /* Adjust padding to move the icon inside */
+    -fx-cursor: hand;
+}

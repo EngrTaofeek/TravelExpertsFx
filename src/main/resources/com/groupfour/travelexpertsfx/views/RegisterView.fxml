@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@../styles/register.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.RegisterController">
+
+    <children>
+
+        <!-- Full-Width Background Pane (Ensures Full Coverage) -->
+        <Pane prefHeight="600" prefWidth="800" styleClass="background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0" />
+
+        <!-- Centered Form Wrapper -->
+        <StackPane maxHeight="450.0" maxWidth="380.0" prefHeight="450.0" prefWidth="380.0" styleClass="register-form" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50">
+
+
+        <VBox alignment="CENTER" spacing="15.0">
+
+                <!-- Page Title -->
+                <Label styleClass="register-title" text="Register New Agent" />
+
+                <!-- Email Input -->
+                <VBox alignment="CENTER_LEFT" spacing="5.0">
+                    <Label styleClass="register-label" text="Agent Email:" />
+                    <TextField fx:id="txtEmail" prefWidth="350.0" promptText="Enter your email" styleClass="register-input" />
+                </VBox>
+
+                <!-- Role Display (Updated Dynamically) -->
+                <VBox alignment="CENTER_LEFT" spacing="5.0">
+                    <Label fx:id="lblRole" styleClass="register-role-label" text="Enter email to fetch role" />
+                </VBox>
+
+                <!-- Password Input -->
+                <VBox alignment="CENTER_LEFT" spacing="5.0">
+                    <Label styleClass="register-label" text="Password:" />
+                    <StackPane>
+                        <PasswordField fx:id="txtPassword" prefWidth="350.0" promptText="Enter your password" styleClass="register-input" />
+                        <TextField fx:id="txtVisiblePassword" managed="false" prefWidth="350.0" promptText="Enter your password" styleClass="register-input" visible="false" />
+                        <Button fx:id="btnShowPassword" styleClass="eye-button" text="👁" StackPane.alignment="CENTER_RIGHT" />
+                    </StackPane>
+                </VBox>
+
+                <!-- Confirm Password Input -->
+                <VBox alignment="CENTER_LEFT" spacing="5.0">
+                    <Label styleClass="register-label" text="Confirm Password:" />
+                    <StackPane>
+                        <PasswordField fx:id="txtConfirmPassword" prefWidth="350.0" promptText="Re-enter your password" styleClass="register-input" />
+                        <TextField fx:id="txtVisibleConfirmPassword" managed="false" prefWidth="350.0" promptText="Re-enter your password" styleClass="register-input" visible="false" />
+                        <Button fx:id="btnShowConfirmPassword" styleClass="eye-button" text="👁" StackPane.alignment="CENTER_RIGHT" />
+                    </StackPane>
+                </VBox>
+
+                <!-- Message Label (Error/Success Messages) -->
+                <Label fx:id="lblMessage" styleClass="register-message" text="" />
+
+                <!-- Buttons (Register & Back) -->
+                <HBox alignment="CENTER" spacing="30.0">
+                    <Button fx:id="btnRegister" onAction="#handleRegister" styleClass="register-button" text="Register" />
+                    <Button fx:id="btnBack" onAction="#handleBack" styleClass="back-button" text="Back to Login" />
+                </HBox>
+
+            </VBox>
+        </StackPane>
+
+    </children>
+</AnchorPane>
