@@ -281,4 +281,21 @@ public class StatisticsDB {
         stmt.close();
         return customers;
     }
+
+    public static int resolveAgentId(String email) throws SQLException {
+        int agentId = 0;
+
+        Connection conn = getConnection();
+        String sql = "SELECT agentid FROM agents" +
+                " WHERE agtemail = ?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, email);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            agentId = rs.getInt(1);
+        }
+        stmt.close();
+        return agentId;
+    }
 }

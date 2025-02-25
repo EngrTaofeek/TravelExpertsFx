@@ -11,6 +11,7 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import com.groupfour.travelexpertsfx.models.CurrentUser;
 import com.groupfour.travelexpertsfx.models.StatisticsDB;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -58,8 +59,10 @@ public class MyStatisticsController {
 
         // Need to update methods to pull id from currently logged-in user
         try {
-            bookings = StatisticsDB.totalSalesPerAgent(1, date);
-            commissions = StatisticsDB.totalCommissionPerAgent(1, date);
+            // Get id of logged-in user
+            int currentId = StatisticsDB.resolveAgentId(CurrentUser.getEmail());
+            bookings = StatisticsDB.totalSalesPerAgent(currentId, date);
+            commissions = StatisticsDB.totalCommissionPerAgent(currentId, date);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
