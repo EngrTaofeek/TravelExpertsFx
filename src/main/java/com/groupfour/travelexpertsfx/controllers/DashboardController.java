@@ -1,16 +1,21 @@
 package com.groupfour.travelexpertsfx.controllers;
 
+import com.groupfour.travelexpertsfx.MainApplication;
+import com.groupfour.travelexpertsfx.models.CurrentUser;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -22,7 +27,7 @@ public class DashboardController implements Initializable {
     @FXML private VBox sideMenu;
     @FXML private Button btnMenuToggle;
     @FXML private StackPane mainContent;
-
+    @FXML private Label lblUserEmail;
     private Object currentController;
     private static String userRole;
     private boolean isSidebarVisible = false;
@@ -33,6 +38,13 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Display logged-in user's email
+        String userEmail = CurrentUser.getEmail();
+        if (userEmail != null) {
+            lblUserEmail.setText("Welcome, " + userEmail);
+        } else {
+            lblUserEmail.setText("Welcome, Guest");
+        }
         // Show the welcome message (as the default view)
         showWelcomeMessage();
 
@@ -149,4 +161,24 @@ public class DashboardController implements Initializable {
             });
         }
     }
+
+    @FXML
+    private void handleLogout() {
+        // Show a confirmation alert
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to log out?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response.getText().equals("OK")) {
+                // Clear current user session
+                CurrentUser.clearUser();
+
+                // Redirect to Log in Screen after logout
+                MainApplication.showLoginScreen();
+            }
+        });
+    }
+
 }

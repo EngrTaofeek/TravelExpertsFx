@@ -35,7 +35,7 @@ public class MainApplication extends Application {
             // Make it a modal pop-up (blocks interaction with login window)
             registerStage.initModality(Modality.APPLICATION_MODAL);
             registerStage.initStyle(StageStyle.UTILITY);
-            registerStage.setResizable(false);
+            registerStage.setResizable(false); // Disable resizing
 
             registerStage.showAndWait(); // Show as pop-up and wait for it to close
 
@@ -53,6 +53,9 @@ public class MainApplication extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Login - Travel Experts");
+            // Open in maximized mode
+            primaryStage.setMaximized(true);
+
             primaryStage.show();
         } catch (Exception e) {
             System.err.println("Error loading LoginView.fxml: " + e.getMessage());

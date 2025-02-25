@@ -1,6 +1,7 @@
 package com.groupfour.travelexpertsfx.controllers;
 
 import com.groupfour.travelexpertsfx.MainApplication;
+import com.groupfour.travelexpertsfx.models.CurrentUser;
 import com.groupfour.travelexpertsfx.models.UserDb;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -110,6 +111,7 @@ public class LoginController {
             return;
         }
 
+        // Attempt authentication
         String authResult = UserDb.authenticateUser(email, password);
 
         // Handle authentication result
@@ -120,12 +122,15 @@ public class LoginController {
             case "wrong-password":
                 showMessage("❌ Incorrect password.", "red");
                 break;
-            case null:
+            case "error":
                 showMessage("❌ An internal error occurred. Please try again later.", "red");
                 break;
             default:
-                // Successful login
-                showMessage("✅ Login successful!", "green");
+                // Successful login: Store logged-in user
+                CurrentUser.setUser(email, authResult);
+                System.out.println("Logged in as: " + CurrentUser.getEmail() + " | Role: " + CurrentUser.getRole());
+
+                // Redirect to the dashboard
                 DashboardController.setUserRole(authResult);
                 MainApplication.showDashboardScreen();
                 break;
@@ -165,4 +170,5 @@ public class LoginController {
         timeline.setCycleCount(1);
         timeline.play();
     }
+
 }

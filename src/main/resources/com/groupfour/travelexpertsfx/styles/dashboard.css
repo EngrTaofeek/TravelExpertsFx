@@ -1,11 +1,17 @@
-
+/* ==========================================
+   Global Styling for Main Content
+   ========================================== */
 .main-content {
     -fx-background-color: white;
     -fx-padding: 15px;
 }
 
+/* ==========================================
+   Top Navigation Bar Styling
+   ========================================== */
 /* Dark Top Bar */
 .top-bar {
+    /* Optional color options */
     /*-fx-background-color: linear-gradient(to right, #D4AF37, #FFD700); !* Gold gradient **/
     /*-fx-background-color: linear-gradient(to right, #003366, #3399FF); !* Blue gradient *!*/
     -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
@@ -20,14 +26,55 @@
     -fx-border-color: #ddd;
 }
 
-/* Sidebar with Gold Gradient */
+/* Align Menu & Home on the Left */
+#btnMenuToggle, #btnHome {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 15px;
+}
+
+/* Align User Email & Logout on the Right */
+#topButtonContainer {
+    -fx-alignment: center-right;
+}
+
+/* User Email Label */
+.user-email {
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Logout Button Styling */
+.logout-button {
+    -fx-background-color: #d9534f; /* Red color */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 12px;
+    -fx-border-radius: 5px;
+}
+
+/* Logout Button Hover Effect */
+.logout-button:hover {
+    -fx-background-color: #c9302c; /* Darker red */
+}
+
+/* ==========================================
+   Sidebar Styling
+   ========================================== */
+/* Sidebar Background */
 .sidebar {
+    /* Optional gradient color options */
     /*-fx-background-color: linear-gradient(to bottom, #B8860B, #FFD700); !* Gold gradient sidebar *!*/
     /*-fx-background-color: linear-gradient(to right, #003366, #3399FF); !* Blue gradient *!*/
     -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
     -fx-padding: 15px;
 }
-/* Sidebar Button Default State */
+
+/* Sidebar Button Default */
 .sidebar-button {
     -fx-background-color: transparent;
     -fx-text-fill: white;
@@ -47,7 +94,7 @@
     -fx-transition: all 0.3s ease-in-out;
 }
 
-/* Sidebar Button Focused & Selected */
+/* Sidebar Button Selected/Pressed */
 .sidebar-button:focused,
 .sidebar-button:selected,
 .sidebar-button:pressed {
@@ -58,8 +105,16 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 3); /* Subtle glow */
 }
 
+/* Sidebar Logo Styling */
+.sidebar-logo {
+    -fx-padding: 10px 0;
+    -fx-alignment: center;
+}
 
-/* Top Buttons */
+/* ==========================================
+   Top Buttons Styling
+   ========================================== */
+/* Top Buttons Default */
 .top-button {
     -fx-background-color: transparent;
     -fx-text-fill: black;
@@ -76,14 +131,17 @@
     -fx-text-fill: #222;
 }
 
-/* Top Button Clicked/Selected */
+/* Top Button Selected */
 .top-button:focused,
 .top-button:selected {
     -fx-background-color: transparent;
     -fx-text-fill: red;
 }
 
-/* Menu Button */
+/* ==========================================
+   Menu Button Styling
+   ========================================== */
+/* Menu Button Default */
 .menu-button {
     -fx-background-color: white;
     -fx-text-fill: black;
@@ -93,18 +151,14 @@
     -fx-cursor: hand;
 }
 
-/* Menu Button Hover */
+/* Menu Button Hover Effect */
 .menu-button:hover {
     -fx-background-color: #e0e0e0;
 }
 
-/* Sidebar Logo Styling */
-.sidebar-logo {
-    -fx-padding: 10px 0;
-    -fx-alignment: center;
-}
-
-/* Smooth Transition Effects */
+/* ==========================================
+   Smooth Transition Effects
+   ========================================== */
 .sidebar-button, .top-button, .menu-button {
     -fx-transition: all 0.3s ease-in-out;
 }

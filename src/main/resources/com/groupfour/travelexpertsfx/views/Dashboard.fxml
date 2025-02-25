@@ -1,28 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.control.Label?>
-<AnchorPane prefWidth="1.0" prefHeight="1.0"
-            AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-            stylesheets="@../styles/dashboard.css"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.groupfour.travelexpertsfx.controllers.DashboardController">
+<AnchorPane prefHeight="1.0" prefWidth="1.0" stylesheets="@../styles/dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.DashboardController">
 
     <children>
-        <BorderPane AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
             <!-- Top Navigation Bar -->
             <top>
@@ -33,26 +28,37 @@
                     <!-- White Navigation Bar -->
                     <AnchorPane maxHeight="67.0" minHeight="20.0" prefHeight="48.0" styleClass="top-nav" VBox.vgrow="NEVER">
                         <children>
-                            <Button fx:id="btnMenuToggle" layoutX="15.0" layoutY="1.0" onAction="#toggleSidebar" prefHeight="44.0" prefWidth="74.0" styleClass="menu-button" text="☰ Menu">
-                                <font>
-                                    <Font size="18.0" />
-                                </font>
-                            </Button>
-
-                            <HBox fx:id="topButtonContainer" layoutX="252.0" layoutY="3.0" spacing="15.0" AnchorPane.rightAnchor="253.60000000000002">
+                            <!-- Left-side: Menu & Home Buttons -->
+                            <HBox spacing="60.0" AnchorPane.leftAnchor="15.0">
                                 <children>
+                                    <Button fx:id="btnMenuToggle" onAction="#toggleSidebar" prefHeight="44.0" prefWidth="100.0" styleClass="menu-button" text="☰ Menu">
+                                        <font>
+                                            <Font size="18.0" />
+                                        </font>
+                                    </Button>
                                     <JFXButton fx:id="btnHome" styleClass="top-button" text="Home" />
+                                </children>
+                            </HBox>
+
+                            <!-- Right-side: User Email & Logout Button -->
+                            <HBox fx:id="topButtonContainer" spacing="15.0" AnchorPane.rightAnchor="20">
+                                <children>
+                                    <Label fx:id="lblUserEmail" styleClass="user-email" />
+                                    <JFXButton fx:id="btnLogout" onAction="#handleLogout" styleClass="logout-button" text="Logout">
+                              <HBox.margin>
+                                 <Insets top="5.0" />
+                              </HBox.margin></JFXButton>
                                 </children>
                             </HBox>
                         </children>
                     </AnchorPane>
+
                 </VBox>
             </top>
 
             <!-- Sidebar with Logo -->
             <left>
-                <VBox fx:id="sideMenu" prefWidth="180.0" styleClass="sidebar"
-                      AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+                <VBox fx:id="sideMenu" prefWidth="180.0" styleClass="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
                         <!-- Logo Image -->
                         <ImageView fitHeight="120.0" fitWidth="160.0" preserveRatio="true">
@@ -72,11 +78,8 @@
 
             <!-- Main Content -->
             <center>
-                <StackPane fx:id="mainContent" styleClass="main-content"
-                           AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                    <Label text="Welcome to Travel Experts Dashboard!"
-                           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #222831;" />
+                <StackPane fx:id="mainContent" styleClass="main-content" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #222831;" text="Welcome to Travel Experts Dashboard!" />
                 </StackPane>
             </center>
 
