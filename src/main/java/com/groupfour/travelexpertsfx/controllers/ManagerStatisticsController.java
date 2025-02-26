@@ -1,13 +1,10 @@
-/**
- * Sample Skeleton for 'ManagerStatistics.fxml' Controller Class
- */
-
 package com.groupfour.travelexpertsfx.controllers;
 
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.groupfour.travelexpertsfx.models.*;
@@ -20,80 +17,23 @@ import javafx.util.StringConverter;
 
 public class ManagerStatisticsController {
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
-    @FXML // fx:id="brcStats"
-    private BarChart<String, Number> brcStats; // Value injected by FXMLLoader
-
-    @FXML // fx:id="btnChartAdd"
-    private Button btnChartAdd; // Value injected by FXMLLoader
-
-    @FXML // fx:id="btnChartClear"
-    private Button btnChartClear; // Value injected by FXMLLoader
-
-    @FXML // fx:id="cmbSelectAgencies"
-    private ComboBox<AgencyStatsDTO> cmbSelectAgencies; // Value injected by FXMLLoader
-
-    @FXML // fx:id="cmbSelectAgents"
-    private ComboBox<AgentStatsDTO> cmbSelectAgents; // Value injected by FXMLLoader
-
-    @FXML // fx:id="cmbSelectCustomers"
-    private ComboBox<CustomerStatsDTO> cmbSelectCustomers; // Value injected by FXMLLoader
-
-    @FXML // fx:id="cmbStatsView"
-    private ComboBox<Map.Entry<String, Integer>> cmbStatsView; // Value injected by FXMLLoader
-
-    @FXML // fx:id="dtpMaxDate"
-    private DatePicker dtpMaxDate; // Value injected by FXMLLoader
-
-    @FXML // fx:id="haxBarStats"
-    private CategoryAxis haxBarStats; // Value injected by FXMLLoader
-
-    @FXML // fx:id="haxLineStats"
-    private CategoryAxis haxLineStats; // Value injected by FXMLLoader
-
-    @FXML // fx:id="lblSelect"
-    private Label lblSelect; // Value injected by FXMLLoader
-
-    @FXML // fx:id="lblTotalSales"
-    private Label lblCumulativeSales; // Value injected by FXMLLoader
-
-    @FXML // fx:id="linStats"
-    private LineChart<String, Number> linStats; // Value injected by FXMLLoader
-
-    @FXML // fx:id="pieStats"
-    private PieChart pieStats; // Value injected by FXMLLoader
-
-    @FXML // fx:id="vaxBarStats"
-    private NumberAxis vaxBarStats; // Value injected by FXMLLoader
-
-    @FXML // fx:id="vaxLineStats"
-    private NumberAxis vaxLineStats; // Value injected by FXMLLoader
+    @FXML private ResourceBundle resources;
+    @FXML private URL location;
+    @FXML private BarChart<String, Number> brcStats;
+    @FXML private Button btnChartAdd, btnChartClear;
+    @FXML private ComboBox<AgencyStatsDTO> cmbSelectAgencies;
+    @FXML private ComboBox<AgentStatsDTO> cmbSelectAgents;
+    @FXML private ComboBox<CustomerStatsDTO> cmbSelectCustomers;
+    @FXML private ComboBox<Map.Entry<String, Integer>> cmbStatsView;
+    @FXML private DatePicker dtpMaxDate;
+    @FXML private CategoryAxis haxBarStats, haxLineStats;
+    @FXML private Label lblSelect, lblCumulativeSales;
+    @FXML private LineChart<String, Number> linStats;
+    @FXML private PieChart pieStats;
+    @FXML private NumberAxis vaxBarStats, vaxLineStats;
 
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert brcStats != null : "fx:id=\"brcStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert btnChartAdd != null : "fx:id=\"btnChartAdd\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert btnChartClear != null : "fx:id=\"btnChartClear\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert cmbSelectAgencies != null : "fx:id=\"cmbSelectAgencies\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert cmbSelectAgents != null : "fx:id=\"cmbSelectAgents\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert cmbSelectCustomers != null : "fx:id=\"cmbSelectCustomers\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert cmbStatsView != null : "fx:id=\"cmbStatsView\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert dtpMaxDate != null : "fx:id=\"dtpMaxDate\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert haxBarStats != null : "fx:id=\"haxBarStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert haxLineStats != null : "fx:id=\"haxLineStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert lblSelect != null : "fx:id=\"lblSelect\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert lblCumulativeSales != null : "fx:id=\"lblCumulativeSales\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert linStats != null : "fx:id=\"linStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert pieStats != null : "fx:id=\"pieStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert vaxBarStats != null : "fx:id=\"vaxBarStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-        assert vaxLineStats != null : "fx:id=\"vaxLineStats\" was not injected: check your FXML file 'ManagerStatistics.fxml'.";
-
         // On load, populate the statistic combobox
         List<Map.Entry<String, Integer>> statList = new ArrayList<>();
         statList.add(new AbstractMap.SimpleEntry<>("Sales Per Agent", 1));
@@ -160,6 +100,54 @@ public class ManagerStatisticsController {
     private void addToChart(Integer value) {
         switch (value) {
             case 1:
+                // Initialize a new series and a long
+                XYChart.Series<String, Number> findSeries = null;
+                long sales = 0;
+                // Get the agent selected in the combobox
+                AgentStatsDTO agent = cmbSelectAgents.getSelectionModel().getSelectedItem();
+                // Store the agent's name as a string
+                String agentName = agent.toString();
+                // Get the selected date and store it separately as a string
+                LocalDate date = dtpMaxDate.getValue();
+                String stringDate = date.toString();
+                // Get the agent's sales
+                try {
+                    sales = StatisticsDB.totalSalesPerAgent(agent.getAgentId(), date);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                // Check if the agent's data series has already been added to the chart
+                for (XYChart.Series<String, Number> series : brcStats.getData()) {
+                    if (series.getName().equals(agentName)) {
+                        findSeries = series;
+                        break;
+                    }
+                }
+                // Check if the date selected already exists in the series only if the series exists
+                if (findSeries != null) {
+                    boolean dataExists = false;
+                    for (XYChart.Data<String, Number> data : findSeries.getData()) {
+                        if (data.getXValue().equals(stringDate)) {
+                            displayMessage(Alert.AlertType.ERROR, stringDate + " for " + agentName + " has already been added to the chart!");
+                            dataExists = true;
+                            break;
+                        }
+                    }
+                    if (!dataExists) {
+                        // If the series exists but the selected date has not yet been added. add it
+                        findSeries.getData().add(new XYChart.Data<>(stringDate, sales));
+                        // Call method to re-sort the data of the series
+                        sortDataByDate(brcStats);
+                    }
+                } else {
+                    // If a series for the agent does not exist, create a new one and add data before adding to the chart
+                    findSeries = new XYChart.Series<>();
+                    findSeries.setName(agentName);
+                    findSeries.getData().add(new XYChart.Data<>(date.toString(), sales));
+                    brcStats.getData().add(findSeries);
+                    // Call method to re-sort the data of the series
+                    sortDataByDate(brcStats);
+                }
                 break;
             case 2:
                 break;
@@ -170,6 +158,33 @@ public class ManagerStatisticsController {
             case 5:
                 break;
         }
+    }
+
+    private void sortDataByDate(XYChart<String, Number> chart) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Sort the data in each series
+        for (XYChart.Series<String, Number> series : chart.getData()) {
+            // Get each data object and convert it to a list
+            List<XYChart.Data<String, Number>> dataList = new ArrayList<>(series.getData());
+            // Re-sort the dates
+            dataList.sort(Comparator.comparing(data -> LocalDate.parse(data.getXValue(), formatter)));
+            // Refresh the data
+            series.getData().setAll(dataList);
+        }
+
+        // Sort all the dates from all the series
+        TreeSet<String> datesToSort = new TreeSet<>(Comparator.comparing(dateStr -> LocalDate.parse(dateStr, formatter)));
+        for (XYChart.Series<String, Number> series : chart.getData()) {
+            for (XYChart.Data<String, Number> data : series.getData()) {
+                datesToSort.add(data.getXValue());
+            }
+        }
+
+        // Convert back to an ObservableList
+        ObservableList<String> sortedDates = FXCollections.observableArrayList(datesToSort);
+        haxBarStats.setCategories(sortedDates);
+        brcStats.layout();
     }
 
     private void formatView(Integer value) {
@@ -199,13 +214,14 @@ public class ManagerStatisticsController {
                     haxBarStats.setLabel("Date");
                     vaxBarStats.setLabel("Sales Per Agent");
                     XYChart.Series<String, Number> totalSalesSeries = new XYChart.Series<>();
-                    totalSalesSeries.setName(agent.getAgentFirstName() + " " + agent.getAgentLastName());
+                    totalSalesSeries.setName(agent.toString());
                     // Add datapoint for agent's first sale
                     LocalDate firstSale = StatisticsDB.agentFirstSaleDate(agent.getAgentId());
                     totalSalesSeries.getData().add(new XYChart.Data<>(firstSale.toString(), 1));
                     // Add datapoint for today's date in datetimepicker
                     totalSalesSeries.getData().add(new XYChart.Data<>(selectedDate, agentSales));
                     brcStats.getData().add(totalSalesSeries);
+                    // Add tooltip
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -235,7 +251,7 @@ public class ManagerStatisticsController {
                     haxLineStats.setLabel("Date");
                     vaxLineStats.setLabel("Commission Value Per Agent");
                     XYChart.Series<String, Number> totalCommissionSeries = new XYChart.Series<>();
-                    totalCommissionSeries.setName(agent.getAgentFirstName() + " " + agent.getAgentLastName());
+                    totalCommissionSeries.setName(agent.toString());
                     // Add datapoint for agent's first sale
                     LocalDate firstSale = StatisticsDB.agentFirstSaleDate(agent.getAgentId());
                     String convertFirst = firstSale.toString();
@@ -244,6 +260,7 @@ public class ManagerStatisticsController {
                     // Add datapoint for today's date
                     totalCommissionSeries.getData().add(new XYChart.Data<>(today, agentCommission));
                     linStats.getData().add(totalCommissionSeries);
+                    // Add tooltip
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -306,13 +323,14 @@ public class ManagerStatisticsController {
                     // Update bar chart vertical label and load data
                     vaxBarStats.setLabel("Sales Per Customer");
                     XYChart.Series<String, Number> customerSales = new XYChart.Series<>();
-                    customerSales.setName(customer.getCustomerFirstName() + " " + customer.getCustomerLastName());
+                    customerSales.setName(customer.toString());
                     // Add datapoint for customer's first booking
                     LocalDate firstSale = StatisticsDB.customerFirstSaleDate(customer.getCustomerId());
                     customerSales.getData().add(new XYChart.Data<>(firstSale.toString(), 1));
                     // Add datapoint for customer's total sales
                     customerSales.getData().add(new XYChart.Data<>(selectedDate, customerBookings));
                     brcStats.getData().add(customerSales);
+                    // Add tooltip
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -343,6 +361,7 @@ public class ManagerStatisticsController {
                     // Add datapoint for all sales until today's date
                     sales.getData().add(new XYChart.Data<>(selectedDate, totalSales));
                     brcStats.getData().add(sales);
+                    // Add tooltip
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -390,6 +409,13 @@ public class ManagerStatisticsController {
         cmbSelectAgents.setItems(agentList);
     }
 
+    private void displayMessage(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(alertType.toString());
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     private StringConverter<Map.Entry<String, Integer>> formatStatList() {
         return new StringConverter<>() {
             @Override
@@ -399,7 +425,6 @@ public class ManagerStatisticsController {
                 }
                 return entry.getKey();
             }
-
             @Override
             public Map.Entry<String, Integer> fromString(String s) {
                 return null;
