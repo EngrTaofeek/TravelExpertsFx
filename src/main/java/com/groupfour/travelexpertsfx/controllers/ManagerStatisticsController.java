@@ -100,62 +100,36 @@ public class ManagerStatisticsController {
     }
 
     private void addToChart(Integer value) {
+        // Get the selected date and store it separately as a string
+        LocalDate date = dtpMaxDate.getValue();
+        String stringDate = date.toString();
+        // Get the agent selected in the combobox
+        AgentStatsDTO agent = cmbSelectAgents.getSelectionModel().getSelectedItem();
+        String agentName = agent.toString();
         switch (value) {
             case 1:
-                // Initialize a new series and a long
-                XYChart.Series<String, Number> findSeries = null;
                 long sales = 0;
-                // Get the agent selected in the combobox
-                AgentStatsDTO agent = cmbSelectAgents.getSelectionModel().getSelectedItem();
-                // Store the agent's name as a string
-                String agentName = agent.toString();
-                // Get the selected date and store it separately as a string
-                LocalDate date = dtpMaxDate.getValue();
-                String stringDate = date.toString();
                 // Get the agent's sales
                 try {
                     sales = StatisticsDB.totalSalesPerAgent(agent.getAgentId(), date);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                // Check if the agent's data series has already been added to the chart
-                for (XYChart.Series<String, Number> series : brcStats.getData()) {
-                    if (series.getName().equals(agentName)) {
-                        findSeries = series;
-                        break;
-                    }
-                }
-                // Check if the date selected already exists in the series only if the series exists
-                if (findSeries != null) {
-                    boolean dataExists = false;
-                    for (XYChart.Data<String, Number> data : findSeries.getData()) {
-                        if (data.getXValue().equals(stringDate)) {
-                            displayMessage(Alert.AlertType.ERROR, stringDate + " for " + agentName + " has already been added to the chart!");
-                            dataExists = true;
-                            break;
-                        }
-                    }
-                    if (!dataExists) {
-                        // If the series exists but the selected date has not yet been added. add it
-                        findSeries.getData().add(new XYChart.Data<>(stringDate, sales));
-                        // Use a dummy category to force a refresh of x-axis labels
-                        haxBarStats.setCategories(FXCollections.observableArrayList("dummy"));
-                        // Call method to re-sort the data of the series
-                        sortDataByDate(brcStats);
-                    }
-                } else {
-                    // If a series for the agent does not exist, create a new one and add data before adding to the chart
-                    findSeries = new XYChart.Series<>();
-                    findSeries.setName(agentName);
-                    findSeries.getData().add(new XYChart.Data<>(stringDate, sales));
-                    brcStats.getData().add(findSeries);
-                    // Use a dummy category to force a refresh of x-axis labels
-                    haxBarStats.setCategories(FXCollections.observableArrayList("dummy"));
-                    // Call method to re-sort the data of the series
-                    sortDataByDate(brcStats);
-                }
+                checkXYSeriesDuplicates(brcStats, agentName, stringDate, sales);
                 break;
             case 2:
+                BigDecimal commission = BigDecimal.ZERO;
+                // Get the agent's commission
+                try {
+                    commission = StatisticsDB.totalCommissionPerAgent(agent.getAgentId(), date);
+                    // If the agent has no commission, set to zero
+                    if (commission == null) {
+                        commission = BigDecimal.ZERO;
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                checkXYSeriesDuplicates(linStats, agentName, stringDate, commission);
                 break;
             case 3:
                 break;
@@ -166,7 +140,51 @@ public class ManagerStatisticsController {
         }
     }
 
+    private void checkXYSeriesDuplicates(XYChart<String, Number> chart, String seriesName, String stringDate, Number seriesData) {
+        // Initialize a new series and a long
+        XYChart.Series<String, Number> findSeries = null;
+        // Check if the agent's data series has already been added to the chart
+        for (XYChart.Series<String, Number> series : chart.getData()) {
+            if (series.getName().equals(seriesName)) {
+                findSeries = series;
+                break;
+            }
+        }
+        // Check if the date selected already exists in the series only if the series exists
+        if (findSeries != null) {
+            boolean dataExists = false;
+            for (XYChart.Data<String, Number> data : findSeries.getData()) {
+                if (data.getXValue().equals(stringDate)) {
+                    displayMessage(Alert.AlertType.ERROR, stringDate + " for " + seriesName + " has already been added to the chart!");
+                    dataExists = true;
+                    break;
+                }
+            }
+            if (!dataExists) {
+                // If the series exists but the selected date has not yet been added. add it
+                findSeries.getData().add(new XYChart.Data<>(stringDate, seriesData));
+                // Call method to re-sort the data of the series
+                sortDataByDate(chart);
+            }
+        } else {
+            // If a series for the agent does not exist, create a new one and add data before adding to the chart
+            findSeries = new XYChart.Series<>();
+            findSeries.setName(seriesName);
+            findSeries.getData().add(new XYChart.Data<>(stringDate, seriesData));
+            chart.getData().add(findSeries);
+            // Call method to re-sort the data of the series
+            sortDataByDate(chart);
+        }
+    }
+
     private void sortDataByDate(XYChart<String, Number> chart) {
+        // Use a dummy category to force a refresh of x-axis labels before sorting
+        if (chart instanceof BarChart) {
+            haxBarStats.setCategories(FXCollections.observableArrayList("dummy"));
+        } else {
+            haxLineStats.setCategories(FXCollections.observableArrayList("dummy"));
+        }
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         // Sort the data in each series
@@ -189,8 +207,18 @@ public class ManagerStatisticsController {
 
         // Convert back to an ObservableList
         ObservableList<String> sortedDates = FXCollections.observableArrayList(datesToSort);
-        haxBarStats.setCategories(sortedDates);
-        brcStats.layout();
+        if (chart instanceof BarChart) {
+            haxBarStats.setCategories(sortedDates);
+        } else {
+            // Manually purge and re-add the data to show data in the LineChart
+            ObservableList<XYChart.Series<String, Number>> tempList = FXCollections.observableArrayList(chart.getData());
+            chart.getData().clear();
+            chart.getData().addAll(tempList);
+            haxLineStats.setAutoRanging(false);
+            haxLineStats.setCategories(sortedDates);
+            haxLineStats.setAutoRanging(true);
+        }
+        chart.layout();
     }
 
     private void formatView(Integer value) {
