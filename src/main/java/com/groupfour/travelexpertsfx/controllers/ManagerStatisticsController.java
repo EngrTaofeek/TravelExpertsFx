@@ -93,8 +93,10 @@ public class ManagerStatisticsController {
 
     private void clearCharts() {
         brcStats.getData().clear();
+        haxBarStats.getCategories().clear();
         pieStats.getData().clear();
         linStats.getData().clear();
+        haxLineStats.getCategories().clear();
     }
 
     private void addToChart(Integer value) {
@@ -136,6 +138,8 @@ public class ManagerStatisticsController {
                     if (!dataExists) {
                         // If the series exists but the selected date has not yet been added. add it
                         findSeries.getData().add(new XYChart.Data<>(stringDate, sales));
+                        // Use a dummy category to force a refresh of x-axis labels
+                        haxBarStats.setCategories(FXCollections.observableArrayList("dummy"));
                         // Call method to re-sort the data of the series
                         sortDataByDate(brcStats);
                     }
@@ -143,8 +147,10 @@ public class ManagerStatisticsController {
                     // If a series for the agent does not exist, create a new one and add data before adding to the chart
                     findSeries = new XYChart.Series<>();
                     findSeries.setName(agentName);
-                    findSeries.getData().add(new XYChart.Data<>(date.toString(), sales));
+                    findSeries.getData().add(new XYChart.Data<>(stringDate, sales));
                     brcStats.getData().add(findSeries);
+                    // Use a dummy category to force a refresh of x-axis labels
+                    haxBarStats.setCategories(FXCollections.observableArrayList("dummy"));
                     // Call method to re-sort the data of the series
                     sortDataByDate(brcStats);
                 }
