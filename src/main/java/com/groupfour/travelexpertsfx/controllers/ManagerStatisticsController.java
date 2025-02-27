@@ -132,10 +132,32 @@ public class ManagerStatisticsController {
                 checkXYSeriesDuplicates(linStats, agentName, stringDate, commission);
                 break;
             case 3:
+                // Get the agency selected in the combobox
+                AgencyStatsDTO agency = cmbSelectAgencies.getSelectionModel().getSelectedItem();
+                String agencyName = agency.toString();
                 break;
             case 4:
+                // Get the customer selected in the combobox
+                CustomerStatsDTO customer = cmbSelectCustomers.getSelectionModel().getSelectedItem();
+                String customerName = customer.toString();
+                long bookings = 0;
+                // Get sales per customer
+                try {
+                    bookings = StatisticsDB.totalSalesPerCustomer(customer.getCustomerId(), date);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                checkXYSeriesDuplicates(brcStats, customerName, stringDate, bookings);
                 break;
             case 5:
+                long totalSales = 0;
+                // Get all sales
+                try {
+                    totalSales = StatisticsDB.totalSales(date);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                checkXYSeriesDuplicates(brcStats, "Total Sales", stringDate, totalSales);
                 break;
         }
     }
@@ -214,6 +236,7 @@ public class ManagerStatisticsController {
             ObservableList<XYChart.Series<String, Number>> tempList = FXCollections.observableArrayList(chart.getData());
             chart.getData().clear();
             chart.getData().addAll(tempList);
+            // Disable auto ranging before setting the sorted categories
             haxLineStats.setAutoRanging(false);
             haxLineStats.setCategories(sortedDates);
             haxLineStats.setAutoRanging(true);
