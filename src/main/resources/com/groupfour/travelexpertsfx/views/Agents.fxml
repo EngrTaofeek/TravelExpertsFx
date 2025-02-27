@@ -1,11 +1,190 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.groupfour.travelexpertsfx.controllers.AgentsController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="622.0" prefWidth="863.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.AgentsController">
+   <children>
+      <HBox layoutX="40.0" layoutY="26.0" prefHeight="30.0" prefWidth="559.0">
+         <children>
+            <JFXButton fx:id="btnAdd" prefHeight="30.0" prefWidth="84.0" text="Add">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/add.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnEdit" prefHeight="30.0" prefWidth="107.0" text="Edit">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="22.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/edit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" prefHeight="30.0" prefWidth="106.0" text="Delete">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" opacity="0.32" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/bin.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+      <TableView fx:id="tvAgent" layoutX="26.0" layoutY="190.0" prefHeight="418.0" prefWidth="804.0">
+         <columns>
+            <TableColumn fx:id="tcFirstName" prefWidth="87.0" text="FirstName" />
+            <TableColumn fx:id="tcMiddleInitial" prefWidth="88.0" text="MiddleInitial" />
+            <TableColumn fx:id="tcLastName" prefWidth="94.0" text="LastName" />
+            <TableColumn fx:id="tcPhone" prefWidth="126.0" text="Phone" />
+            <TableColumn fx:id="tcEmail" prefWidth="125.0" text="Email" />
+            <TableColumn fx:id="tcPosition" prefWidth="124.0" text="Position" />
+            <TableColumn fx:id="tcAgency" prefWidth="159.0" text="Agency" />
+         </columns>
+      </TableView>
+      <HBox layoutY="73.0" prefHeight="44.0" prefWidth="856.0">
+         <children>
+            <Label text="FirstName:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="tfFirstName" prefHeight="29.0" prefWidth="100.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Label text="MiddleInitial:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="tfMiddleInitial" prefHeight="29.0" prefWidth="100.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Label text="LastName:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="tfLastName" prefHeight="29.0" prefWidth="107.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Label text="Agency:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <ComboBox fx:id="cbAgency" prefWidth="150.0">
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </ComboBox>
+         </children>
+      </HBox>
+      <HBox layoutX="6.0" layoutY="123.0" prefHeight="44.0" prefWidth="856.0">
+         <children>
+            <Label text="Phone:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="tfPhone" prefHeight="29.0" prefWidth="147.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Label text="Email:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="tfEmail" prefHeight="29.0" prefWidth="156.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Label text="Position:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="tfPosition" prefHeight="29.0" prefWidth="164.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Button fx:id="btnSearch" mnemonicParsing="false" text="Search">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" top="6.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnClear" mnemonicParsing="false" text="Clear">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="16.0" top="6.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
 </AnchorPane>
