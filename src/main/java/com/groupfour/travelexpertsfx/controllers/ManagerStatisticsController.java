@@ -135,6 +135,14 @@ public class ManagerStatisticsController {
                 // Get the agency selected in the combobox
                 AgencyStatsDTO agency = cmbSelectAgencies.getSelectionModel().getSelectedItem();
                 String agencyName = agency.toString();
+                long agencySales = 0;
+                // Get sales per agency
+                try {
+                    agencySales = StatisticsDB.totalSalesPerAgency(agency.getAgencyid(), date);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                checkPieDataDuplicates(pieStats, agencyName, stringDate, agencySales);
                 break;
             case 4:
                 // Get the customer selected in the combobox
@@ -162,8 +170,29 @@ public class ManagerStatisticsController {
         }
     }
 
+    private void checkPieDataDuplicates(PieChart chart, String agencyName, String stringDate, long agencySales) {
+        // Initialize a new boolean
+        boolean alreadyAdded = false;
+        // Check if the agency's data has already been added to the chart
+        for (PieChart.Data data : chart.getData()) {
+            if (data.getName().equalsIgnoreCase(agencyName)) {
+                displayMessage(agencyName + " has already been added to the chart!");
+                alreadyAdded = true;
+                break;
+            }
+        }
+        if (!alreadyAdded) {
+            // If not, add the agency's data to the chart with a tooltip
+            PieChart.Data agency = new PieChart.Data(agencyName, agencySales);
+            chart.getData().add(agency);
+            Tooltip tooltip = new Tooltip(agencyName + ": " + agencySales);
+            tooltip.setStyle("-fx-font-size: 14px");
+            Tooltip.install(agency.getNode(), tooltip);
+        }
+    }
+
     private void checkXYSeriesDuplicates(XYChart<String, Number> chart, String seriesName, String stringDate, Number seriesData) {
-        // Initialize a new series and a long
+        // Initialize a new series
         XYChart.Series<String, Number> findSeries = null;
         // Check if the agent's data series has already been added to the chart
         for (XYChart.Series<String, Number> series : chart.getData()) {
@@ -177,7 +206,7 @@ public class ManagerStatisticsController {
             boolean dataExists = false;
             for (XYChart.Data<String, Number> data : findSeries.getData()) {
                 if (data.getXValue().equals(stringDate)) {
-                    displayMessage(Alert.AlertType.ERROR, stringDate + " for " + seriesName + " has already been added to the chart!");
+                    displayMessage(stringDate + " for " + seriesName + " has already been added to the chart!");
                     dataExists = true;
                     break;
                 }
@@ -344,8 +373,6 @@ public class ManagerStatisticsController {
                     long agencySales = StatisticsDB.totalSalesPerAgency(agency.getAgencyid(), date);
                     // Format and add data to the chart
                     pieStats.setTitle("Sales Per Agency (Until " + date + ")");
-                    List<Map.Entry<String, Long>> sales = new ArrayList<>();
-                    sales.add(new AbstractMap.SimpleEntry<>(agencyName, agencySales));
                     PieChart.Data firstAgency = new PieChart.Data(agencyName, agencySales);
                     pieStats.getData().add(firstAgency);
                     // Add a tooltip to show the value of the pie slice
@@ -466,9 +493,10 @@ public class ManagerStatisticsController {
         cmbSelectAgents.setItems(agentList);
     }
 
-    private void displayMessage(Alert.AlertType alertType, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(alertType.toString());
+    private void displayMessage(String message) {
+        Alert.AlertType type = Alert.AlertType.ERROR;
+        Alert alert = new Alert(type);
+        alert.setTitle(type.toString());
         alert.setContentText(message);
         alert.showAndWait();
     }
