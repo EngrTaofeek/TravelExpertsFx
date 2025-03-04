@@ -23,7 +23,7 @@ public class DashboardController implements Initializable {
 
     @FXML private HBox topButtonContainer;
     @FXML private Button btnHome;
-    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers, btnProducts;
+    @FXML private Button btnAgents, btnAgencies, btnPackages, btnSuppliers, btnCustomers, btnProducts, btnMyStatistics, btnManagerStatistics;
     @FXML private VBox sideMenu;
     @FXML private Button btnMenuToggle;
     @FXML private StackPane mainContent;
@@ -69,6 +69,8 @@ public class DashboardController implements Initializable {
         btnSuppliers.setOnAction(event -> { loadPage("Suppliers.fxml", btnSuppliers); toggleHomeButton(true); });
         btnCustomers.setOnAction(event -> { loadPage("Customers.fxml", btnCustomers); toggleHomeButton(true); });
         btnProducts.setOnAction(event -> { loadPage("Products.fxml", btnProducts); toggleHomeButton(true); });
+        btnMyStatistics.setOnAction(event -> { loadPage("MyStatistics.fxml", btnMyStatistics); toggleHomeButton(true); });
+        btnManagerStatistics.setOnAction(event -> { loadPage("ManagerStatistics.fxml", btnManagerStatistics); });
         
 
         // Apply default styles
@@ -94,6 +96,8 @@ public class DashboardController implements Initializable {
             btnAgents.setManaged(false);
             btnAgencies.setVisible(false);
             btnAgencies.setManaged(false);
+            btnManagerStatistics.setVisible(false);
+            btnManagerStatistics.setManaged(false);
         }
     }
 
