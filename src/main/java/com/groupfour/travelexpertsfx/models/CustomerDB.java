@@ -210,6 +210,7 @@ public class CustomerDB {
                 "where customerid = "+searchNum+
                 " or custhomephone ilike '%" + searchNum + "%' " +
                 "or custbusphone ilike '%" + searchNum + "%' " +
+                "or custaddress ilike '%" + searchNum + "%' " +
                 " order by customerid asc";
         Connection conn = DBConnection.getConnection();
         Statement stmt = conn.createStatement();

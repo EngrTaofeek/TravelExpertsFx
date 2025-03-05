@@ -73,6 +73,8 @@
                         <JFXButton fx:id="btnSuppliers" styleClass="sidebar-button" text="Suppliers" />
                         <JFXButton fx:id="btnCustomers" styleClass="sidebar-button" text="Customers" />
                         <JFXButton fx:id="btnProducts" styleClass="sidebar-button" text="Products" />
+                  <JFXButton fx:id="btnMyStatistics" layoutX="25.0" layoutY="370.0" styleClass="sidebar-button" text="My Statistics" />
+                  <JFXButton fx:id="btnManagerStatistics" layoutX="25.0" layoutY="415.0" styleClass="sidebar-button" text="Manager Stats" />
                     </children>
                 </VBox>
             </left>
