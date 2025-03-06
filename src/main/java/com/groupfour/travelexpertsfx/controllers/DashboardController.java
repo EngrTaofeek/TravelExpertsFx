@@ -139,6 +139,9 @@ public class DashboardController implements Initializable {
         mainContent.getChildren().clear();
         Label welcomeLabel = new Label("Welcome to Travel Experts Dashboard!");
         welcomeLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #222831;");
+        String videopath=getClass().getResource("/images/welcomevideoclip.mp4").toExternalForm();
+
+
         mainContent.getChildren().add(welcomeLabel);
     }
 
@@ -149,8 +152,9 @@ public class DashboardController implements Initializable {
         btnSuppliers.setStyle("");
         btnCustomers.setStyle("");
         btnProducts.setStyle("");
+        btnMyStatistics.setStyle("");
+        btnManagerStatistics.setStyle("");
 
-        clickedButton.setStyle("-fx-background-color: #FFA000; -fx-text-fill: white;");
     }
 
     private void toggleHomeButton(boolean visible) {
