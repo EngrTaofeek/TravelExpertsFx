@@ -1,5 +1,17 @@
 package com.groupfour.travelexpertsfx.database;
 
+/**
+ * @Author: Kazi Fattah
+ * @Date: 2/2025
+ * @Description: Method for establishing database connection
+ * @To-do-list:
+ *
+
+ * - view past trips
+ * - search customer
+ *
+ */
+
 
 import java.sql.*;
 

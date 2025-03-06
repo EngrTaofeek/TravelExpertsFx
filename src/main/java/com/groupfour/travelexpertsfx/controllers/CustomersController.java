@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import com.groupfour.travelexpertsfx.MainApplication;
 import com.groupfour.travelexpertsfx.models.Customer;
 import com.groupfour.travelexpertsfx.models.CustomerDB;
 import com.groupfour.travelexpertsfx.models.CustomerDTO;
@@ -17,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -165,6 +167,21 @@ public class CustomersController {
         }
     }
 
+    @FXML
+    void viewTrips(MouseEvent event) {
+        if (tvCustomer.getSelectionModel().getSelectedItem() != null) {
+            int selectedId = tvCustomer.getSelectionModel().getSelectedItem().getCustomerId();
+
+            openTripsPage(selectedId);
+
+        } else
+        {
+            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Select a Customer");
+        }
+    }
+
+
+
     private ObservableList<CustomerDTO> customerData = FXCollections.observableArrayList();
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -243,6 +260,45 @@ public class CustomersController {
         return isInt;
     }
 
+    public void openTripsPage(int selectedId) {
+        String fullPath = "/com/groupfour/travelexpertsfx/views/PastTrips.fxml";
+
+        URL fileUrl = getClass().getResource(fullPath);
+        if (fileUrl == null) {
+            return;
+        }
+        FXMLLoader fxmlLoader = new FXMLLoader(fileUrl);
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new  RuntimeException("Failed to load PastTrips.fxml", e);
+        }
+
+        // SET UP CONTROLLER
+        PastTripsController controller = fxmlLoader.getController();
+        Customer selectedCustomer = null;
+        try {
+            selectedCustomer = CustomerDB.getCustomerById(selectedId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        controller.setCustomerId(selectedId);
+        //System.out.println(selectedId);
+
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Past Trips of "+selectedCustomer.getCustfirstname()+" "+selectedCustomer.getCustlastname());
+        stage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("/com/groupfour/travelexpertsfx/images/airplane.png")));
+
+        stage.setScene(scene);
+        stage.showAndWait();
+        displayCustomer();
+
+
+    }
+
     private void openCustomerDetailsPage(Customer passedCustomerDetails, String pageMode){
 
         String fullPath = "/com/groupfour/travelexpertsfx/views/CustomerDetails.fxml";
@@ -256,7 +312,7 @@ public class CustomersController {
         try {
             scene = new Scene(fxmlLoader.load());
         } catch (IOException e) {
-            throw new  RuntimeException("Fail to load CustomerDetailsPage.fxml", e);
+            throw new  RuntimeException("Failed to load CustomerDetails.fxml", e);
         }
 
         // CONTROLLER
@@ -268,6 +324,14 @@ public class CustomersController {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Customer "+pageMode);
+        if (pageMode.equalsIgnoreCase("ADD")) {
+            stage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("/com/groupfour/travelexpertsfx/images/add2.png")));
+        } else if (pageMode.equalsIgnoreCase("EDIT")) {
+            stage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("/com/groupfour/travelexpertsfx/images/edit2.png")));
+        } else if (pageMode.equalsIgnoreCase("DETAILS")) {
+            stage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("/com/groupfour/travelexpertsfx/images/data2.png")));
+        }
+
         stage.setScene(scene);
         stage.showAndWait();
         displayCustomer();
@@ -286,7 +350,6 @@ Notes for Kazi:
 TASKS:
 Status: INCOMPLETE
 
-    * view past trips
     * validation (yuck)
 
  Status: COMPLETE
@@ -297,5 +360,6 @@ Status: INCOMPLETE
     * UPDATE - edit customer details
     * DELETE - delete customer
     * search customer
+    * view past trips
 
  */

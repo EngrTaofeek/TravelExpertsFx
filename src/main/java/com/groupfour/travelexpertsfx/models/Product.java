@@ -1,5 +1,14 @@
 package com.groupfour.travelexpertsfx.models;
 
+
+/**
+ * @Author: Kazi Fattah
+ * @Date: 2/2025
+ * @Description Product Class
+ * @To-do-list:
+ *
+ */
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 

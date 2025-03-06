@@ -4,6 +4,13 @@
 
 package com.groupfour.travelexpertsfx.controllers;
 
+/**
+ * @Author: Kazi Fattah
+ * @Date: 2/2025
+ * @Description: Controller for Customer Details view. Responsible for adding/updating and viewing customer details
+
+ */
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -105,14 +112,14 @@ public class CustomerDetailsController {
     @FXML
     void viewTrips(MouseEvent event) {
 
+        CustomersController customersController = new CustomersController();
+        customersController.openTripsPage(currentCustomer.getCustomerid());
+
     }
 
     @FXML
     void goBack(MouseEvent event) {
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        stage.close();
-
+        ControllerMethods.closeWindow(event);
     }
 
     @FXML
@@ -145,7 +152,10 @@ public class CustomerDetailsController {
         }
 
         // CLOSE WINDOW
-        goBack(event);
+        if (pageMode.equalsIgnoreCase("Edit")) {
+            setPageMode("Details");
+        } else goBack(event);
+
 
     }
 
@@ -196,6 +206,8 @@ public class CustomerDetailsController {
             lblHeader.setText("Customer Details: ");
             lblCustomerName.setText(currentCustomer.getCustfirstname()+" "+currentCustomer.getCustlastname());
             btnSaveChanges.setVisible(false);
+            btnEdit.setVisible(true);
+
         } else if (pageMode.equalsIgnoreCase("edit")) {
             setFieldsEditable();
             tfCustomerId.setDisable(true);
@@ -231,6 +243,33 @@ public class CustomerDetailsController {
         tfCustBusPhone.setEditable(false);
         tfCustEmail.setEditable(false);
         tfCustAgentId.setEditable(false);
+        tfCustomerId.getStyleClass().remove("customerTextEditable");
+        tfCustomerId.getStyleClass().add("customerTextNotEditable");
+        tfCustFirstName.getStyleClass().remove("customerTextEditable");
+        tfCustFirstName.getStyleClass().add("customerTextNotEditable");
+        tfCustLastName.getStyleClass().remove("customerTextEditable");
+        tfCustLastName.getStyleClass().add("customerTextNotEditable");
+        tfCustAddress.getStyleClass().remove("customerTextEditable");
+        tfCustAddress.getStyleClass().add("customerTextNotEditable");
+        tfCustCity.getStyleClass().remove("customerTextEditable");
+        tfCustCity.getStyleClass().add("customerTextNotEditable");
+        tfCustProvince.getStyleClass().remove("customerTextEditable");
+        tfCustProvince.getStyleClass().add("customerTextNotEditable");
+        tfCustPostal.getStyleClass().remove("customerTextEditable");
+        tfCustPostal.getStyleClass().add("customerTextNotEditable");
+        tfCustEmail.getStyleClass().remove("customerTextEditable");
+        tfCustEmail.getStyleClass().add("customerTextNotEditable");
+        tfCustCountry.getStyleClass().remove("customerTextEditable");
+        tfCustCountry.getStyleClass().add("customerTextNotEditable");
+        tfCustHomePhone.getStyleClass().remove("customerTextEditable");
+        tfCustHomePhone.getStyleClass().add("customerTextNotEditable");
+        tfCustBusPhone.getStyleClass().remove("customerTextEditable");
+        tfCustBusPhone.getStyleClass().add("customerTextNotEditable");
+        tfCustAgentId.getStyleClass().remove("customerTextEditable");
+        tfCustAgentId.getStyleClass().add("customerTextNotEditable");
+
+
+
     }
 
     private void setFieldsEditable() {
@@ -246,6 +285,30 @@ public class CustomerDetailsController {
         tfCustBusPhone.setEditable(true);
         tfCustEmail.setEditable(true);
         tfCustAgentId.setEditable(true);
+        tfCustomerId.getStyleClass().remove("customerTextNotEditable");
+        tfCustomerId.getStyleClass().add("customerTextEditable");
+        tfCustFirstName.getStyleClass().remove("customerTextNotEditable");
+        tfCustFirstName.getStyleClass().add("customerTextEditable");
+        tfCustLastName.getStyleClass().remove("customerTextNotEditable");
+        tfCustLastName.getStyleClass().add("customerTextEditable");
+        tfCustAddress.getStyleClass().remove("customerTextNotEditable");
+        tfCustAddress.getStyleClass().add("customerTextEditable");
+        tfCustCity.getStyleClass().remove("customerTextNotEditable");
+        tfCustCity.getStyleClass().add("customerTextEditable");
+        tfCustProvince.getStyleClass().remove("customerTextNotEditable");
+        tfCustProvince.getStyleClass().add("customerTextEditable");
+        tfCustPostal.getStyleClass().remove("customerTextNotEditable");
+        tfCustPostal.getStyleClass().add("customerTextEditable");
+        tfCustEmail.getStyleClass().remove("customerTextNotEditable");
+        tfCustEmail.getStyleClass().add("customerTextEditable");
+        tfCustCountry.getStyleClass().remove("customerTextNotEditable");
+        tfCustCountry.getStyleClass().add("customerTextEditable");
+        tfCustHomePhone.getStyleClass().remove("customerTextNotEditable");
+        tfCustHomePhone.getStyleClass().add("customerTextEditable");
+        tfCustBusPhone.getStyleClass().remove("customerTextNotEditable");
+        tfCustBusPhone.getStyleClass().add("customerTextEditable");
+        tfCustAgentId.getStyleClass().remove("customerTextNotEditable");
+        tfCustAgentId.getStyleClass().add("customerTextEditable");
     }
 
 
