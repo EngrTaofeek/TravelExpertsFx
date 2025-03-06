@@ -52,7 +52,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btnTrips" onMouseClicked="#deleteCustomer" prefHeight="30.0" prefWidth="106.0" text="Past Trips">
+            <JFXButton fx:id="btnTrips" onMouseClicked="#viewTrips" prefHeight="30.0" prefWidth="106.0" text="Past Trips">
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="479.0" prefWidth="694.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.PastTripsController">
+   <children>
+      <Button fx:id="btnGoBack" layoutX="274.0" layoutY="341.0" mnemonicParsing="false" onMouseClicked="#goBack" text="Back" />
+      <Label fx:id="lblCustName" layoutX="260.0" layoutY="48.0" text="Customer Name: " />
+      <TableView fx:id="tvTrips" layoutX="43.0" layoutY="100.0" prefHeight="200.0" prefWidth="602.0">
+        <columns>
+          <TableColumn fx:id="colBookingId" prefWidth="75.0" text="BookingID" />
+          <TableColumn fx:id="colDesc" prefWidth="75.0" text="Description" />
+            <TableColumn fx:id="colDest" prefWidth="75.0" text="Destination" />
+            <TableColumn fx:id="colTT" prefWidth="75.0" text="Trip Type" />
+            <TableColumn fx:id="colClass" prefWidth="75.0" text="Class" />
+            <TableColumn fx:id="colStart" prefWidth="75.0" text="Start Date" />
+            <TableColumn fx:id="colEnd" prefWidth="75.0" text="End Date" />
+            <TableColumn fx:id="colPrice" prefWidth="75.0" text="Total Price" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

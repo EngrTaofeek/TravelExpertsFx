@@ -1,5 +1,14 @@
 package com.groupfour.travelexpertsfx.models;
 
+
+/**
+ * @Author: Kazi Fattah
+ * @Date: 2/2025
+ * @Description Custom class for Customer that stores selected properties for viewing
+ * @To-do-list:
+ *
+ */
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
