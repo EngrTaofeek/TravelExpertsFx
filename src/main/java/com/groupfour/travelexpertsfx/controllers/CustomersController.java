@@ -350,9 +350,10 @@ Notes for Kazi:
 TASKS:
 Status: INCOMPLETE
 
-    * validation (yuck)
+
     * CSS
     * make pages not ugly
+    * add confirmation for delete
 
  Status: COMPLETE
     * READ - view customer details in a table
@@ -363,5 +364,6 @@ Status: INCOMPLETE
     * DELETE - delete customer
     * search customer
     * view past trips
+    * validation (yuck)
 
  */

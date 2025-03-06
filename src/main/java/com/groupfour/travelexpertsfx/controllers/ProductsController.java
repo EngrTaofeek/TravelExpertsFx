@@ -29,6 +29,7 @@ import javafx.scene.layout.HBox;
  *
  *
  * - Message: are you sure you want to delete? before deleting
+ * make page not ugly
  */
 
 
@@ -127,7 +128,7 @@ public class ProductsController {
         try {
             productData = ProductDB.getProducts();
         } catch (SQLException e) {
-            throw new RuntimeException("Fail to load Products table", e);
+            ControllerMethods.alertUser (Alert.AlertType.ERROR, "Fail to load Products table\n"+e.getMessage());
         }
         tvProduct.setItems(productData);
     }
@@ -137,7 +138,7 @@ public class ProductsController {
         try {
             productData = ProductDB.getProductsBySearch(searchword);
         } catch (SQLException e) {
-            throw new RuntimeException("Fail to load Products table", e);
+            ControllerMethods.alertUser (Alert.AlertType.ERROR, "Fail to load Products table\n"+e.getMessage());
         }
         tvProduct.setItems(productData);
     }
