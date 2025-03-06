@@ -207,6 +207,7 @@ public class CustomerDetailsController {
             lblCustomerName.setText(currentCustomer.getCustfirstname()+" "+currentCustomer.getCustlastname());
             btnSaveChanges.setVisible(false);
             btnEdit.setVisible(true);
+            btnTrips.setVisible(true);
 
         } else if (pageMode.equalsIgnoreCase("edit")) {
             setFieldsEditable();
