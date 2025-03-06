@@ -7,8 +7,7 @@ package com.groupfour.travelexpertsfx.utils;
  * @To-do-list:
  *
 
- * - view past trips
- * - search customer
+
  *
  */
 
