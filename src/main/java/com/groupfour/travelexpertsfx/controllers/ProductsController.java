@@ -5,6 +5,7 @@ package com.groupfour.travelexpertsfx.controllers;
 
 import com.groupfour.travelexpertsfx.models.Product;
 import com.groupfour.travelexpertsfx.utils.ControllerMethods;
+import com.groupfour.travelexpertsfx.utils.Validator_KF;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
@@ -26,7 +27,7 @@ import javafx.scene.layout.HBox;
  * @Description: Controller for the performing CRUD on products
  * @To-do-list:
  *
- * - Validation
+ *
  * - Message: are you sure you want to delete? before deleting
  */
 
@@ -40,10 +41,10 @@ public class ProductsController {
     private URL location;
 
     @FXML // fx:id="colProductId"
-    private TableColumn<ProductSupplier, Integer> colProductId; // Value injected by FXMLLoader
+    private TableColumn<Product, Integer> colProductId; // Value injected by FXMLLoader
 
     @FXML // fx:id="colProductName"
-    private TableColumn<ProductSupplier, String> colProductName; // Value injected by FXMLLoader
+    private TableColumn<Product, String> colProductName; // Value injected by FXMLLoader
 
     @FXML // fx:id="colProductId"
     private TableColumn<ProductSupplier, Integer> colSupplierId; // Value injected by FXMLLoader
@@ -52,7 +53,7 @@ public class ProductsController {
     private TableColumn<ProductSupplier, String> colSupplierName; // Value injected by FXMLLoader
 
     @FXML // fx:id="tvProduct"
-    private TableView<ProductSupplier> tvProduct; // Value injected by FXMLLoader
+    private TableView<Product> tvProduct; // Value injected by FXMLLoader
 
     @FXML
     private Button btnAdd, btnEdit, btnDelete, btnSaveChanges, btnSearch;
@@ -65,8 +66,8 @@ public class ProductsController {
 
 
 
-    //private ObservableList<Product> productData = FXCollections.observableArrayList();
-    private ObservableList<ProductSupplier> productData = FXCollections.observableArrayList();
+    private ObservableList<Product> productData = FXCollections.observableArrayList();
+//    private ObservableList<ProductSupplier> productData = FXCollections.observableArrayList();
     String modeSetter;
     Product productToUpdate;
 
@@ -92,7 +93,7 @@ public class ProductsController {
         displayProduct();
 
     }
-
+/*
     private void setupProductTable() {
         colProductId.setCellValueFactory(new PropertyValueFactory<ProductSupplier,Integer>("productId"));
         colProductName.setCellValueFactory(new PropertyValueFactory<ProductSupplier,String>("productName"));
@@ -100,11 +101,31 @@ public class ProductsController {
         colSupplierName.setCellValueFactory(new PropertyValueFactory<ProductSupplier, String>("supplierName"));
     }
 
+ */
 
+    private void setupProductTable() {
+        colProductId.setCellValueFactory(new PropertyValueFactory<Product,Integer>("productId"));
+        colProductName.setCellValueFactory(new PropertyValueFactory<Product,String>("productName"));
+
+    }
+
+/*
     public void displayProduct(){
         productData.clear();
         try {
             productData = ProductDB.getProductsSuppliers();
+        } catch (SQLException e) {
+            throw new RuntimeException("Fail to load Products table", e);
+        }
+        tvProduct.setItems(productData);
+    }
+
+ */
+
+    public void displayProduct(){
+        productData.clear();
+        try {
+            productData = ProductDB.getProducts();
         } catch (SQLException e) {
             throw new RuntimeException("Fail to load Products table", e);
         }
@@ -189,34 +210,48 @@ public class ProductsController {
 
     public void saveChangesProduct(MouseEvent mouseEvent) {
         int numRows=0;
+        String errorMessage="";
+        errorMessage = Validator_KF.isEmpty(tfProdName, "Product Name")
+                + Validator_KF.productAlreadyExists(tfProdName);
+
         if (modeSetter.equalsIgnoreCase("ADD")) {
-            try {
-                numRows = ProductDB.addProduct(tfProdName.getText());
-                Product product = ProductDB.getProductsByName(tfProdName.getText());
-                ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Product added successfully.\n" +
-                        "Details: \n" +
-                        "Product ID: "+product.getProductId()+"\n"+
-                        "Product Name: "+product.getProductName());
-                HBoxEdit.setVisible(false);
-                displayProduct();
-            } catch (SQLException e) {
-                ControllerMethods.alertUser(Alert.AlertType.ERROR, "An error occurred while adding New Product\n" + e.getMessage());
+
+
+            if (errorMessage.equals("")) {
+                try {
+                    numRows = ProductDB.addProduct(tfProdName.getText());
+                    Product product = ProductDB.getProductsByName(tfProdName.getText());
+                    ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Product added successfully.\n" +
+                            "Details: \n" +
+                            "Product ID: "+product.getProductId()+"\n"+
+                            "Product Name: "+product.getProductName());
+                    HBoxEdit.setVisible(false);
+                    displayProduct();
+                } catch (SQLException e) {
+                    ControllerMethods.alertUser(Alert.AlertType.ERROR, "An error occurred while adding New Product\n" + e.getMessage());
+                }
+            } else {
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, errorMessage);
             }
         } else if (modeSetter.equalsIgnoreCase("EDIT")) {
 
 
-            try {
-                productToUpdate.setProductName(tfProdName.getText());
-                numRows = ProductDB.updateProduct(productToUpdate);
-                ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Product updated successfully.\n" +
-                        "Details: \n" +
-                        "Product ID: "+productToUpdate.getProductId()+"\n"+
-                        "New Product Name: "+productToUpdate.getProductName());
-                HBoxEdit.setVisible(false);
-                displayProduct();
+            if (errorMessage.equals("")) {
+                try {
+                    productToUpdate.setProductName(tfProdName.getText());
+                    numRows = ProductDB.updateProduct(productToUpdate);
+                    ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Product updated successfully.\n" +
+                            "Details: \n" +
+                            "Product ID: "+productToUpdate.getProductId()+"\n"+
+                            "New Product Name: "+productToUpdate.getProductName());
+                    HBoxEdit.setVisible(false);
+                    displayProduct();
 
-            } catch (SQLException e) {
-                ControllerMethods.alertUser(Alert.AlertType.ERROR, "An error occurred while updating Product\n" + e.getMessage());
+                } catch (SQLException e) {
+                    ControllerMethods.alertUser(Alert.AlertType.ERROR, "An error occurred while updating Product\n" + e.getMessage());
+                }
+            } else {
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, errorMessage);
             }
 
         } else if (modeSetter.equalsIgnoreCase("DELETE")) {

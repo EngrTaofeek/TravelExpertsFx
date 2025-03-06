@@ -351,6 +351,8 @@ TASKS:
 Status: INCOMPLETE
 
     * validation (yuck)
+    * CSS
+    * make pages not ugly
 
  Status: COMPLETE
     * READ - view customer details in a table

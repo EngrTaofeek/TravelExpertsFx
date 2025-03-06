@@ -17,8 +17,8 @@
         <columns>
           <TableColumn fx:id="colProductId" prefWidth="75.0" text="Product ID" />
           <TableColumn fx:id="colProductName" prefWidth="75.0" text="Product Name" />
-            <TableColumn fx:id="colSupplierId" prefWidth="75.0" text="Supplier ID" />
-            <TableColumn fx:id="colSupplierName" prefWidth="75.0" text="Supplier Name" />
+<!--            <TableColumn fx:id="colSupplierId" prefWidth="75.0" text="Supplier ID" />-->
+<!--            <TableColumn fx:id="colSupplierName" prefWidth="75.0" text="Supplier Name" />-->
         </columns>
       </TableView>
       <HBox layoutX="150.0" layoutY="296.0">
