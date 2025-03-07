@@ -70,8 +70,7 @@ public class DashboardController implements Initializable {
         btnCustomers.setOnAction(event -> { loadPage("Customers.fxml", btnCustomers); toggleHomeButton(true); });
         btnProducts.setOnAction(event -> { loadPage("Products.fxml", btnProducts); toggleHomeButton(true); });
         btnMyStatistics.setOnAction(event -> { loadPage("MyStatistics.fxml", btnMyStatistics); toggleHomeButton(true); });
-        btnManagerStatistics.setOnAction(event -> { loadPage("ManagerStatistics.fxml", btnManagerStatistics); });
-        
+        btnManagerStatistics.setOnAction(event -> { loadPage("ManagerStatistics.fxml", btnManagerStatistics); toggleHomeButton(true); });
 
         // Apply default styles
         applyStylesheet();
@@ -149,8 +148,9 @@ public class DashboardController implements Initializable {
         btnSuppliers.setStyle("");
         btnCustomers.setStyle("");
         btnProducts.setStyle("");
+        btnMyStatistics.setStyle("");
+        btnManagerStatistics.setStyle("");
 
-        clickedButton.setStyle("-fx-background-color: #FFA000; -fx-text-fill: white;");
     }
 
     private void toggleHomeButton(boolean visible) {
