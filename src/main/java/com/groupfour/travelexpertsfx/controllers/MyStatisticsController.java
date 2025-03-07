@@ -2,6 +2,7 @@ package com.groupfour.travelexpertsfx.controllers;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,15 +18,13 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 
 public class MyStatisticsController {
 
     @FXML private BarChart<String, Number> brcStats;
     @FXML private CategoryAxis haxBarStats;
     @FXML private DatePicker dtpMaxDate;
-    @FXML private Label lblBookingAmt;
-    @FXML private Label lblCommissionAmt;
     @FXML private NumberAxis vaxBarStats;
 
     // Initialize a LocalDate object with its value set to today
@@ -63,10 +62,13 @@ public class MyStatisticsController {
                 XYChart.Series<String, Number> salesSeries = new XYChart.Series<>();
                 salesSeries.setName("Your Sales");
                 // Add datapoint for today's date
-                salesSeries.getData().add(new XYChart.Data<>(dateString, bookings));
+                XYChart.Data<String, Number> data = new XYChart.Data<>(dateString, bookings);
+                salesSeries.getData().add(data);
                 brcStats.getData().add(salesSeries);
                 // Add tooltip for initial date added
-
+                Tooltip tooltip = new Tooltip("Your Sales for " + dateString + ": " + bookings + "\nCommission: " + NumberFormat.getCurrencyInstance().format(commissions));
+                tooltip.setStyle("-fx-font-size: 14px");
+                Tooltip.install(data.getNode(), tooltip);
                 // Change the flag
                 isFirstLoad = false;
             } else {
@@ -90,9 +92,12 @@ public class MyStatisticsController {
             }
         }
         if (!dateAlreadyAdded) {
-            userSeries.getData().add(new XYChart.Data<>(dateString, bookings));
+            XYChart.Data<String, Number> data = new XYChart.Data<>(dateString, bookings);
+            userSeries.getData().add(data);
             // Add tooltip with commission data
-
+            Tooltip tooltip = new Tooltip("Your Sales for " + dateString + ": " + bookings + "\nCommission: " + NumberFormat.getCurrencyInstance().format(commissions));
+            tooltip.setStyle("-fx-font-size: 14px");
+            Tooltip.install(data.getNode(), tooltip);
             // Sort the dates
             sortDataByDate(userSeries);
         }
