@@ -17,7 +17,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class AgentsController {
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -192,6 +194,8 @@ public class AgentsController {
         Stage stage = new Stage();
         stage.setTitle("Agent" + mode);
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UTILITY);
         stage.showAndWait();
     }
 

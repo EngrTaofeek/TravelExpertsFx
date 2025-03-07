@@ -16,7 +16,9 @@ import com.groupfour.travelexpertsfx.models.PackageDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class PackagesController {
 
@@ -216,6 +218,8 @@ public class PackagesController {
         Stage stage = new Stage();
         stage.setTitle("Package" + mode);
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UTILITY);
         stage.showAndWait();
     }
 
