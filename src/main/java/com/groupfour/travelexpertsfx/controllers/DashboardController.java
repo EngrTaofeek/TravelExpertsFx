@@ -139,9 +139,6 @@ public class DashboardController implements Initializable {
         mainContent.getChildren().clear();
         Label welcomeLabel = new Label("Welcome to Travel Experts Dashboard!");
         welcomeLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #222831;");
-        String videopath=getClass().getResource("/images/welcomevideoclip.mp4").toExternalForm();
-
-
         mainContent.getChildren().add(welcomeLabel);
     }
 
