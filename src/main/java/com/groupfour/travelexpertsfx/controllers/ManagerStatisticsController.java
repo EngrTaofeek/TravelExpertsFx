@@ -27,7 +27,7 @@ public class ManagerStatisticsController {
     @FXML private ComboBox<Map.Entry<String, Integer>> cmbStatsView;
     @FXML private DatePicker dtpMaxDate;
     @FXML private CategoryAxis haxBarStats, haxLineStats;
-    @FXML private Label lblSelect, lblCumulativeSales;
+    @FXML private Label lblSelect, lblCumulativeSales, lblEmptyPie;
     @FXML private LineChart<String, Number> linStats;
     @FXML private PieChart pieStats;
     @FXML private NumberAxis vaxBarStats, vaxLineStats;
@@ -97,6 +97,9 @@ public class ManagerStatisticsController {
         pieStats.getData().clear();
         linStats.getData().clear();
         haxLineStats.getCategories().clear();
+        if (pieStats.isVisible()) {
+            lblEmptyPie.setVisible(true);
+        }
     }
 
     private void addToChart(Integer value) {
@@ -132,6 +135,7 @@ public class ManagerStatisticsController {
                 checkXYSeriesDuplicates(linStats, agentName, stringDate, commission);
                 break;
             case 3:
+                lblEmptyPie.setVisible(false);
                 // Get the agency selected in the combobox
                 AgencyStatsDTO agency = cmbSelectAgencies.getSelectionModel().getSelectedItem();
                 String agencyName = agency.toString();
@@ -284,6 +288,7 @@ public class ManagerStatisticsController {
                 cmbSelectAgencies.setVisible(false);
                 cmbSelectCustomers.setVisible(false);
                 lblCumulativeSales.setVisible(false);
+                lblEmptyPie.setVisible(false);
                 // Update labels
                 lblSelect.setText("Select Agent:");
                 // Reset date picker to today
@@ -321,6 +326,7 @@ public class ManagerStatisticsController {
                 cmbSelectAgencies.setVisible(false);
                 cmbSelectCustomers.setVisible(false);
                 lblCumulativeSales.setVisible(false);
+                lblEmptyPie.setVisible(false);
                 // Update labels
                 lblSelect.setText("Select Agent:");
                 // Reset date picker to today's date
@@ -360,6 +366,7 @@ public class ManagerStatisticsController {
                 brcStats.setVisible(false);
                 cmbSelectAgents.setVisible(false);
                 cmbSelectCustomers.setVisible(false);
+                lblEmptyPie.setVisible(false);
                 // Update label
                 lblSelect.setText("Select Agency: ");
                 // Reset date picker
@@ -394,6 +401,7 @@ public class ManagerStatisticsController {
                 cmbSelectAgencies.setVisible(false);
                 cmbSelectAgents.setVisible(false);
                 lblCumulativeSales.setVisible(false);
+                lblEmptyPie.setVisible(false);
                 // Update label
                 lblSelect.setText("Select Customer: ");
                 // Reset date picker
@@ -429,6 +437,7 @@ public class ManagerStatisticsController {
                 cmbSelectCustomers.setVisible(false);
                 lblSelect.setVisible(false);
                 lblCumulativeSales.setVisible(false);
+                lblEmptyPie.setVisible(false);
                 // Reset date picker and store the date as string
                 dtpMaxDate.setValue(LocalDate.now());
                 String selectedDate = dtpMaxDate.getValue().toString();
