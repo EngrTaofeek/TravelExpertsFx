@@ -7,12 +7,14 @@ import java.util.ResourceBundle;
 import com.groupfour.travelexpertsfx.models.Supplier;
 import com.groupfour.travelexpertsfx.models.SupplierDB;
 import com.groupfour.travelexpertsfx.utils.AlertMessage;
+import com.groupfour.travelexpertsfx.utils.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 
 public class SuppliersController {
 
@@ -37,6 +39,15 @@ public class SuppliersController {
     @FXML // fx:id="btnSearch"
     private Button btnSearch; // Value injected by FXMLLoader
 
+    @FXML // fx:id="btnSave"
+    private Button btnSave; // Value injected by FXMLLoader
+
+    @FXML // fx:id="edSupplierName"
+    private TextField edSupplierName; // Value injected by FXMLLoader
+
+    @FXML // fx:id="editField"
+    private HBox editField; // Value injected by FXMLLoader
+
     @FXML // fx:id="tcId"
     private TableColumn<Supplier, Integer> tcId; // Value injected by FXMLLoader
 
@@ -55,13 +66,17 @@ public class SuppliersController {
 
     Supplier selectedSupplier;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Suppliers.fxml'.";
         assert btnDelete != null : "fx:id=\"btnDelete\" was not injected: check your FXML file 'Suppliers.fxml'.";
         assert btnEdit != null : "fx:id=\"btnEdit\" was not injected: check your FXML file 'Suppliers.fxml'.";
         assert btnClear != null : "fx:id=\"btnClear\" was not injected: check your FXML file 'Suppliers.fxml'.";
+        assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'Suppliers.fxml'.";
         assert btnSearch != null : "fx:id=\"btnSearch\" was not injected: check your FXML file 'Suppliers.fxml'.";
+        assert edSupplierName != null : "fx:id=\"edSupplierName\" was not injected: check your FXML file 'Suppliers.fxml'.";
+        assert editField != null : "fx:id=\"editField\" was not injected: check your FXML file 'Suppliers.fxml'.";
         assert tcId != null : "fx:id=\"tcId\" was not injected: check your FXML file 'Suppliers.fxml'.";
         assert tcName != null : "fx:id=\"tcName\" was not injected: check your FXML file 'Suppliers.fxml'.";
         assert tfName != null : "fx:id=\"tfName\" was not injected: check your FXML file 'Suppliers.fxml'.";
@@ -71,44 +86,65 @@ public class SuppliersController {
         displaySuppliers();
 
         btnAdd.setOnAction(event -> {
-            try {
-                addSupplier();
-            } catch (SQLException e) {
-               message.alertMessage(Alert.AlertType.ERROR, e.getMessage());
-            }
+            editField.setVisible(true);
+            edSupplierName.clear();
+            btnSave.setText("Add");
         });
 
         btnDelete.setOnAction(event -> {
-            deleteSupplier();
+            if (selectedSupplier != null) {
+                deleteSupplier();
+            } else {
+                message.alertMessage(Alert.AlertType.ERROR, "Please select a supplier");
+            }
         });
 
         btnEdit.setOnAction(event -> {
-            editSupplier();
+            if (selectedSupplier != null) {
+                editField.setVisible(true);
+                btnSave.setText("Update");
+                edSupplierName.setText(selectedSupplier.getSupname());
+            } else {
+                message.alertMessage(Alert.AlertType.ERROR, "Please select a supplier");
+            }
         });
 
         btnClear.setOnAction(event -> {
             tfName.clear();
+            displaySuppliers();
         });
 
         btnSearch.setOnAction(event -> {
-           searchSupplier();
+            searchSupplier();
+        });
+
+        btnSave.setOnAction(event -> {
+            if (btnSave.getText().equals("Update")) {
+                editSupplier();
+            } else {
+                try {
+                    addSupplier();
+                } catch (SQLException e) {
+                    message.alertMessage(Alert.AlertType.ERROR, e.getMessage());
+                }
+            }
         });
 
         tvSuppliers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 selectedSupplier = newValue;
-                tfName.setText(selectedSupplier.getSupname());
+                edSupplierName.clear();
             }
         });
     }
 
     private void setupSupplierTable() {
-        tcId.setCellValueFactory(new PropertyValueFactory<Supplier,Integer>("id"));
-        tcName.setCellValueFactory(new PropertyValueFactory<Supplier,String>("supname"));
+        tcId.setCellValueFactory(new PropertyValueFactory<Supplier, Integer>("id"));
+        tcName.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supname"));
     }
 
 
-    public void displaySuppliers(){
+    public void displaySuppliers() {
         data.clear();
         try {
             data = SupplierDB.getSuppliers();
@@ -119,25 +155,33 @@ public class SuppliersController {
     }
 
     public void addSupplier() throws SQLException {
-        Supplier supplier = new Supplier(0,tfName.getText());
-        int numRows = 0;
+        boolean valid = true;
         try {
-            numRows = SupplierDB.addSupplier(supplier);
+            Validator.validateName(edSupplierName.getText());
         } catch (Exception e) {
-             message.alertMessage(Alert.AlertType.ERROR,"An error occurred while adding the supplier\n:" + e.getMessage());
+            valid = false;
+            message.alertMessage(Alert.AlertType.ERROR, e.getMessage());
         }
-        if (numRows == 1) {
-            message.alertMessage(Alert.AlertType.CONFIRMATION, "Successfully added the supplier");
-        } else {
-            message.alertMessage(Alert.AlertType.ERROR, "Insertion failed.");
+        if (valid) {
+            Supplier supplier = new Supplier(0, edSupplierName.getText());
+            int numRows = 0;
+            try {
+                numRows = SupplierDB.addSupplier(supplier);
+            } catch (Exception e) {
+                message.alertMessage(Alert.AlertType.ERROR, "An error occurred while adding the supplier\n:" + e.getMessage());
+            }
+            if (numRows == 1) {
+                message.alertMessage(Alert.AlertType.CONFIRMATION, "Successfully added the supplier");
+            } else {
+                message.alertMessage(Alert.AlertType.ERROR, "Insertion failed.");
+            }
+            displaySuppliers();
         }
-        displaySuppliers();
     }
 
-    public void deleteSupplier(){
+    public void deleteSupplier() {
         int numRows = 0;
         Integer supplierId = selectedSupplier.getId();
-
         try {
             numRows = SupplierDB.deleteSupplier(supplierId);
             if (numRows == 1) {
@@ -148,29 +192,38 @@ public class SuppliersController {
         } catch (SQLException e) {
             message.alertMessage(Alert.AlertType.ERROR, "An error occurred while deleting the supplier\n" + e.getMessage());
         }
-        tfName.clear();
+        edSupplierName.clear();
         displaySuppliers();
     }
 
-    public void editSupplier(){
-        int numRows = 0;
-        Supplier supplier = new Supplier(selectedSupplier.getId(),tfName.getText());
+    public void editSupplier() {
+        boolean valid = true;
         try {
-            numRows = SupplierDB.updateSupplier(selectedSupplier.getId(), supplier);
-            if (numRows == 1) {
-                message.alertMessage(Alert.AlertType.CONFIRMATION, "The supplier has been updated successfully.");
-            } else {
-                message.alertMessage(Alert.AlertType.ERROR, "Update supplier failed.");
-            }
-        } catch (SQLException e) {
-            message.alertMessage(Alert.AlertType.ERROR, "An error occurred while updating the supplier\n:" + e.getMessage());
+            Validator.validateName(edSupplierName.getText());
+        } catch (Exception e) {
+            valid = false;
+            message.alertMessage(Alert.AlertType.ERROR, e.getMessage());
         }
-        tfName.clear();
-        displaySuppliers();
+        if (valid) {
+            int numRows = 0;
+            Supplier supplier = new Supplier(selectedSupplier.getId(), edSupplierName.getText());
+            try {
+                numRows = SupplierDB.updateSupplier(selectedSupplier.getId(), supplier);
+                if (numRows == 1) {
+                    message.alertMessage(Alert.AlertType.CONFIRMATION, "The supplier has been updated successfully.");
+                } else {
+                    message.alertMessage(Alert.AlertType.ERROR, "Update supplier failed.");
+                }
+            } catch (SQLException e) {
+                message.alertMessage(Alert.AlertType.ERROR, "An error occurred while updating the supplier\n:" + e.getMessage());
+            }
+            edSupplierName.clear();
+            displaySuppliers();
+        }
     }
 
-    public void searchSupplier(){
-        if(tfName.getText().isEmpty()){
+    public void searchSupplier() {
+        if (tfName.getText().isEmpty()) {
             displaySuppliers();
         } else {
             data.clear();

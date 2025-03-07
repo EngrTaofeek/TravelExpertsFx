@@ -106,9 +106,11 @@ public class SupplierDB {
         ObservableList<Supplier> suppliers = FXCollections.observableArrayList();
         Supplier supplier;
         Connection conn = getConnection();
-        String SQL = "select * from suppliers where supname like ?";
+        String SQL = "SELECT * FROM suppliers WHERE " +
+                "LOWER(supname) LIKE LOWER(?)";
         PreparedStatement stmt = conn.prepareStatement(SQL);
-        stmt.setString(1,"%"+searchValue+"%");
+        stmt.setString(1, "%" + searchValue + "%");
+
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             supplier = new Supplier(

@@ -15,6 +15,7 @@ import com.groupfour.travelexpertsfx.models.AgencyDB;
 import com.groupfour.travelexpertsfx.models.Agent;
 import com.groupfour.travelexpertsfx.models.AgentDB;
 import com.groupfour.travelexpertsfx.utils.AlertMessage;
+import com.groupfour.travelexpertsfx.utils.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,7 +69,8 @@ public class AgentFormViewController {
 
     AlertMessage message = new AlertMessage();
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert btnCancel != null : "fx:id=\"btnCancel\" was not injected: check your FXML file 'agent-from-view.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'agent-from-view.fxml'.";
@@ -87,50 +89,52 @@ public class AgentFormViewController {
         });
 
         btnSave.setOnAction((ActionEvent event) -> {
-           saveAgent(event);
+            saveAgent(event);
         });
     }
 
-    private void setItemsOfAgency(){
+    private void setItemsOfAgency() {
         try {
             options = AgencyDB.getAgencies();
             cbAgency.setItems(options);
         } catch (SQLException e) {
-            message.alertMessage(Alert.AlertType.ERROR,"Error loading agency options");
+            message.alertMessage(Alert.AlertType.ERROR, "Error loading agency options");
         }
     }
 
     private void saveAgent(ActionEvent event) {
         Agent agent = getAgentFormView();
         int numRows = 0;
-        if (mode.equals("add")) {
-            try {
-                numRows = AgentDB.addAgent(agent);
-            } catch (SQLException e) {
-                message.alertMessage(Alert.AlertType.ERROR,"An error occurred while Adding the agent\n:"+e.getMessage());
+        if (agent != null) {
+            if (mode.equals("add")) {
+                try {
+                    numRows = AgentDB.addAgent(agent);
+                } catch (SQLException e) {
+                    message.alertMessage(Alert.AlertType.ERROR, "An error occurred while Adding the agent\n:" + e.getMessage());
+                }
+            } else {
+                try {
+                    numRows = AgentDB.updateAgent(agent);
+                } catch (SQLException e) {
+                    message.alertMessage(Alert.AlertType.ERROR, "An error occurred while Updating the agent\n:" + e.getMessage());
+                }
             }
-        } else {
-            try {
-                numRows = AgentDB.updateAgent(agent);
-            } catch (SQLException e) {
-                message.alertMessage(Alert.AlertType.ERROR,"An error occurred while Updating the agent\n:"+e.getMessage());
+            if (numRows == 1) {
+                message.alertMessage(Alert.AlertType.CONFIRMATION, "Successfully saved the agent");
+            } else {
+                message.alertMessage(Alert.AlertType.ERROR, mode == "add" ? "Insertion" : "Update" + " failed.");
             }
+            closeWindow(event);
         }
-        if(numRows == 1){
-            message.alertMessage(Alert.AlertType.CONFIRMATION,"Successfully saved the agent");
-        } else {
-            message.alertMessage(Alert.AlertType.ERROR,mode == "add" ? "Insertion" : "Update" + " failed.");
-        }
-        closeWindow(event);
     }
 
     private void closeWindow(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
     }
 
-    public void setMode(String mode){
+    public void setMode(String mode) {
         this.mode = mode;
     }
 
@@ -139,14 +143,29 @@ public class AgentFormViewController {
     }
 
     private Agent getAgentFormView() {
-        return new Agent(agentId != 0 ? agentId : 0,
-                tfFirstname.getText(),
-                tfMiddleInitial.getText(),
-                tfLastname.getText(),
-                tfBusPhone.getText(),
-                tfEmail.getText(),
-                tfPosition.getText(),
-                cbAgency.getSelectionModel().getSelectedItem().getId(),"");
+        try {
+            Validator.validateName(tfFirstname.getText());
+            Validator.validateName(tfLastname.getText());
+            Validator.validatePhone(tfBusPhone.getText());
+            Validator.validateEmail(tfEmail.getText());
+            Validator.validateMiddleName(tfMiddleInitial.getText());
+            Validator.isEmpty(tfPosition.getText(), "Please enter a position");
+            if (cbAgency.getSelectionModel().getSelectedItem() == null) {
+                throw new RuntimeException("Please select an agency");
+            }
+            ;
+            return new Agent(agentId != 0 ? agentId : 0,
+                    tfFirstname.getText(),
+                    tfMiddleInitial.getText(),
+                    tfLastname.getText(),
+                    tfBusPhone.getText(),
+                    tfEmail.getText(),
+                    tfPosition.getText(),
+                    cbAgency.getSelectionModel().getSelectedItem().getId(), "");
+        } catch (RuntimeException e) {
+            message.alertMessage(Alert.AlertType.ERROR, e.getMessage());
+        }
+        return null;
     }
 
     public void setAgentFormView(Agent agent) {
@@ -157,8 +176,8 @@ public class AgentFormViewController {
         tfEmail.setText(agent.getAgtemail());
         tfPosition.setText(agent.getAgtposition());
         int index = 0;
-        for(int i = 0;i < options.size();i++) {
-            if(options.get(i).getId() == agent.getAgencyid()){
+        for (int i = 0; i < options.size(); i++) {
+            if (options.get(i).getId() == agent.getAgencyid()) {
                 index = i;
             }
         }
