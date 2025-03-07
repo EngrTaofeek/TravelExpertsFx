@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.time.LocalDate;
 
 /**
  * @Author DarylWxc
@@ -103,48 +102,20 @@ public class AgencyDB {
         return numAffectedRows;
     }
 
-    public static ObservableList<Agency> searchAgencies(String address, String city, String prov, String postal, String country, String phone, String fax) throws SQLException {
+    public static ObservableList<Agency> searchAgenciesByString(String searchWord) throws SQLException {
         ObservableList<Agency> agencies = FXCollections.observableArrayList();
         Agency agency;
         Connection conn = getConnection();
 
         String SQL = "SELECT * FROM agencies WHERE " +
-                "(? IS NULL OR ? = '' OR LOWER(agncyaddress) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agncycity) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agncyprov) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agncypostal) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agncycountry) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agncyphone) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agncyfax) LIKE LOWER(?)) ";
+                "agncyaddress ilike '%" + searchWord + "%' " +
+                "or agncycity  ilike '%" + searchWord + "%' " +
+                "or agncyprov  ilike '%" + searchWord + "%'" +
+                "or agncypostal  ilike '%" + searchWord + "%'" +
+                "or agncycountry  ilike '%" + searchWord + "%'" +
+                "or agncyphone  ilike '%" + searchWord + "%'" +
+                "or agncyfax  ilike '%" + searchWord + "%'";
         PreparedStatement stmt = conn.prepareStatement(SQL);
-
-        stmt.setString(1, address.isEmpty() ? null : address);
-        stmt.setString(2, address.isEmpty() ? null : address);
-        stmt.setString(3, "%" + address + "%");
-
-        stmt.setString(4, city.isEmpty() ? null : city);
-        stmt.setString(5, city.isEmpty() ? null : city);
-        stmt.setString(6, "%" + city + "%");
-
-        stmt.setString(7, prov.isEmpty() ? null : prov);
-        stmt.setString(8, prov.isEmpty() ? null : prov);
-        stmt.setString(9, "%" + prov + "%");
-
-        stmt.setString(10, postal.isEmpty() ? null : postal);
-        stmt.setString(11, postal.isEmpty() ? null : postal);
-        stmt.setString(12, "%" + postal + "%");
-
-        stmt.setString(13, country.isEmpty() ? null : country);
-        stmt.setString(14, country.isEmpty() ? null : country);
-        stmt.setString(15, "%" + country + "%");
-
-        stmt.setString(16, phone.isEmpty() ? null : phone);
-        stmt.setString(17, phone.isEmpty() ? null : phone);
-        stmt.setString(18, "%" + phone + "%");
-
-        stmt.setString(19, fax.isEmpty() ? null : fax);
-        stmt.setString(20, fax.isEmpty() ? null : fax);
-        stmt.setString(21, "%" + fax + "%");
 
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
