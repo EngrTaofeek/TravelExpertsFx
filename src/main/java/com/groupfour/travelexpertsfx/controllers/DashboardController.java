@@ -149,8 +149,9 @@ public class DashboardController implements Initializable {
         btnSuppliers.setStyle("");
         btnCustomers.setStyle("");
         btnProducts.setStyle("");
+        btnMyStatistics.setStyle("");
+        btnManagerStatistics.setStyle("");
 
-        clickedButton.setStyle("-fx-background-color: #FFA000; -fx-text-fill: white;");
     }
 
     private void toggleHomeButton(boolean visible) {

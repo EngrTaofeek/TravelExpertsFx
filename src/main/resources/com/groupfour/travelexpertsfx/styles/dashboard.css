@@ -98,11 +98,11 @@
 .sidebar-button:focused,
 .sidebar-button:selected,
 .sidebar-button:pressed {
-    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Darker red-pink */
+    -fx-background-color: linear-gradient(to right, #FF8C00, #FFA500); /* orange highlight */
     -fx-text-fill: white;
-    -fx-border-width: 2px;
-    -fx-border-color: white;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 3); /* Subtle glow */
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0, 0, 4); /* Subtle glow */
 }
 
 /* Sidebar Logo Styling */
@@ -161,4 +161,18 @@
    ========================================== */
 .sidebar-button, .top-button, .menu-button {
     -fx-transition: all 0.3s ease-in-out;
+}
+
+
+
+/* ==========================================
+   footer Effects (for future development e.g. copyright, version..)
+   ========================================== */
+
+
+.footer {
+    -fx-background-color: #6A0572;
+    -fx-text-fill: white;
+    -fx-padding: 5px 10px;
+    -fx-alignment: center-right;
 }
