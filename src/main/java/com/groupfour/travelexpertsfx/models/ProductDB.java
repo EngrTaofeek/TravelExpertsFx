@@ -15,7 +15,7 @@ import java.sql.*;
 public class ProductDB implements DBConnection {
 
 
-/*
+
     public static ObservableList<Product> getProducts() throws SQLException {
         ObservableList<Product> products = FXCollections.observableArrayList();
         Product product;
@@ -32,7 +32,7 @@ public class ProductDB implements DBConnection {
         return products;
     }
 
- */
+
 
     public static Product getProductsByName(String prodName) throws SQLException {
         //ObservableList<Product> products = FXCollections.observableArrayList();
@@ -103,6 +103,8 @@ public class ProductDB implements DBConnection {
 
     // SEARCH FUNCTION
 
+    /*
+
     public static ObservableList<ProductSupplier> getProductsBySearch(String searchword) throws SQLException {
         ObservableList<ProductSupplier> productSuppliers = FXCollections.observableArrayList();
         ProductSupplier productSupplier;
@@ -125,6 +127,30 @@ public class ProductDB implements DBConnection {
             productSuppliers.add(productSupplier);
         }
         return productSuppliers;
+    }
+
+     */
+
+    public static ObservableList<Product> getProductsBySearch(String searchword) throws SQLException {
+        ObservableList<Product> products = FXCollections.observableArrayList();
+        Product product;
+        String query = "SELECT products.productid, products.prodname " +
+                "FROM products " +
+
+
+                "where products.prodname ilike '%"+searchword+"%' "+
+                "ORDER BY products.productid ASC";
+        Connection conn = DBConnection.getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            product = new Product(
+                    rs.getInt(1),
+                    rs.getString(2)
+            );
+            products.add(product);
+        }
+        return products;
     }
 
     // ADD NEW PRODUCTS (C)

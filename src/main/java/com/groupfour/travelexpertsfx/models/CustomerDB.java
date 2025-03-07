@@ -1,5 +1,13 @@
 package com.groupfour.travelexpertsfx.models;
 
+/**
+ * @Author: Kazi Fattah
+ * @Date: 2/2025
+ * @Description Java class that handles database operations for CustomersController
+ * @To-do-list:
+ *
+ */
+
 import com.groupfour.travelexpertsfx.database.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -230,7 +238,43 @@ public class CustomerDB {
 
     }
 
+    public static ObservableList<PastTrips> getTripsByCustomerId(int customerId) throws SQLException {
+        ObservableList<PastTrips> trips = FXCollections.observableArrayList();
+        PastTrips trip;
+        String query = "select bookings.bookingid, " +
+                "description, " +
+                "destination, " +
+                "baseprice+agencycommission, " +
+                "ttname, " +
+                "classname, " +
+                "tripstart, " +
+                "tripend " +
+                "from bookingdetails " +
+                "join bookings on bookingdetails.bookingid=bookings.bookingid " +
+                "join triptypes on triptypes.triptypeid = bookings.triptypeid " +
+                "join classes on classes.classid = bookingdetails.classid " +
+                "where customerid = "+customerId;
+        Connection conn = DBConnection.getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            trip = new PastTrips(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getDouble(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    rs.getDate(7),
+                    rs.getDate(8)
+            );
+            trips.add(trip);
+        }
+        return trips;
+    }
+
     /*
+
 
      */
 
