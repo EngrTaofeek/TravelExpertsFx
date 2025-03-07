@@ -50,58 +50,86 @@ public class PackageDB {
         return packages;
     }
 
-    public static ObservableList<Package> searchPackages(String pkgName, LocalDate start, LocalDate end, Double basePrice, Double agencyCommission, String desc) throws SQLException {
+    public static ObservableList<Package> searchPackagesByString(String searchWord, LocalDate start, LocalDate end) throws SQLException {
         ObservableList<Package> packages = FXCollections.observableArrayList();
         Package objectPackage;
         Connection conn = getConnection();
 
         String SQL = "SELECT * FROM packages WHERE " +
-                "(? IS NULL OR ? = '' OR LOWER(pkgname) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(pkgdesc) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR pkgstartdate >= ?) " +
-                "AND (? IS NULL OR pkgenddate <= ?)" +
-                "AND (? IS NULL OR pkgbaseprice = ?) " +
-                "AND (? IS NULL OR pkgagencycommission = ?)";
+                "((? IS NULL OR ? = '' OR pkgname ILIKE ?) " +
+                "OR (? IS NULL OR ? = '' OR pkgdesc ILIKE ?)) " +
+                "AND (?::timestamp IS NULL OR pkgstartdate >= ?::timestamp) " +
+                "AND (?::timestamp IS NULL OR pkgenddate <= ?::timestamp)";
         PreparedStatement stmt = conn.prepareStatement(SQL);
 
-        stmt.setString(1, pkgName.isEmpty() ? null : pkgName);
-        stmt.setString(2, pkgName.isEmpty() ? null : pkgName);
-        stmt.setString(3, "%" + pkgName + "%");
+        stmt.setString(1, searchWord.isEmpty() ? null : searchWord);
+        stmt.setString(2, searchWord.isEmpty() ? null : searchWord);
+        stmt.setString(3, "%" + searchWord + "%");
 
-        stmt.setString(4, desc.isEmpty() ? null : desc);
-        stmt.setString(5, desc.isEmpty() ? null : desc);
-        stmt.setString(6, "%" + desc + "%");
+        stmt.setString(4, searchWord.isEmpty() ? null : searchWord);
+        stmt.setString(5, searchWord.isEmpty() ? null : searchWord);
+        stmt.setString(6, "%" + searchWord + "%");
 
-        if(start == null) {
-            stmt.setNull(7, java.sql.Types.DATE);
-            stmt.setNull(8, java.sql.Types.DATE);
+        if (start == null) {
+            stmt.setNull(7, Types.DATE);
+            stmt.setNull(8, Types.DATE);
         } else {
-            stmt.setDate(7, java.sql.Date.valueOf(start));
-            stmt.setDate(8, java.sql.Date.valueOf(start));
+            stmt.setDate(7, Date.valueOf(start));
+            stmt.setDate(8, Date.valueOf(start));
         }
 
-        if(end == null) {
-            stmt.setNull(9, java.sql.Types.DATE);
-            stmt.setNull(10, java.sql.Types.DATE);
+        if (end == null) {
+            stmt.setNull(9, Types.DATE);
+            stmt.setNull(10, Types.DATE);
         } else {
-            stmt.setDate(9, java.sql.Date.valueOf(end));
-            stmt.setDate(10, java.sql.Date.valueOf(end));
+            stmt.setDate(9, Date.valueOf(end));
+            stmt.setDate(10, Date.valueOf(end));
         }
 
-        if(basePrice == null) {
-            stmt.setNull(11, java.sql.Types.DOUBLE);
-            stmt.setNull(12, java.sql.Types.DOUBLE);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            objectPackage = new Package(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getDouble(7),
+                    rs.getDouble(6),
+                    rs.getDate(4),
+                    rs.getDate(3),
+                    rs.getString(5)
+            );
+            packages.add(objectPackage);
+        }
+        return packages;
+    }
+
+    public static ObservableList<Package> searchPackagesByNumber(double searchWord, LocalDate start, LocalDate end) throws SQLException {
+        ObservableList<Package> packages = FXCollections.observableArrayList();
+        Package objectPackage;
+        Connection conn = getConnection();
+
+        String SQL = "SELECT * FROM packages WHERE " +
+                "(CAST(pkgbaseprice as TEXT) ilike '%" + searchWord + "%' " +
+                "or CAST(pkgagencycommission as TEXT) ilike '%" + searchWord + "%' " +
+                "or pkgdesc ilike '%" + searchWord + "%' " +
+                "or pkgname ilike '%" + searchWord + "%') " +
+                "AND (?::timestamp IS NULL OR pkgstartdate >= ?::timestamp) " +
+                "AND (?::timestamp IS NULL OR pkgenddate <= ?::timestamp)";
+        PreparedStatement stmt = conn.prepareStatement(SQL);
+
+        if (start == null) {
+            stmt.setNull(1, Types.DATE);
+            stmt.setNull(2, Types.DATE);
         } else {
-            stmt.setDouble(11, basePrice);
-            stmt.setDouble(12, basePrice);
+            stmt.setDate(1, Date.valueOf(start));
+            stmt.setDate(2, Date.valueOf(start));
         }
 
-        if(agencyCommission == null) {
-            stmt.setNull(13, java.sql.Types.DOUBLE);
-            stmt.setNull(14, java.sql.Types.DOUBLE);
+        if (end == null) {
+            stmt.setNull(3, Types.DATE);
+            stmt.setNull(4, Types.DATE);
         } else {
-            stmt.setDouble(13, agencyCommission);
-            stmt.setDouble(14, agencyCommission);
+            stmt.setDate(3, Date.valueOf(end));
+            stmt.setDate(4, Date.valueOf(end));
         }
 
         ResultSet rs = stmt.executeQuery();
@@ -126,8 +154,8 @@ public class PackageDB {
         String sql = "INSERT INTO packages (pkgname, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, objectPackage.getPkgname());
-        stmt.setDate(2,Date.valueOf(objectPackage.getPkgstartdate()));
-        stmt.setDate(3,Date.valueOf(objectPackage.getPkgenddate()));
+        stmt.setDate(2, Date.valueOf(objectPackage.getPkgstartdate()));
+        stmt.setDate(3, Date.valueOf(objectPackage.getPkgenddate()));
         stmt.setString(4, objectPackage.getPkgdesc());
         stmt.setDouble(5, objectPackage.getPkgbaseprice());
         stmt.setDouble(6, objectPackage.getPkgagencycommission());
@@ -147,12 +175,12 @@ public class PackageDB {
                 "Where packageid = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, objectPackage.getPkgname());
-        stmt.setDate(2,Date.valueOf(objectPackage.getPkgstartdate()));
-        stmt.setDate(3,Date.valueOf(objectPackage.getPkgenddate()));
+        stmt.setDate(2, Date.valueOf(objectPackage.getPkgstartdate()));
+        stmt.setDate(3, Date.valueOf(objectPackage.getPkgenddate()));
         stmt.setString(4, objectPackage.getPkgdesc());
         stmt.setDouble(5, objectPackage.getPkgbaseprice());
         stmt.setDouble(6, objectPackage.getPkgagencycommission());
-        stmt.setInt(7,objectPackage.getId());
+        stmt.setInt(7, objectPackage.getId());
 
         numAffectedRows = stmt.executeUpdate();
         conn.close();
@@ -164,7 +192,7 @@ public class PackageDB {
         int numAffectedRows = 0;
         String sql = "DELETE FROM packages WHERE packageid = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1,packageId);
+        stmt.setInt(1, packageId);
         numAffectedRows = stmt.executeUpdate();
         conn.close();
         return numAffectedRows;

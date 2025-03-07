@@ -65,26 +65,8 @@ public class AgentsController {
     @FXML // fx:id="tcPosition"
     private TableColumn<Agent, String> tcPosition; // Value injected by FXMLLoader
 
-    @FXML // fx:id="tfAddress"
-    private TextField tfAddress; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfEmail"
-    private TextField tfEmail; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfFirstName"
-    private TextField tfFirstName; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfLastName"
-    private TextField tfLastName; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfMiddleInitial"
-    private TextField tfMiddleInitial; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfPhone"
-    private TextField tfPhone; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfPosition"
-    private TextField tfPosition; // Value injected by FXMLLoader
+    @FXML // fx:id="tfSearchField"
+    private TextField tfSearchField; // Value injected by FXMLLoader
 
     @FXML // fx:id="tvAgent"
     private TableView<Agent> tvAgent; // Value injected by FXMLLoader
@@ -99,7 +81,8 @@ public class AgentsController {
 
     private ObservableList<Agency> options = FXCollections.observableArrayList();
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Agents.fxml'.";
         assert btnClear != null : "fx:id=\"btnClear\" was not injected: check your FXML file 'Agents.fxml'.";
@@ -114,14 +97,8 @@ public class AgentsController {
         assert tcMiddleInitial != null : "fx:id=\"tcMiddleInitial\" was not injected: check your FXML file 'Agents.fxml'.";
         assert tcPhone != null : "fx:id=\"tcPhone\" was not injected: check your FXML file 'Agents.fxml'.";
         assert tcPosition != null : "fx:id=\"tcPosition\" was not injected: check your FXML file 'Agents.fxml'.";
-        assert tfAddress != null : "fx:id=\"tfAddress\" was not injected: check your FXML file 'Agents.fxml'.";
-        assert tfEmail != null : "fx:id=\"tfEmail\" was not injected: check your FXML file 'Agents.fxml'.";
-        assert tfFirstName != null : "fx:id=\"tfFirstName\" was not injected: check your FXML file 'Agents.fxml'.";
-        assert tfLastName != null : "fx:id=\"tfLastName\" was not injected: check your FXML file 'Agents.fxml'.";
-        assert tfMiddleInitial != null : "fx:id=\"tfMiddleInitial\" was not injected: check your FXML file 'Agents.fxml'.";
-        assert tfPhone != null : "fx:id=\"tfPhone\" was not injected: check your FXML file 'Agents.fxml'.";
-        assert tfPosition != null : "fx:id=\"tfPosition\" was not injected: check your FXML file 'Agents.fxml'.";
         assert tvAgent != null : "fx:id=\"tvAgent\" was not injected: check your FXML file 'Agents.fxml'.";
+        assert tfSearchField != null : "fx:id=\"tfSearchField\" was not injected: check your FXML file 'Agents.fxml'.";
 
         setItemsOfAgency();
         setupAgentTable();
@@ -143,15 +120,15 @@ public class AgentsController {
             if (agent != null) {
                 CreateForm(agent);
             } else {
-                message.alertMessage(Alert.AlertType.ERROR,"Please select a agent first");
+                message.alertMessage(Alert.AlertType.ERROR, "Please select a agent first");
             }
         });
 
         btnDelete.setOnAction(event -> {
-            if(agent != null) {
+            if (agent != null) {
                 deleteAgent(agent);
             } else {
-                message.alertMessage(Alert.AlertType.ERROR,"Please select a agent first");
+                message.alertMessage(Alert.AlertType.ERROR, "Please select a agent first");
             }
         });
 
@@ -164,23 +141,23 @@ public class AgentsController {
         });
     }
 
-    private void setItemsOfAgency(){
+    private void setItemsOfAgency() {
         try {
             options = AgencyDB.getAgencies();
             cbAgency.setItems(options);
         } catch (SQLException e) {
-            message.alertMessage(Alert.AlertType.ERROR,"Error loading agency options");
+            message.alertMessage(Alert.AlertType.ERROR, "Error loading agency options");
         }
     }
 
     private void setupAgentTable() {
-        tcFirstName.setCellValueFactory(new PropertyValueFactory<Agent,String>("agtfirstname"));
-        tcMiddleInitial.setCellValueFactory(new PropertyValueFactory<Agent,String>("agtmiddleinitial"));
-        tcLastName.setCellValueFactory(new PropertyValueFactory<Agent,String>("agtlastname"));
-        tcPhone.setCellValueFactory(new PropertyValueFactory<Agent,String>("agtbusphone"));
-        tcEmail.setCellValueFactory(new PropertyValueFactory<Agent,String>("agtemail"));
-        tcPosition.setCellValueFactory(new PropertyValueFactory<Agent,String>("agtposition"));
-        tcAgency.setCellValueFactory(new PropertyValueFactory<Agent,String>("agency"));
+        tcFirstName.setCellValueFactory(new PropertyValueFactory<Agent, String>("agtfirstname"));
+        tcMiddleInitial.setCellValueFactory(new PropertyValueFactory<Agent, String>("agtmiddleinitial"));
+        tcLastName.setCellValueFactory(new PropertyValueFactory<Agent, String>("agtlastname"));
+        tcPhone.setCellValueFactory(new PropertyValueFactory<Agent, String>("agtbusphone"));
+        tcEmail.setCellValueFactory(new PropertyValueFactory<Agent, String>("agtemail"));
+        tcPosition.setCellValueFactory(new PropertyValueFactory<Agent, String>("agtposition"));
+        tcAgency.setCellValueFactory(new PropertyValueFactory<Agent, String>("agency"));
     }
 
     public void displayAgents() {
@@ -193,7 +170,7 @@ public class AgentsController {
         tvAgent.setItems(data);
     }
 
-    private void CreateForm(Agent agent){
+    private void CreateForm(Agent agent) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/groupfour/travelexpertsfx/views/agent-from-view.fxml"));
         Scene scene = null;
         try {
@@ -203,7 +180,7 @@ public class AgentsController {
         }
         AgentFormViewController controller = fxmlLoader.getController();
         controller.setMode(mode);
-        if(agent != null){
+        if (agent != null) {
             controller.setAgentFormView(agent);
             controller.setAgentId(agent.getId());
         }
@@ -213,12 +190,12 @@ public class AgentsController {
 
     private void closeWindow(Scene scene) {
         Stage stage = new Stage();
-        stage.setTitle("Agent"+ mode);
+        stage.setTitle("Agent" + mode);
         stage.setScene(scene);
         stage.showAndWait();
     }
 
-    private void deleteAgent(Agent agent){
+    private void deleteAgent(Agent agent) {
         int numRows = 0;
         int agentId = agent.getId();
 
@@ -235,28 +212,22 @@ public class AgentsController {
         displayAgents();
     }
 
-    private void clearSearchForm(){
-        tfLastName.clear();
-        tfMiddleInitial.clear();
-        tfLastName.clear();
-        tfEmail.clear();
-        tfPhone.clear();
-        tfPosition.clear();
+    private void clearSearchForm() {
         cbAgency.getSelectionModel().clearSelection();
+        tfSearchField.clear();
         displayAgents();
     }
 
     private void searchAgents() {
         data.clear();
         Agency agency = cbAgency.getSelectionModel().getSelectedItem();
+        String searchWord = tfSearchField.getText();
         int agencyId = 0;
-        if(agency != null){
+        if (agency != null) {
             agencyId = agency.getId();
         }
         try {
-            data = AgentDB.searchAgents(tfFirstName.getText(),tfMiddleInitial.getText(),
-                    tfLastName.getText(),tfPhone.getText(),tfEmail.getText(),tfPosition.getText(),
-                    agencyId == 0 ? null : agencyId);
+            data = AgentDB.searchAgents(searchWord, agencyId == 0 ? null : agencyId);
         } catch (SQLException e) {
             throw new RuntimeException("Fail to load agency table", e);
         }

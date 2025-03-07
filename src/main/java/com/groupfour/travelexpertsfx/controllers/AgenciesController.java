@@ -60,29 +60,11 @@ public class AgenciesController {
     @FXML // fx:id="tcProvince"
     private TableColumn<Agency, String> tcProvince; // Value injected by FXMLLoader
 
-    @FXML // fx:id="tfAddress"
-    private TextField tfAddress; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfCity"
-    private TextField tfCity; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfCountry"
-    private TextField tfCountry; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfFax"
-    private TextField tfFax; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfPhone"
-    private TextField tfPhone; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfPostal"
-    private TextField tfPostal; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfProvince"
-    private TextField tfProvince; // Value injected by FXMLLoader
-
     @FXML // fx:id="tvAgency"
     private TableView<Agency> tvAgency; // Value injected by FXMLLoader
+
+    @FXML
+    private TextField tfSearchField;
 
     private ObservableList<Agency> data = FXCollections.observableArrayList();
 
@@ -92,7 +74,8 @@ public class AgenciesController {
 
     AlertMessage message = new AlertMessage();
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Agencies.fxml'.";
         assert btnClear != null : "fx:id=\"btnClear\" was not injected: check your FXML file 'Agencies.fxml'.";
@@ -106,14 +89,9 @@ public class AgenciesController {
         assert tcPhone != null : "fx:id=\"tcPhone\" was not injected: check your FXML file 'Agencies.fxml'.";
         assert tcPostal != null : "fx:id=\"tcPostal\" was not injected: check your FXML file 'Agencies.fxml'.";
         assert tcProvince != null : "fx:id=\"tcProvince\" was not injected: check your FXML file 'Agencies.fxml'.";
-        assert tfAddress != null : "fx:id=\"tfAddress\" was not injected: check your FXML file 'Agencies.fxml'.";
-        assert tfCity != null : "fx:id=\"tfCity\" was not injected: check your FXML file 'Agencies.fxml'.";
-        assert tfCountry != null : "fx:id=\"tfCountry\" was not injected: check your FXML file 'Agencies.fxml'.";
-        assert tfFax != null : "fx:id=\"tfFax\" was not injected: check your FXML file 'Agencies.fxml'.";
-        assert tfPhone != null : "fx:id=\"tfPhone\" was not injected: check your FXML file 'Agencies.fxml'.";
-        assert tfPostal != null : "fx:id=\"tfPostal\" was not injected: check your FXML file 'Agencies.fxml'.";
         assert tvAgency != null : "fx:id=\"tvPackages\" was not injected: check your FXML file 'Agencies.fxml'.";
-        assert tfProvince != null : "fx:id=\"tfProvince\" was not injected: check your FXML file 'Agencies.fxml'.";
+        assert tfSearchField != null : "fx:id=\"tfSearchField\" was not injected: check your FXML file 'Agencies.fxml'.";
+
 
         setupPackageTable();
         displayAgencies();
@@ -134,20 +112,20 @@ public class AgenciesController {
             if (agency != null) {
                 CreateForm(agency);
             } else {
-                message.alertMessage(Alert.AlertType.ERROR,"Please select a agency first");
+                message.alertMessage(Alert.AlertType.ERROR, "Please select a agency first");
             }
         });
 
         btnDelete.setOnAction(event -> {
-            if(agency != null) {
+            if (agency != null) {
                 deleteAgency(agency);
             } else {
-                message.alertMessage(Alert.AlertType.ERROR,"Please select a agency first");
+                message.alertMessage(Alert.AlertType.ERROR, "Please select a agency first");
             }
         });
 
         btnClear.setOnAction(event -> {
-           clearSearchForm();
+            clearSearchForm();
         });
 
         btnSearch.setOnAction(event -> {
@@ -156,13 +134,13 @@ public class AgenciesController {
     }
 
     private void setupPackageTable() {
-        tcAddress.setCellValueFactory(new PropertyValueFactory<Agency,String>("agencyaddress"));
-        tcCity.setCellValueFactory(new PropertyValueFactory<Agency,String>("agencycity"));
-        tcProvince.setCellValueFactory(new PropertyValueFactory<Agency,String>("agencyprov"));
-        tcPostal.setCellValueFactory(new PropertyValueFactory<Agency,String>("agencypostal"));
-        tcCountry.setCellValueFactory(new PropertyValueFactory<Agency,String>("agencycountry"));
-        tcPhone.setCellValueFactory(new PropertyValueFactory<Agency,String>("agencyphone"));
-        tcFax.setCellValueFactory(new PropertyValueFactory<Agency,String>("agencyfax"));
+        tcAddress.setCellValueFactory(new PropertyValueFactory<Agency, String>("agencyaddress"));
+        tcCity.setCellValueFactory(new PropertyValueFactory<Agency, String>("agencycity"));
+        tcProvince.setCellValueFactory(new PropertyValueFactory<Agency, String>("agencyprov"));
+        tcPostal.setCellValueFactory(new PropertyValueFactory<Agency, String>("agencypostal"));
+        tcCountry.setCellValueFactory(new PropertyValueFactory<Agency, String>("agencycountry"));
+        tcPhone.setCellValueFactory(new PropertyValueFactory<Agency, String>("agencyphone"));
+        tcFax.setCellValueFactory(new PropertyValueFactory<Agency, String>("agencyfax"));
     }
 
     public void displayAgencies() {
@@ -175,7 +153,7 @@ public class AgenciesController {
         tvAgency.setItems(data);
     }
 
-    private void CreateForm(Agency agency){
+    private void CreateForm(Agency agency) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/groupfour/travelexpertsfx/views/agency-form-view.fxml"));
         Scene scene = null;
         try {
@@ -185,7 +163,7 @@ public class AgenciesController {
         }
         AgencyFormViewController controller = fxmlLoader.getController();
         controller.setMode(mode);
-        if(agency != null){
+        if (agency != null) {
             controller.setAgencyFormView(agency);
             controller.setAgencyId(agency.getId());
         }
@@ -195,12 +173,12 @@ public class AgenciesController {
 
     private void closeWindow(Scene scene) {
         Stage stage = new Stage();
-        stage.setTitle("Agency"+ mode);
+        stage.setTitle("Agency" + mode);
         stage.setScene(scene);
         stage.showAndWait();
     }
 
-    private void deleteAgency(Agency agency){
+    private void deleteAgency(Agency agency) {
         int numRows = 0;
         int agencyId = agency.getId();
 
@@ -217,24 +195,16 @@ public class AgenciesController {
         displayAgencies();
     }
 
-    private void clearSearchForm(){
-        tfAddress.clear();
-        tfCity.clear();
-        tfProvince.clear();
-        tfCountry.clear();
-        tfPostal.clear();
-        tfPhone.clear();
-        tfFax.clear();
+    private void clearSearchForm() {
+        tfSearchField.clear();
         displayAgencies();
     }
 
     private void searchAgencies() {
         data.clear();
+        String searchWord = tfSearchField.getText();
         try {
-            data = AgencyDB.searchAgencies(tfAddress.getText(),tfCity.getText(),
-                    tfProvince.getText(),tfPostal.getText(),
-                    tfCountry.getText(),tfPhone.getText(),
-                    tfFax.getText());
+            data = AgencyDB.searchAgenciesByString(searchWord);
         } catch (SQLException e) {
             throw new RuntimeException("Fail to load agency table", e);
         }

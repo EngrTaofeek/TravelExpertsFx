@@ -108,7 +108,7 @@ public class AgentDB {
         return numAffectedRows;
     }
 
-    public static ObservableList<Agent> searchAgents(String firstname, String middleInitial, String lastname, String phone,String email, String position, Integer agencyId) throws SQLException {
+    public static ObservableList<Agent> searchAgents(String searchWord,Integer agencyId) throws SQLException {
         ObservableList<Agent> agents = FXCollections.observableArrayList();
         Agent agent;
         Connection conn = getConnection();
@@ -117,45 +117,22 @@ public class AgentDB {
                 "agt.agtbusphone, agt.agtemail, agt.agtposition, " +
                 "agt.agencyid, CONCAT(agc.agncyaddress, ',', agc.agncycity, ',', agc.agncyprov, ',', agc.agncycountry) AS agency " +
                 "FROM agents agt JOIN agencies agc ON agt.agencyid = agc.agencyid WHERE " +
-                "(? IS NULL OR ? = '' OR LOWER(agt.agtfirstname) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agt.agtmiddleinitial) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agt.agtlastname) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agt.agtbusphone) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agt.agtemail) LIKE LOWER(?)) " +
-                "AND (? IS NULL OR ? = '' OR LOWER(agt.agtposition) LIKE LOWER(?)) " +
+                "(agt.agtfirstname ilike '%" + searchWord + "%' " +
+                "or agt.agtmiddleinitial ilike '%" + searchWord + "%' " +
+                "or agt.agtlastname ilike '%" + searchWord + "%' " +
+                "or agt.agtbusphone ilike '%" + searchWord + "%' " +
+                "or agt.agtemail ilike '%" + searchWord + "%' " +
+                "or agt.agtposition ilike '%" + searchWord + "%') " +
                 "AND (? IS NULL OR agt.agencyid = ?)";
         PreparedStatement stmt = conn.prepareStatement(SQL);
 
-        stmt.setString(1, firstname.isEmpty() ? null : firstname);
-        stmt.setString(2, firstname.isEmpty() ? null : firstname);
-        stmt.setString(3, "%" + firstname + "%");
-
-        stmt.setString(4, middleInitial.isEmpty() ? null : middleInitial);
-        stmt.setString(5, middleInitial.isEmpty() ? null : middleInitial);
-        stmt.setString(6, "%" + middleInitial + "%");
-
-        stmt.setString(7, lastname.isEmpty() ? null : lastname);
-        stmt.setString(8, lastname.isEmpty() ? null : lastname);
-        stmt.setString(9, "%" + lastname + "%");
-
-        stmt.setString(10, phone.isEmpty() ? null : phone);
-        stmt.setString(11, phone.isEmpty() ? null : phone);
-        stmt.setString(12, "%" + phone + "%");
-
-        stmt.setString(13, email.isEmpty() ? null : email);
-        stmt.setString(14, email.isEmpty() ? null : email);
-        stmt.setString(15, "%" + email + "%");
-
-        stmt.setString(16, position.isEmpty() ? null : position);
-        stmt.setString(17, position.isEmpty() ? null : position);
-        stmt.setString(18, "%" + position + "%");
 
         if(agencyId == null) {
-            stmt.setNull(19, Types.INTEGER);
-            stmt.setNull(20, java.sql.Types.INTEGER);
+            stmt.setNull(1, Types.INTEGER);
+            stmt.setNull(2, java.sql.Types.INTEGER);
         } else {
-            stmt.setInt(19, agencyId);
-            stmt.setInt(20, agencyId);
+            stmt.setInt(1, agencyId);
+            stmt.setInt(2, agencyId);
         }
 
         ResultSet rs = stmt.executeQuery();

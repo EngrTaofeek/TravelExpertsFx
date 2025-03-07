@@ -41,23 +41,14 @@ public class PackagesController {
     @FXML // fx:id="btnEdit"
     private Button btnEdit; // Value injected by FXMLLoader
 
+    @FXML // fx:id="tfSearchField"
+    private TextField tfSearchField; // Value injected by FXMLLoader
+
     @FXML // fx:id="dpEnd"
     private DatePicker dpEnd; // Value injected by FXMLLoader
 
     @FXML // fx:id="dpStart"
     private DatePicker dpStart; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfAgencyCommission"
-    private TextField tfAgencyCommission; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfBasePrice"
-    private TextField tfBasePrice; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfDesc"
-    private TextField tfDesc; // Value injected by FXMLLoader
-
-    @FXML // fx:id="tfName"
-    private TextField tfName; // Value injected by FXMLLoader
 
     @FXML // fx:id="tcAgencyCommission"
     private TableColumn<Package, Double> tcAgencyCommission; // Value injected by FXMLLoader
@@ -88,7 +79,8 @@ public class PackagesController {
 
     AlertMessage message = new AlertMessage();
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert btnAdd != null : "fx:id=\"btnAdd\" was not injected: check your FXML file 'Packages.fxml'.";
         assert btnClear != null : "fx:id=\"btnClear\" was not injected: check your FXML file 'Packages.fxml'.";
@@ -103,11 +95,8 @@ public class PackagesController {
         assert tcEndDate != null : "fx:id=\"tcEndDate\" was not injected: check your FXML file 'Packages.fxml'.";
         assert tcName != null : "fx:id=\"tcName\" was not injected: check your FXML file 'Packages.fxml'.";
         assert tcStartDate != null : "fx:id=\"tcStartDate\" was not injected: check your FXML file 'Packages.fxml'.";
-        assert tfAgencyCommission != null : "fx:id=\"tfAgencyCommission\" was not injected: check your FXML file 'Packages.fxml'.";
-        assert tfBasePrice != null : "fx:id=\"tfBasePrice\" was not injected: check your FXML file 'Packages.fxml'.";
-        assert tfDesc != null : "fx:id=\"tfDesc\" was not injected: check your FXML file 'Packages.fxml'.";
-        assert tfName != null : "fx:id=\"tfName\" was not injected: check your FXML file 'Packages.fxml'.";
         assert tvPackages != null : "fx:id=\"tvPackages\" was not injected: check your FXML file 'Packages.fxml'.";
+        assert tfSearchField != null : "fx:id=\"tfSearchField\" was not injected: check your FXML file 'Packages.fxml'.";
 
         setupPackageTable();
         displayPackages();
@@ -122,15 +111,15 @@ public class PackagesController {
             if (objectPackage != null) {
                 CreateForm(objectPackage);
             } else {
-                message.alertMessage(Alert.AlertType.ERROR,"Please select a package first");
+                message.alertMessage(Alert.AlertType.ERROR, "Please select a package first");
             }
         });
 
         btnDelete.setOnAction(event -> {
-            if(objectPackage != null) {
+            if (objectPackage != null) {
                 deletePackage(objectPackage);
             } else {
-                message.alertMessage(Alert.AlertType.ERROR,"Please select a package first");
+                message.alertMessage(Alert.AlertType.ERROR, "Please select a package first");
             }
         });
 
@@ -151,15 +140,15 @@ public class PackagesController {
     }
 
     private void setupPackageTable() {
-        tcName.setCellValueFactory(new PropertyValueFactory<Package,String>("pkgname"));
+        tcName.setCellValueFactory(new PropertyValueFactory<Package, String>("pkgname"));
         tcStartDate.setCellValueFactory(new PropertyValueFactory<Package, Date>("pkgstartdate"));
-        tcEndDate.setCellValueFactory(new PropertyValueFactory<Package,Date>("pkgenddate"));
-        tcDescription.setCellValueFactory(new PropertyValueFactory<Package,String>("pkgdesc"));
-        tcBasePrice.setCellValueFactory(new PropertyValueFactory<Package,Double>("pkgbaseprice"));
-        tcAgencyCommission.setCellValueFactory(new PropertyValueFactory<Package,Double>("pkgagencycommission"));
+        tcEndDate.setCellValueFactory(new PropertyValueFactory<Package, Date>("pkgenddate"));
+        tcDescription.setCellValueFactory(new PropertyValueFactory<Package, String>("pkgdesc"));
+        tcBasePrice.setCellValueFactory(new PropertyValueFactory<Package, Double>("pkgbaseprice"));
+        tcAgencyCommission.setCellValueFactory(new PropertyValueFactory<Package, Double>("pkgagencycommission"));
     }
 
-    public void displayPackages(){
+    public void displayPackages() {
         data.clear();
         try {
             data = PackageDB.getPackages();
@@ -170,19 +159,42 @@ public class PackagesController {
     }
 
     public void searchPackages() {
-        Double basePrice = tfBasePrice.getText().isEmpty() ? null : Double.valueOf(tfBasePrice.getText());
-        Double agencyCommission = tfAgencyCommission.getText().isEmpty() ? null : Double.valueOf(tfAgencyCommission.getText());
         data.clear();
-        try {
-            data = PackageDB.searchPackages(tfName.getText(), dpStart.getValue(), dpEnd.getValue(),
-                    basePrice, agencyCommission, tfDesc.getText());
-        } catch (SQLException e) {
-            throw new RuntimeException("Fail to load package table", e);
+        String searchWord = tfSearchField.getText();
+        if (isInputDouble(searchWord)) {
+            double searchNum = Double.parseDouble(searchWord);
+
+            try {
+                data = PackageDB.searchPackagesByNumber(searchNum, dpStart.getValue(), dpEnd.getValue());
+            } catch (SQLException e) {
+                throw new RuntimeException("Fail to load package table", e);
+            }
+        } else {
+            if (searchWord.isEmpty() && dpEnd.getValue() == null && dpStart.getValue() == null) {
+                displayPackages();
+            } else {
+                try {
+                    data = PackageDB.searchPackagesByString(searchWord, dpStart.getValue(), dpEnd.getValue());
+                } catch (SQLException e) {
+                    throw new RuntimeException("Fail to load package table", e);
+                }
+            }
         }
         tvPackages.setItems(data);
     }
 
-    private void CreateForm(Package objectPackage){
+    public static boolean isInputDouble(String input) {
+        boolean isInputDouble = true;
+        try {
+            Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            isInputDouble = false;
+        }
+
+        return isInputDouble;
+    }
+
+    private void CreateForm(Package objectPackage) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/groupfour/travelexpertsfx/views/package-form-view.fxml"));
         Scene scene = null;
         try {
@@ -192,7 +204,7 @@ public class PackagesController {
         }
         PackageFormViewController controller = fxmlLoader.getController();
         controller.setMode(mode);
-        if(objectPackage != null){
+        if (objectPackage != null) {
             controller.setPackageFormView(objectPackage);
             controller.setPackageId(objectPackage.getId());
         }
@@ -202,12 +214,12 @@ public class PackagesController {
 
     private void closeWindow(Scene scene) {
         Stage stage = new Stage();
-        stage.setTitle("Package"+ mode);
+        stage.setTitle("Package" + mode);
         stage.setScene(scene);
         stage.showAndWait();
     }
 
-    private void deletePackage(Package objectPackage){
+    private void deletePackage(Package objectPackage) {
         int numRows = 0;
         int packageId = objectPackage.getId();
 
@@ -224,13 +236,10 @@ public class PackagesController {
         displayPackages();
     }
 
-    private void clearSearchForm(){
-        tfName.clear();
-        tfAgencyCommission.clear();
-        tfBasePrice.clear();
-        tfAgencyCommission.clear();
-        dpStart.cancelEdit();
-        dpEnd.cancelEdit();
+    private void clearSearchForm() {
+        tfSearchField.clear();
+        dpStart.setValue(null);
+        dpEnd.setValue(null);
         displayPackages();
     }
 }

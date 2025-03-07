@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import com.groupfour.travelexpertsfx.models.PackageDB;
 import com.groupfour.travelexpertsfx.utils.AlertMessage;
+import com.groupfour.travelexpertsfx.utils.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -87,26 +88,28 @@ public class PackageFormViewController{
 
     private void savePackage(ActionEvent event) {
         Package newPackage = getPackageFormView();
-        int numRows = 0;
-        if (mode.equals("add")) {
-            try {
-                numRows = PackageDB.addPackage(newPackage);
-            } catch (SQLException e) {
-                message.alertMessage(Alert.AlertType.ERROR,"An error occurred while Adding the package\n:"+e.getMessage());
+        if(newPackage != null) {
+            int numRows = 0;
+            if (mode.equals("add")) {
+                try {
+                    numRows = PackageDB.addPackage(newPackage);
+                } catch (SQLException e) {
+                    message.alertMessage(Alert.AlertType.ERROR,"An error occurred while Adding the package\n:"+e.getMessage());
+                }
+            } else {
+                try {
+                    numRows = PackageDB.updatePackage(newPackage);
+                } catch (SQLException e) {
+                    message.alertMessage(Alert.AlertType.ERROR,"An error occurred while Updating the package\n:"+e.getMessage());
+                }
             }
-        } else {
-            try {
-                numRows = PackageDB.updatePackage(newPackage);
-            } catch (SQLException e) {
-                message.alertMessage(Alert.AlertType.ERROR,"An error occurred while Updating the package\n:"+e.getMessage());
+            if(numRows == 1){
+                message.alertMessage(Alert.AlertType.CONFIRMATION,"Successfully saved the package");
+            } else {
+                message.alertMessage(Alert.AlertType.ERROR,mode == "add" ? "Insertion" : "Update" + " failed.");
             }
+            closeWindow(event);
         }
-        if(numRows == 1){
-            message.alertMessage(Alert.AlertType.CONFIRMATION,"Successfully saved the package");
-        } else {
-            message.alertMessage(Alert.AlertType.ERROR,mode == "add" ? "Insertion" : "Update" + " failed.");
-        }
-        closeWindow(event);
     }
 
     public void setMode(String mode){
@@ -114,12 +117,26 @@ public class PackageFormViewController{
     }
 
     private Package getPackageFormView() {
-        return new Package(packageId != 0 ? packageId : 0,tfName.getText(),
-                Double.parseDouble(tfAgencyCommission.getText()),
-                Double.parseDouble(tfBasePrice.getText()),
-                Date.valueOf(dpEndDate.getValue()),
-                Date.valueOf(dpStartDate.getValue()),
-                tfDescription.getText());
+        try {
+            Validator.validateName(tfName.getText());
+            if(dpStartDate.getValue() == null) {
+                throw new RuntimeException("please select start date");
+            }
+            if(dpEndDate.getValue() == null) {
+                throw new RuntimeException("please select end date");
+            }
+            Validator.validatePrice(tfBasePrice.getText(),"base price");
+            Validator.validatePrice(tfAgencyCommission.getText(),"agency commission");
+            return new Package(packageId != 0 ? packageId : 0,tfName.getText(),
+                    Double.parseDouble(tfAgencyCommission.getText()),
+                    Double.parseDouble(tfBasePrice.getText()),
+                    Date.valueOf(dpEndDate.getValue()),
+                    Date.valueOf(dpStartDate.getValue()),
+                    tfDescription.getText());
+        } catch (Exception e) {
+            message.alertMessage(Alert.AlertType.ERROR,e.getMessage());
+        }
+        return null;
     }
 
     public void setPackageFormView(Package pack) {

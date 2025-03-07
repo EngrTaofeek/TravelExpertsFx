@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import com.groupfour.travelexpertsfx.models.Agency;
 import com.groupfour.travelexpertsfx.models.AgencyDB;
 import com.groupfour.travelexpertsfx.utils.AlertMessage;
+import com.groupfour.travelexpertsfx.utils.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -61,7 +62,9 @@ public class AgencyFormViewController {
 
     AlertMessage message = new AlertMessage();
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert btnCancel != null : "fx:id=\"btnCancel\" was not injected: check your FXML file 'agency-form-view.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'agency-form-view.fxml'.";
@@ -85,35 +88,37 @@ public class AgencyFormViewController {
 
     private void saveAgency(ActionEvent event) {
         Agency agency = getAgencyFormView();
-        int numRows = 0;
-        if (mode.equals("add")) {
-            try {
-                numRows = AgencyDB.addAgency(agency);
-            } catch (SQLException e) {
-                message.alertMessage(Alert.AlertType.ERROR,"An error occurred while Adding the agency\n:"+e.getMessage());
+        if (agency != null) {
+            int numRows = 0;
+            if (mode.equals("add")) {
+                try {
+                    numRows = AgencyDB.addAgency(agency);
+                } catch (SQLException e) {
+                    message.alertMessage(Alert.AlertType.ERROR, "An error occurred while Adding the agency\n:" + e.getMessage());
+                }
+            } else {
+                try {
+                    numRows = AgencyDB.updateAgency(agency);
+                } catch (SQLException e) {
+                    message.alertMessage(Alert.AlertType.ERROR, "An error occurred while Updating the agency\n:" + e.getMessage());
+                }
             }
-        } else {
-            try {
-                numRows = AgencyDB.updateAgency(agency);
-            } catch (SQLException e) {
-                message.alertMessage(Alert.AlertType.ERROR,"An error occurred while Updating the agency\n:"+e.getMessage());
+            if (numRows == 1) {
+                message.alertMessage(Alert.AlertType.CONFIRMATION, "Successfully saved the agency");
+            } else {
+                message.alertMessage(Alert.AlertType.ERROR, mode == "add" ? "Insertion" : "Update" + " failed.");
             }
+            closeWindow(event);
         }
-        if(numRows == 1){
-            message.alertMessage(Alert.AlertType.CONFIRMATION,"Successfully saved the agency");
-        } else {
-            message.alertMessage(Alert.AlertType.ERROR,mode == "add" ? "Insertion" : "Update" + " failed.");
-        }
-        closeWindow(event);
     }
 
     private void closeWindow(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
         stage.close();
     }
 
-    public void setMode(String mode){
+    public void setMode(String mode) {
         this.mode = mode;
     }
 
@@ -122,14 +127,26 @@ public class AgencyFormViewController {
     }
 
     private Agency getAgencyFormView() {
-        return new Agency(agencyId != 0 ? agencyId : 0,
-                tfAddress.getText(),
-                tfCity.getText(),
-                tfProv.getText(),
-                tfPostal.getText(),
-                tfCountry.getText(),
-                tfPhone.getText(),
-                tfFax.getText());
+        try {
+            Validator.validateAddress(tfAddress.getText());
+            Validator.validateCity(tfCity.getText());
+            Validator.validateProv(tfProv.getText());
+            Validator.validatePostal(tfPostal.getText());
+            Validator.validateCountry(tfCountry.getText());
+            Validator.validatePhone(tfPhone.getText());
+            Validator.validateFax(tfFax.getText());
+            return new Agency(agencyId != 0 ? agencyId : 0,
+                    tfAddress.getText(),
+                    tfCity.getText(),
+                    tfProv.getText(),
+                    tfPostal.getText(),
+                    tfCountry.getText(),
+                    tfPhone.getText(),
+                    tfFax.getText());
+        } catch (Exception e) {
+            message.alertMessage(Alert.AlertType.ERROR, e.getMessage());
+        }
+        return null;
     }
 
     public void setAgencyFormView(Agency agency) {
