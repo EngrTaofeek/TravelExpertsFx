@@ -10,7 +10,7 @@
 <AnchorPane prefHeight="659.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.MyStatisticsController">
    <children>
       <DatePicker fx:id="dtpMaxDate" layoutX="213.0" layoutY="75.0" />
-      <Label layoutX="208.0" layoutY="38.0" text="Select the Cutoff Date for Statistics" />
+      <Label fx:id="lblDatePickerLabel" layoutX="208.0" layoutY="38.0" text="Select the Cutoff Date for Statistics" />
       <BarChart fx:id="brcStats" layoutX="48.0" layoutY="111.0">
         <xAxis>
           <CategoryAxis fx:id="haxBarStats" side="BOTTOM" />
@@ -19,5 +19,6 @@
           <NumberAxis fx:id="vaxBarStats" side="LEFT" />
         </yAxis>
       </BarChart>
+      <Label fx:id="lblNoStats" layoutX="214.0" layoutY="303.0" text="No sales or commission earned!" />
    </children>
 </AnchorPane>
