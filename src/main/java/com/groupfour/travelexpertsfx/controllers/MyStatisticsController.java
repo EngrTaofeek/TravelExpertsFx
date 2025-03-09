@@ -18,6 +18,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 
 public class MyStatisticsController {
@@ -26,6 +27,7 @@ public class MyStatisticsController {
     @FXML private CategoryAxis haxBarStats;
     @FXML private DatePicker dtpMaxDate;
     @FXML private NumberAxis vaxBarStats;
+    @FXML private Label lblNoStats, lblDatePickerLabel;
 
     // Initialize a LocalDate object with its value set to today
     private LocalDate date = LocalDate.now();
@@ -37,8 +39,18 @@ public class MyStatisticsController {
     void initialize() {
         // On load, set today's date and load stats
         dtpMaxDate.setValue(date);
+        lblNoStats.setVisible(false);
         brcStats.setAnimated(false);
-        loadStats(date);
+        try {
+            loadStats(date);
+        } catch (Exception e) {
+            // If logged in agent has no sales
+            dtpMaxDate.setVisible(false);
+            brcStats.setVisible(false);
+            lblDatePickerLabel.setVisible(false);
+            lblNoStats.setVisible(true);
+            displayMessage("You do not have any sales!");
+        }
 
         // Define event listener for DatePicker to update stats depending on date
         dtpMaxDate.setOnAction(event -> {
@@ -86,7 +98,7 @@ public class MyStatisticsController {
         // Check if date has already been added to the series
         for (XYChart.Data<String, Number> data : userSeries.getData()) {
             if (data.getXValue().equals(dateString)) {
-                displayMessage();
+                displayMessage("This date has already been added to the chart!");
                 dateAlreadyAdded = true;
                 break;
             }
@@ -114,11 +126,11 @@ public class MyStatisticsController {
         userSeries.getData().setAll(dateList);
     }
 
-    private void displayMessage() {
+    private void displayMessage(String message) {
         Alert.AlertType type = Alert.AlertType.WARNING;
         Alert alert = new Alert(type);
         alert.setTitle(type.toString());
-        alert.setContentText("This date has already been added to the chart!");
+        alert.setContentText(message);
         alert.showAndWait();
     }
 }
