@@ -153,6 +153,23 @@
             </ComboBox>
          </children>
       </HBox>
+      <HBox prefHeight="59.0" prefWidth="517.0">
+         <children>
+            <Label text="Role:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <ComboBox fx:id="cbRole" prefHeight="23.0" prefWidth="446.0">
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </ComboBox>
+         </children>
+      </HBox>
       <HBox alignment="CENTER" prefHeight="73.0" prefWidth="517.0">
          <children>
             <Button fx:id="btnSave" mnemonicParsing="false" text="Save">

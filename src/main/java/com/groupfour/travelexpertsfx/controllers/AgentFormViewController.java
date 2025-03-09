@@ -43,6 +43,9 @@ public class AgentFormViewController {
     @FXML // fx:id="cbAgency"
     private ComboBox<Agency> cbAgency; // Value injected by FXMLLoader
 
+    @FXML // fx:id="cbRole"
+    private ComboBox<String> cbRole; // Value injected by FXMLLoader
+
     @FXML // fx:id="tfBusPhone"
     private TextField tfBusPhone; // Value injected by FXMLLoader
 
@@ -62,6 +65,7 @@ public class AgentFormViewController {
     private TextField tfPosition; // Value injected by FXMLLoader
 
     private ObservableList<Agency> options = FXCollections.observableArrayList();
+    private ObservableList<String> roles = FXCollections.observableArrayList();
 
     private int agentId = 0;
 
@@ -75,6 +79,7 @@ public class AgentFormViewController {
         assert btnCancel != null : "fx:id=\"btnCancel\" was not injected: check your FXML file 'agent-from-view.fxml'.";
         assert btnSave != null : "fx:id=\"btnSave\" was not injected: check your FXML file 'agent-from-view.fxml'.";
         assert cbAgency != null : "fx:id=\"cbAgency\" was not injected: check your FXML file 'agent-from-view.fxml'.";
+        assert cbRole != null : "fx:id=\"cbRole\" was not injected: check your FXML file 'agent-from-view.fxml'.";
         assert tfBusPhone != null : "fx:id=\"tfBusPhone\" was not injected: check your FXML file 'agent-from-view.fxml'.";
         assert tfEmail != null : "fx:id=\"tfEmail\" was not injected: check your FXML file 'agent-from-view.fxml'.";
         assert tfFirstname != null : "fx:id=\"tfFirstname\" was not injected: check your FXML file 'agent-from-view.fxml'.";
@@ -83,6 +88,7 @@ public class AgentFormViewController {
         assert tfPosition != null : "fx:id=\"tfPosition\" was not injected: check your FXML file 'agent-from-view.fxml'.";
 
         setItemsOfAgency();
+        setItemsOfRole();
 
         btnCancel.setOnAction((ActionEvent event) -> {
             closeWindow(event);
@@ -100,6 +106,12 @@ public class AgentFormViewController {
         } catch (SQLException e) {
             message.alertMessage(Alert.AlertType.ERROR, "Error loading agency options");
         }
+    }
+
+    private void setItemsOfRole() {
+        roles.add("agent");
+        roles.add("manager");
+        cbRole.setItems(roles);
     }
 
     private void saveAgent(ActionEvent event) {
@@ -151,9 +163,11 @@ public class AgentFormViewController {
             Validator.validateMiddleName(tfMiddleInitial.getText());
             Validator.isEmpty(tfPosition.getText(), "Please enter a position");
             if (cbAgency.getSelectionModel().getSelectedItem() == null) {
-                throw new RuntimeException("Please select an agency");
+                throw new RuntimeException("Please select agency");
             }
-            ;
+            if (cbRole.getSelectionModel().getSelectedItem() == null) {
+                throw new RuntimeException("Please select role");
+            }
             return new Agent(agentId != 0 ? agentId : 0,
                     tfFirstname.getText(),
                     tfMiddleInitial.getText(),
@@ -161,7 +175,8 @@ public class AgentFormViewController {
                     tfBusPhone.getText(),
                     tfEmail.getText(),
                     tfPosition.getText(),
-                    cbAgency.getSelectionModel().getSelectedItem().getId(), "");
+                    cbAgency.getSelectionModel().getSelectedItem().getId(), "",
+                    cbRole.getSelectionModel().getSelectedItem());
         } catch (RuntimeException e) {
             message.alertMessage(Alert.AlertType.ERROR, e.getMessage());
         }
@@ -182,5 +197,6 @@ public class AgentFormViewController {
             }
         }
         cbAgency.getSelectionModel().select(index);
+        cbRole.getSelectionModel().select(agent.getRole());
     }
 }
