@@ -13,12 +13,13 @@ public class Agent {
     private SimpleStringProperty agtposition;
     private SimpleIntegerProperty agencyid;
     private SimpleStringProperty agency;
+    private SimpleStringProperty role;
 
     public Agent(Integer id, String agtfirstname,
                  String agtmiddleinitial, String agtlastname,
                  String agtbusphone, String agtemail,
                  String agtposition, Integer agencyid,
-                 String agency) {
+                 String agency, String role) {
         this.id = new SimpleIntegerProperty(id);
         this.agtfirstname = new SimpleStringProperty(agtfirstname);
         this.agtmiddleinitial = new SimpleStringProperty(agtmiddleinitial);
@@ -28,6 +29,7 @@ public class Agent {
         this.agtposition = new SimpleStringProperty(agtposition);
         this.agencyid = new SimpleIntegerProperty(agencyid);
         this.agency = new SimpleStringProperty(agency);
+        this.role = new SimpleStringProperty(role);
     }
 
     public int getId() {
@@ -136,5 +138,17 @@ public class Agent {
 
     public void setAgency(String agency) {
         this.agency.set(agency);
+    }
+
+    public String getRole() {
+        return role.get();
+    }
+
+    public SimpleStringProperty roleProperty() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role.set(role);
     }
 }

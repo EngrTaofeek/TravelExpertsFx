@@ -35,7 +35,7 @@ public class AgentDB {
         String sql = "select agt.agentid, agt.agtfirstname, " +
                 "agt.agtmiddleinitial, agt.agtlastname, " +
                 "agt.agtbusphone, agt.agtemail, agt.agtposition, " +
-                "agt.agencyid, CONCAT(agc.agncyaddress, ',', agc.agncycity, ',', agc.agncyprov, ',', agc.agncycountry) AS agency " +
+                "agt.agencyid, CONCAT(agc.agncyaddress, ',', agc.agncycity, ',', agc.agncyprov, ',', agc.agncycountry), agt.role AS agency " +
                 "FROM agents agt JOIN agencies agc ON agt.agencyid = agc.agencyid";
         ResultSet rs = stmt.executeQuery(sql);
         while (rs.next()) {
@@ -48,7 +48,8 @@ public class AgentDB {
                     rs.getString(6),
                     rs.getString(7),
                     rs.getInt(8),
-                    rs.getString(9)
+                    rs.getString(9),
+                    rs.getString(10)
             );
             agents.add(Agent);
         }
@@ -59,8 +60,8 @@ public class AgentDB {
         Connection conn = getConnection();
         int numAffectedRows = 0;
         String sql = "INSERT INTO agents (agtfirstname, agtmiddleinitial, " +
-                "agtlastname, agtbusphone, agtemail, agtposition, agencyid)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "agtlastname, agtbusphone, agtemail, agtposition, agencyid, role)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, agent.getAgtfirstname());
         stmt.setString(2,agent.getAgtmiddleinitial());
@@ -69,6 +70,7 @@ public class AgentDB {
         stmt.setString(5,agent.getAgtemail());
         stmt.setString(6,agent.getAgtposition());
         stmt.setInt(7,agent.getAgencyid());
+        stmt.setString(8,agent.getRole());
 
         numAffectedRows = stmt.executeUpdate();
         return numAffectedRows;
@@ -81,7 +83,7 @@ public class AgentDB {
                 "SET agtfirstname = ?, " +
                 "agtmiddleinitial = ?, " +
                 "agtlastname = ?, agtbusphone = ?, agtemail = ?, " +
-                "agtposition = ?, agencyid = ? " +
+                "agtposition = ?, agencyid = ? ,role = ? " +
                 "Where agentid = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, agent.getAgtfirstname());
@@ -91,7 +93,9 @@ public class AgentDB {
         stmt.setString(5,agent.getAgtemail());
         stmt.setString(6,agent.getAgtposition());
         stmt.setInt(7,agent.getAgencyid());
-        stmt.setInt(8,agent.getId());
+        stmt.setString(8,agent.getRole());
+        stmt.setInt(9,agent.getId());
+
 
         numAffectedRows = stmt.executeUpdate();
         return numAffectedRows;
@@ -115,7 +119,7 @@ public class AgentDB {
         String SQL = "select agt.agentid, agt.agtfirstname, " +
                 "agt.agtmiddleinitial, agt.agtlastname, " +
                 "agt.agtbusphone, agt.agtemail, agt.agtposition, " +
-                "agt.agencyid, CONCAT(agc.agncyaddress, ',', agc.agncycity, ',', agc.agncyprov, ',', agc.agncycountry) AS agency " +
+                "agt.agencyid, CONCAT(agc.agncyaddress, ',', agc.agncycity, ',', agc.agncyprov, ',', agc.agncycountry), agt.role AS agency " +
                 "FROM agents agt JOIN agencies agc ON agt.agencyid = agc.agencyid WHERE " +
                 "(agt.agtfirstname ilike '%" + searchWord + "%' " +
                 "or agt.agtmiddleinitial ilike '%" + searchWord + "%' " +
@@ -146,7 +150,8 @@ public class AgentDB {
                     rs.getString(6),
                     rs.getString(7),
                     rs.getInt(8),
-                    rs.getString(9)
+                    rs.getString(9),
+                    rs.getString(10)
             );
             agents.add(agent);
         }
