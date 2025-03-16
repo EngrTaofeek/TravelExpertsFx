@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -28,6 +30,7 @@ public class DashboardController implements Initializable {
     @FXML private Button btnMenuToggle;
     @FXML private StackPane mainContent;
     @FXML private Label lblUserEmail;
+    @FXML private ImageView menuIcon;
     private Object currentController;
     private static String userRole;
     private boolean isSidebarVisible = false;
@@ -77,17 +80,33 @@ public class DashboardController implements Initializable {
 
     }
 
+    // Corrected Java Code
     @FXML
-    public void toggleSidebar() {
+    private void toggleSidebar() {
         isSidebarVisible = !isSidebarVisible;
         sideMenu.setVisible(isSidebarVisible);
         sideMenu.setManaged(isSidebarVisible);
+
+        // Define icon path
+        String iconPath = isSidebarVisible ? "/com/groupfour/travelexpertsfx/images/menu-close.png" : "/com/groupfour/travelexpertsfx/images/menu-open.png";
+
+        // Load image safely
+        URL iconUrl = getClass().getResource(iconPath);
+        if (iconUrl != null) {
+            menuIcon.setImage(new Image(iconUrl.toExternalForm()));
+        } else {
+            System.out.println("Error: Menu icon not found at " + iconPath);
+        }
 
         // Restore welcome message only if no page is open
         if (!isSidebarVisible && mainContent.getChildren().isEmpty()) {
             showWelcomeMessage();
         }
     }
+
+
+
+
 
     private void applyRolePermissions() {
         if (userRole != null && userRole.equalsIgnoreCase("agent")) {
