@@ -31,7 +31,7 @@
                                     <!--  Menu Button with Icon -->
                                     <JFXButton fx:id="btnMenuToggle" onAction="#toggleSidebar" styleClass="menu-button" text="Menu">
                                         <graphic>
-                                            <ImageView fx:id="menuIcon" fitHeight="35.0" fitWidth="35.0">
+                                            <ImageView fx:id="menuIcon" fitHeight="45.0" fitWidth="45.0">
                                                 <image>
                                                     <Image url="@../images/menu-open.png" />
                                                 </image>
@@ -45,7 +45,7 @@
                                     <!-- Home Button with Icon -->
                                     <JFXButton fx:id="btnHome" styleClass="top-button" text="Home">
                                         <graphic>
-                                            <ImageView fitHeight="35.0" fitWidth="35.0">
+                                            <ImageView fitHeight="40.0" fitWidth="40.0">
                                                 <image>
                                                     <Image url="@../images/home-icon.png" />
                                                 </image>

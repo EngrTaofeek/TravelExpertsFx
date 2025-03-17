@@ -5,9 +5,14 @@
    /* Option 2: Softer Blue */
     /*-fx-background-color: linear-gradient(to right, #2193b0, #6dd5ed); !* Softer Blue *!*/
     /* Option 3: Purple Gradient */
-    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
-     /* Option 4: cool blue */
-    /* -fx-background-color: linear-gradient(to right, #6dd5ed, #2193b0); */
+    /*-fx-background-color: linear-gradient(to right, #6A0572, #E94560); !* Purple gradient *!*/
+    /*  Option 4: cool blue */
+    /* -fx-background-color: linear-gradient(to right, #6dd5ed, #2193b0);*/
+    /*-fx-background-color: linear-gradient(to right, #005f73, #0a9396); !* Deep Ocean Blue Gradient *!*/
+    /*-fx-background-color: linear-gradient(to right, #6dd5ed, #2193b0); !* Cool Blue Gradient *!*/
+    /*-fx-background-color: linear-gradient(to right, #6dd5ed, #2193b0);*/
+    -fx-background-color: linear-gradient(to right, #005f73, #0a9396);
+
     -fx-pref-width: 800px;
     -fx-pref-height: 600px;
 }
@@ -61,7 +66,10 @@
 
 .register-button {
     /*-fx-background-color: linear-gradient(to bottom, #FFC107, #FF8C00); !* Deeper orange *!*/
-    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    /*-fx-background-color: linear-gradient(to right, #C62828, #E57373); !* Slightly Darker Pink *!*/
+    /*-fx-background-color: linear-gradient(to right, #00ADB5, #0073E6); !* Teal-Blue Gradient *!*/
+    -fx-background-color: linear-gradient(to right, #007BFF, #0056D2);
+
     -fx-border-radius: 10px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -72,14 +80,18 @@
 
 .register-button:hover {
     /*-fx-background-color: #FF8C00;*/
-    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    /*-fx-background-color: linear-gradient(to right, #C62828, #E57373); !* Slightly Darker Pink *!*/
+    -fx-background-color: linear-gradient(to right, #009688, #005F6B); /* Darker Teal-Blue Gradient */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 5);
 }
 
 /* Back to Login Button */
 .back-button {
     /*-fx-background-color: linear-gradient(to bottom, #FFD700, #FFA500); !* Gold-Orange *!*/
-    -fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); /* Pink-Red Gradient */
+    /*-fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); !* Pink-Red Gradient *!*/
+    /*-fx-background-color: linear-gradient(to right, #00ADB5, #0073E6); !* Teal-Blue Gradient *!*/
+    -fx-background-color: linear-gradient(to right, #5A9BD3, #3A7CBF);
+
     -fx-border-radius: 10px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
@@ -89,7 +101,8 @@
 
 .back-button:hover {
     /*-fx-background-color: #FF8C00;*/
-    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    /*-fx-background-color: linear-gradient(to right, #C62828, #E57373); !* Slightly Darker Pink *!*/
+    -fx-background-color: linear-gradient(to right, #388E3C, #005F6B); /* Darker Green-Blue Gradient */
     -fx-text-fill: white;
     -fx-opacity: 1;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 3);

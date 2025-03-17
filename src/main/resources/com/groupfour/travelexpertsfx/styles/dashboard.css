@@ -155,10 +155,19 @@
     -fx-cursor: hand;
 }
 
+/* Center Menu & Home Buttons */
 #btnMenuToggle, #btnHome {
-    -fx-padding: 10px 15px;
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
     -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px; /* Reduce padding to make them align */
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-translate-y: -4px; /* Slightly move them up */
 }
+
 
 /* Top Button Hover Effect */
 .top-button:hover {
