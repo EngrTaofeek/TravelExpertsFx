@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="548.0" prefWidth="664.0" stylesheets="@../styles/customer.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.CustomerDetailsController">
+<AnchorPane prefHeight="548.0" prefWidth="664.0" stylesheets="@../styles/customers.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.CustomerDetailsController">
    <children>
       <VBox layoutX="13.0" layoutY="14.0">
          <children>
-            <HBox alignment="CENTER_LEFT" stylesheets="@../styles/customer.css">
+            <HBox alignment="CENTER_LEFT" stylesheets="@../styles/customers.css">
                <children>
                   <Label fx:id="lblHeader" text="Details: " />
                   <Label fx:id="lblCustomerName" text="Customer Name" />
@@ -24,78 +24,78 @@
             <Label fx:id="lblRequired" text="*Required Fields" visible="false" />
             <HBox>
                <children>
-                  <VBox spacing="10.0" stylesheets="@../styles/customer.css">
+                  <VBox spacing="10.0" stylesheets="@../styles/customers.css">
                      <children>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="Customer ID:" />
-                              <TextField fx:id="tfCustomerId" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="Customer ID:" />
+                              <TextField fx:id="tfCustomerId" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="First Name*:" />
-                              <TextField fx:id="tfCustFirstName" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="First Name*:" />
+                              <TextField fx:id="tfCustFirstName" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="Last Name*:" />
-                              <TextField fx:id="tfCustLastName" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="Last Name*:" />
+                              <TextField fx:id="tfCustLastName" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="Address*:" />
-                              <TextField fx:id="tfCustAddress" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="Address*:" />
+                              <TextField fx:id="tfCustAddress" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="City*:" />
-                              <TextField fx:id="tfCustCity" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="City*:" />
+                              <TextField fx:id="tfCustCity" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="Province*:" />
-                              <TextField fx:id="tfCustProvince" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="Province*:" />
+                              <TextField fx:id="tfCustProvince" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="Postal Code*:" />
-                              <TextField fx:id="tfCustPostal" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="Postal Code*:" />
+                              <TextField fx:id="tfCustPostal" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="Country:" />
-                              <TextField fx:id="tfCustCountry" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="Country:" />
+                              <TextField fx:id="tfCustCountry" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="Home Phone:" />
-                              <TextField fx:id="tfCustHomePhone" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="Home Phone:" />
+                              <TextField fx:id="tfCustHomePhone" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="Business Phone*:" />
-                              <TextField fx:id="tfCustBusPhone" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="Business Phone*:" />
+                              <TextField fx:id="tfCustBusPhone" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="Email*:" />
-                              <TextField fx:id="tfCustEmail" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="Email*:" />
+                              <TextField fx:id="tfCustEmail" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customer.css">
+                        <HBox alignment="CENTER_RIGHT" stylesheets="@../styles/customers.css">
                            <children>
-                              <Label stylesheets="@../styles/customer.css" text="Agent ID:" />
-                              <TextField fx:id="tfCustAgentId" styleClass="customerTextEditable" stylesheets="@../styles/customer.css" />
+                              <Label stylesheets="@../styles/customers.css" text="Agent ID:" />
+                              <TextField fx:id="tfCustAgentId" styleClass="customerTextEditable" stylesheets="@../styles/customers.css" />
                            </children>
                         </HBox>
                      </children>
@@ -111,7 +111,7 @@
                   </AnchorPane>
                </children>
             </HBox>
-            <HBox spacing="20.0" stylesheets="@../styles/customer.css">
+            <HBox spacing="20.0" stylesheets="@../styles/customers.css">
                <children>
                   <Button fx:id="btnSaveChanges" mnemonicParsing="false" onMouseClicked="#saveChanges" text="Save Changes" />
                   <Button fx:id="btnEdit" mnemonicParsing="false" onMouseClicked="#editCustomer" text="Edit Customer" />

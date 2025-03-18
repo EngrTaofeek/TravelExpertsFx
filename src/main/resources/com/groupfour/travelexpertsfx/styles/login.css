@@ -1,13 +1,15 @@
 /* General Styling */
 .root {
     /*-fx-background-color: linear-gradient(to right, #FFD700, #FFA500); !* Gold gradient *!*/
-    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
+    /*-fx-background-color: linear-gradient(to right, #6A0572, #E94560); !* Purple gradient *!*/
+    -fx-background-color: linear-gradient(to right, #002F6C, #0073E6);
 }
 
 /* Left Section  */
 .left-section {
     /*-fx-background-color: linear-gradient(to bottom, #FFD700, #FFA500); !* Gold gradient *!*/
-    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
+    /*-fx-background-color: linear-gradient(to right, #6A0572, #E94560); !* Purple gradient *!*/
+    -fx-background-color: linear-gradient(to right, #002F6C, #0073E6);
     -fx-padding: 50px;
     -fx-alignment: center;
     -fx-spacing: 20px;
@@ -63,7 +65,7 @@
 /* Input Labels */
 .login-label {
     -fx-font-size: 1.3em;
-    -fx-font-weight: semibold;
+    -fx-font-weight: 600;
     -fx-text-fill: #333333; /* Darker text for contrast */
 }
 
@@ -95,8 +97,9 @@
 /* Login Button */
 .login-button {
     /*-fx-background-color: linear-gradient(to bottom, #FFD700, #FFA500); !* Gold-Orange *!*/
-    -fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); /* Pink-Red Gradient */
+    /*-fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); !* Pink-Red Gradient *!*/
     /*-fx-background-color: linear-gradient(to right, #8E2DE2, #4A00E0); !* Deep Purple Gradient *!*/
+    -fx-background-color: linear-gradient(to right, #00ADB5, #0073E6); /* Teal-Blue Gradient */
     -fx-text-fill: white;
     -fx-font-size: 1.1em;
     -fx-font-weight: bold;
@@ -109,14 +112,16 @@
 
 .login-button:hover {
     /*-fx-background-color: linear-gradient(to bottom, #FFC107, #FF8C00); !* Deeper orange *!*/
-    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    /*-fx-background-color: linear-gradient(to right, #C62828, #E57373); !* Slightly Darker Pink *!*/
+    -fx-background-color: linear-gradient(to right, #009688, #005F6B); /* Darker Teal-Blue Gradient */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 5);
 }
 
 /* Register Button */
 .register-button {
     /*-fx-background-color: linear-gradient(to bottom, #FFA500, #E65100); !* Deep Orange *!*/
-    -fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); /* Pink-Red Gradient */
+    /*-fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); !* Pink-Red Gradient *!*/
+    -fx-background-color: linear-gradient(to right, #00ADB5, #0073E6); /* Teal-Blue Gradient */
     -fx-text-fill: white;
     -fx-font-size: 1.1em;
     -fx-font-weight: bold;
@@ -129,7 +134,8 @@
 
 .register-button:hover {
     /*-fx-background-color: linear-gradient(to bottom, #FF8C00, #B23A00); !* Deeper orange *!*/
-    -fx-background-color: linear-gradient(to right, #C62828, #E57373); /* Slightly Darker Pink */
+    /*-fx-background-color: linear-gradient(to right, #C62828, #E57373); !* Slightly Darker Pink *!*/
+    -fx-background-color: linear-gradient(to right, #388E3C, #005F6B); /* Darker Green-Blue Gradient */
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 5);
 }
 
@@ -137,7 +143,8 @@
 /* Forgot Password */
 .forgot-password {
     /*-fx-text-fill: #2563EB; !* Blue for contrast *!*/
-    -fx-text-fill: #FF4081; /* Pink Highlight */
+    /*-fx-text-fill: #FF4081; !* Pink Highlight *!*/
+    -fx-text-fill: #00ADB5; /* Teal Highlight */
     -fx-font-size: 1em;
     -fx-cursor: hand;
     -fx-padding: 5px 0; /* Add padding for better spacing */

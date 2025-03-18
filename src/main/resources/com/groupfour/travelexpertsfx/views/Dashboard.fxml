@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="1.0" prefWidth="1.0" stylesheets="@../styles/dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.DashboardController">
+<AnchorPane prefHeight="647.0" prefWidth="885.0" stylesheets="@../styles/dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.DashboardController">
 
     <children>
         <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -26,12 +26,12 @@
                     <AnchorPane maxHeight="67.0" minHeight="20.0" prefHeight="48.0" styleClass="top-nav" VBox.vgrow="NEVER">
                         <children>
                             <!-- Left-side: Menu & Home Buttons -->
-                            <HBox spacing="60.0" AnchorPane.leftAnchor="15.0">
+                            <HBox layoutX="-7.0" layoutY="-2.0" spacing="90.0" AnchorPane.leftAnchor="-35.0">
                                 <children>
                                     <!--  Menu Button with Icon -->
                                     <JFXButton fx:id="btnMenuToggle" onAction="#toggleSidebar" styleClass="menu-button" text="Menu">
                                         <graphic>
-                                            <ImageView fx:id="menuIcon" fitHeight="35.0" fitWidth="35.0">
+                                            <ImageView fx:id="menuIcon" fitHeight="45.0" fitWidth="45.0">
                                                 <image>
                                                     <Image url="@../images/menu-open.png" />
                                                 </image>
@@ -45,7 +45,7 @@
                                     <!-- Home Button with Icon -->
                                     <JFXButton fx:id="btnHome" styleClass="top-button" text="Home">
                                         <graphic>
-                                            <ImageView fitHeight="35.0" fitWidth="35.0">
+                                            <ImageView fitHeight="40.0" fitWidth="40.0">
                                                 <image>
                                                     <Image url="@../images/home-icon.png" />
                                                 </image>

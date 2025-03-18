@@ -7,18 +7,26 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="659.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.MyStatisticsController">
-   <children>
-      <DatePicker fx:id="dtpMaxDate" layoutX="213.0" layoutY="75.0" />
-      <Label fx:id="lblDatePickerLabel" layoutX="208.0" layoutY="38.0" text="Select the Cutoff Date for Statistics" />
-      <BarChart fx:id="brcStats" layoutX="48.0" layoutY="111.0">
-        <xAxis>
-          <CategoryAxis fx:id="haxBarStats" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="vaxBarStats" side="LEFT" />
-        </yAxis>
-      </BarChart>
-      <Label fx:id="lblNoStats" layoutX="214.0" layoutY="303.0" text="No sales or commission earned!" />
-   </children>
+<AnchorPane prefHeight="737.0" prefWidth="1011.0" stylesheets="@../styles/mystatistics.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.groupfour.travelexpertsfx.controllers.MyStatisticsController">
+
+    <children>
+        <!-- Date Picker -->
+        <Label fx:id="lblDatePickerLabel" layoutX="400.0" layoutY="40.0" text="Select the Cutoff Date for Statistics" styleClass="label-text" />
+        <DatePicker fx:id="dtpMaxDate" layoutX="440.0" layoutY="70.0" styleClass="date-picker" />
+
+        <!-- Bar Chart Enlarged for Full View -->
+        <BarChart fx:id="brcStats" layoutX="80.0" layoutY="120.0" prefHeight="520.0" prefWidth="850.0" styleClass="bar-chart">
+            <xAxis>
+                <CategoryAxis fx:id="haxBarStats" side="BOTTOM" label="Date" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="vaxBarStats" side="LEFT" label="Number of Sales" />
+            </yAxis>
+        </BarChart>
+
+        <!-- Message for No Data -->
+        <Label fx:id="lblNoStats" layoutX="430.0" layoutY="350.0" text="No sales or commission earned!" visible="false" styleClass="empty-message" />
+    </children>
 </AnchorPane>

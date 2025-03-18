@@ -1,5 +1,5 @@
 /* ======================================
-   Agents Module Styling (Final Version)
+    Suppliers Module Styling (Aligned with Packages)
 ====================================== */
 
 /*  General Styling */
@@ -9,7 +9,7 @@
 }
 
 /* ============================
-    Table Styling
+   Table Styling
 ============================ */
 .table-view {
     -fx-border-color: #ccc;
@@ -18,27 +18,18 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 3);
 }
 
-/* 🏷 Table Header*/
 .table-view .column-header-background {
     -fx-background-color: linear-gradient(to right, #5FAAFF, #F0F8FF);
     -fx-background-radius: 5px 5px 0 0;
 }
 
-/*  Table Header Text */
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-text-fill: black;
     -fx-font-weight: bold;
     -fx-font-size: 15px;
 }
-/* Centering Table Header Text */
-.table-view .column-header .label {
-    -fx-alignment: center;
-    -fx-text-alignment: center;
-}
 
-
-/* Table Row Styling */
 .table-row-cell:odd {
     -fx-background-color: #f9f9f9;
 }
@@ -47,7 +38,6 @@
     -fx-background-color: white;
 }
 
-/* Selected Row - Professional Blue */
 .table-row-cell:selected {
     -fx-background-color: linear-gradient(to bottom, #2986CC, #1768AC);
     -fx-text-fill: white;
@@ -66,49 +56,30 @@
     -fx-graphic-text-gap: 5px;
 }
 
-/*  Add Button */
-.add-button {
-    /*-fx-background-color: #28A745;*/
-}
-.add-button:hover {
+#btnAdd:hover {
     -fx-text-fill: #218838;
 }
 
-/* Edit Button */
-.edit-button {
-    /*-fx-background-color: #007BFF;*/
-}
-.edit-button:hover {
-    -fx-text-fill:#0056b3;
-}
-
-/*  Delete Button */
-.delete-button {
-    /*-fx-background-color: #DC3545;*/
-}
-.delete-button:hover {
-    -fx-text-fill: #C82333;
-}
-
-/* Search & Clear Buttons */
-.search-button {
-    /*-fx-background-color: #007BFF;*/
-}
-.search-button:hover {
+#btnEdit:hover {
     -fx-text-fill: #0056b3;
 }
 
-.clear-button {
-    /*-fx-background-color: #F39C12;*/
+#btnDelete:hover {
+    -fx-text-fill: #C82333;
 }
-.clear-button:hover {
+
+#btnSearch:hover {
+    -fx-text-fill: #0056b3;
+}
+
+#btnClear:hover {
     -fx-text-fill: #0056b3;
 }
 
 /* ============================
     Label & TextField Styling
 ============================ */
-.label-text {
+.label {
     -fx-font-size: 15px;
     -fx-text-fill: #333;
     -fx-font-weight: bold;
@@ -121,23 +92,24 @@
     -fx-font-size: 14px;
 }
 
-/* 🎚 ComboBox Styling */
-.combo-box {
+#editField {
     -fx-background-color: white;
+    -fx-padding: 10px;
     -fx-border-color: #ccc;
     -fx-border-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 3);
 }
 
 /* ============================
-   Smooth Transition Effects
+    Smooth Transition Effects
 ============================ */
 .jfx-button, .search-button, .clear-button {
     -fx-transition: all 0.2s ease-in-out;
 }
 
 .jfx-button:hover {
-    -fx-scale-x: 1.08; /* Less aggressive scaling */
+    -fx-scale-x: 1.08;
     -fx-scale-y: 1.03;
-    -fx-opacity: 0.95; /* Just slightly reduced opacity */
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3); /* Light shadow effect */
+    -fx-opacity: 0.95;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
 }
