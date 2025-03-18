@@ -1,57 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-        <?import com.jfoenix.controls.JFXButton?>
-        <?import javafx.geometry.Insets?>
-        <?import javafx.scene.control.Label?>
-        <?import javafx.scene.control.TableColumn?>
-        <?import javafx.scene.control.TableView?>
-        <?import javafx.scene.control.TextField?>
-        <?import javafx.scene.image.Image?>
-        <?import javafx.scene.image.ImageView?>
-        <?import javafx.scene.layout.AnchorPane?>
-        <?import javafx.scene.layout.HBox?>
-        <?import javafx.scene.text.Font?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="495.0" prefWidth="699.0" stylesheets="@../styles/suppliers.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.SuppliersController">
+<AnchorPane prefHeight="737.0" prefWidth="1011.0" stylesheets="@../styles/suppliers.css"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.groupfour.travelexpertsfx.controllers.SuppliersController">
+
    <children>
-      <!-- 📊 Suppliers Table -->
-      <TableView fx:id="tvSuppliers" layoutX="109.0" layoutY="120.0"
-                 prefHeight="237.0" prefWidth="482.0" styleClass="table-view"> <!-- 🔹 Added styleClass -->
+      <!-- 🔍 Search & Filter Section -->
+      <HBox alignment="CENTER" layoutX="3.0" layoutY="93.0" prefHeight="44.0" prefWidth="1005.0"
+            AnchorPane.bottomAnchor="640.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <Label styleClass="label-text" text="Supplier Name:">
+               <HBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="tfName" prefHeight="34.0" prefWidth="250.0" promptText="Enter Supplier Name..."
+                       styleClass="text-field">
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <JFXButton fx:id="btnSearch" onMouseClicked="#searchSupplier" styleClass="search-button" text="Search">
+               <graphic>
+                  <ImageView fitHeight="25" fitWidth="25" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/search.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnClear" styleClass="clear-button" text="Clear">
+               <graphic>
+                  <ImageView fitHeight="25" fitWidth="25" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/clear.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets left="5.0" top="10.0" />
+               </HBox.margin>
+            </JFXButton>
+         </children>
+      </HBox>
+
+      <!-- 📊 Expanded Suppliers Table -->
+      <TableView fx:id="tvSuppliers" layoutX="26.0" layoutY="130.0" prefHeight="500.0" prefWidth="940.0"
+                 AnchorPane.bottomAnchor="140.0" AnchorPane.topAnchor="100.0" styleClass="table-view">
          <columns>
-            <TableColumn fx:id="tcId" prefWidth="188.0" text="Id" />
-            <TableColumn fx:id="tcName" prefWidth="293.0" text="Name" />
+            <TableColumn fx:id="tcId" prefWidth="200.0" text="Supplier ID" />
+            <TableColumn fx:id="tcName" prefWidth="740.0" text="Supplier Name" />
          </columns>
       </TableView>
 
-      <!-- 🎯 Action Buttons (Add, Edit, Delete) -->
-      <HBox layoutX="109.0" layoutY="369.0" prefHeight="30.0" prefWidth="291.0" spacing="15">
+      <!-- 🎯 Action Buttons (Now Positioned Below the Table) -->
+      <HBox alignment="CENTER" layoutX="26.0" layoutY="609.0" prefHeight="35.0" prefWidth="960.0"
+            spacing="150.0" AnchorPane.bottomAnchor="85.0" AnchorPane.topAnchor="590.0">
          <children>
-            <JFXButton fx:id="btnAdd" prefHeight="30.0" prefWidth="84.0"
-                       text="Add" styleClass="jfx-button add-button"> <!-- 🔹 Added styleClass -->
+            <JFXButton fx:id="btnAdd" onMouseClicked="#addSupplier" styleClass="add-button" text="Add">
                <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25" fitWidth="25" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/add2.png" />
                      </image>
                   </ImageView>
                </graphic>
             </JFXButton>
-
-            <JFXButton fx:id="btnEdit" prefHeight="30.0" prefWidth="107.0"
-                       text="Edit" styleClass="jfx-button edit-button"> <!-- 🔹 Added styleClass -->
+            <JFXButton fx:id="btnEdit" onMouseClicked="#editSupplier" styleClass="edit-button" text="Edit">
                <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25" fitWidth="25" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/edit2.png" />
                      </image>
                   </ImageView>
                </graphic>
             </JFXButton>
-
-            <JFXButton fx:id="btnDelete" prefHeight="30.0" prefWidth="97.0"
-                       text="Delete" styleClass="jfx-button delete-button"> <!-- 🔹 Added styleClass -->
+            <JFXButton fx:id="btnDelete" onMouseClicked="#deleteSupplier" styleClass="delete-button" text="Delete">
                <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25" fitWidth="25" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/bin2.png" />
                      </image>
@@ -61,59 +103,15 @@
          </children>
       </HBox>
 
-      <!-- 🔍 Search & Clear Buttons -->
-      <HBox layoutX="16.0" layoutY="52.0" prefHeight="30.0" prefWidth="670.0" spacing="15">
-         <children>
-            <Label text="Supplier Name:" styleClass="label-text"> <!-- 🔹 Added styleClass -->
-               <HBox.margin>
-                  <Insets top="7.0" />
-               </HBox.margin>
-            </Label>
-
-            <TextField fx:id="tfName" prefHeight="30.0" prefWidth="260.0" styleClass="text-field"> <!-- 🔹 Added styleClass -->
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </TextField>
-
-            <JFXButton fx:id="btnSearch" prefHeight="30.0" prefWidth="84.0"
-                       text="Search" styleClass="search-button"> <!-- 🔹 Added styleClass -->
-               <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/search.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-
-            <JFXButton fx:id="btnClear" prefHeight="30.0" prefWidth="84.0"
-                       text="Clear" styleClass="clear-button"> <!-- 🔹 Added styleClass -->
-               <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/clear.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-         </children>
-      </HBox>
-
       <!-- ✏️ Edit Field (Hidden by default) -->
-      <HBox fx:id="editField" layoutX="16.0" layoutY="410.0" prefHeight="30.0"
-            prefWidth="670.0" visible="false" spacing="15">
+      <HBox fx:id="editField" layoutX="16.0" layoutY="410.0" prefHeight="30.0" prefWidth="670.0" spacing="15" visible="false">
          <children>
-            <Label text="Supplier Name:" styleClass="label-text"> <!-- 🔹 Added styleClass -->
+            <Label styleClass="label-text" text="Supplier Name:">
                <HBox.margin>
                   <Insets top="7.0" />
                </HBox.margin>
             </Label>
-
-            <TextField fx:id="edSupplierName" prefHeight="30.0" prefWidth="260.0" styleClass="text-field"> <!-- 🔹 Added styleClass -->
+            <TextField fx:id="edSupplierName" prefHeight="30.0" prefWidth="260.0" styleClass="text-field">
                <font>
                   <Font size="15.0" />
                </font>
@@ -121,13 +119,13 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </TextField>
-
-            <JFXButton fx:id="btnSave" text="Update" styleClass="jfx-button"> <!-- 🔹 Added styleClass -->
+            <JFXButton fx:id="btnSave" styleClass="jfx-button" text="Update">
                <HBox.margin>
                   <Insets left="10.0" top="3.0" />
                </HBox.margin>
             </JFXButton>
          </children>
       </HBox>
+
    </children>
 </AnchorPane>

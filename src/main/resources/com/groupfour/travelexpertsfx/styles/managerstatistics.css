@@ -1,0 +1,136 @@
+/* ======================================
+   Manager Statistics Styling
+====================================== */
+
+/*  General Styling */
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 15px;
+}
+
+/* ============================
+    Chart Styling
+============================ */
+.chart {
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 5, 0, 0, 3);
+}
+
+/*  Bar Chart */
+.chart-bar {
+    -fx-bar-fill: #FF6B3B;
+    -fx-bar-stroke: transparent;
+}
+
+/* Line Chart */
+.chart-line-symbol {
+    -fx-background-color: #1768AC, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+}
+
+/*  Pie Chart */
+.chart-pie {
+    -fx-border-radius: 8px;
+}
+
+/* ============================
+    Label Styling
+============================ */
+.label-text {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+
+/* ============================
+    ComboBox Styling
+============================ */
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+}
+
+/* ============================
+    Date Picker Styling
+============================ */
+.date-picker {
+    -fx-border-color: #bfbfbf;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 4px;
+    -fx-background-color: white;
+    -fx-pref-height: 30px;
+}
+
+/*  Date Picker Text Field */
+.date-picker .text-field {
+    -fx-border-color: transparent;
+    -fx-background-color: white;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+/*  Date Picker Button */
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-pref-width: 25px;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #e6e6e6;
+}
+
+/* ============================
+    Button Styling
+============================ */
+.jfx-button {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 5px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-graphic-text-gap: 5px;
+}
+
+/*  Add To Chart Button */
+.add-button {
+    /*-fx-background-color: #28a745;*/
+    /*-fx-text-fill: white;*/
+}
+
+.add-button:hover {
+    -fx-text-fill: #218838;
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}
+
+/*  Clear Chart Button */
+.delete-button {
+    /*-fx-background-color: #dc3545;*/
+    /*-fx-text-fill: white;*/
+}
+
+.delete-button:hover {
+    -fx-text-fill: #c82333;
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}
+
+/* ============================
+    Smooth Transitions
+============================ */
+.jfx-button {
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.jfx-button:hover {
+    -fx-opacity: 0.9;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
+}

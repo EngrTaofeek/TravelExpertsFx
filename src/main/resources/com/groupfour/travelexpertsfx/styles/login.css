@@ -65,7 +65,7 @@
 /* Input Labels */
 .login-label {
     -fx-font-size: 1.3em;
-    -fx-font-weight: semibold;
+    -fx-font-weight: 500;
     -fx-text-fill: #333333; /* Darker text for contrast */
 }
 

@@ -1,15 +1,15 @@
 /* ======================================
-   🏢 Suppliers Module Styling (Aligned with Packages)
+    Suppliers Module Styling (Aligned with Packages)
 ====================================== */
 
-/* 📌 General Styling */
+/*  General Styling */
 .root {
     -fx-background-color: #f8f9fa;
     -fx-padding: 15px;
 }
 
 /* ============================
-   📊 Table Styling
+   Table Styling
 ============================ */
 .table-view {
     -fx-border-color: #ccc;
@@ -18,13 +18,13 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 3);
 }
 
-/* 🏣 Table Header */
+/*  Table Header */
 .table-view .column-header-background {
     -fx-background-color: linear-gradient(to right, #5FAAFF, #F0F8FF);
     -fx-background-radius: 5px 5px 0 0;
 }
 
-/* 🔠 Table Header Text */
+/*  Table Header Text */
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-text-fill: black;
@@ -32,7 +32,7 @@
     -fx-font-size: 15px;
 }
 
-/* 🏢 Table Row Styling */
+/*  Table Row Styling */
 .table-row-cell:odd {
     -fx-background-color: #f9f9f9;
 }
@@ -41,14 +41,14 @@
     -fx-background-color: white;
 }
 
-/* 🎯 Selected Row - Professional Blue */
+/*  Selected Row - Professional Blue */
 .table-row-cell:selected {
     -fx-background-color: linear-gradient(to bottom, #2986CC, #1768AC);
     -fx-text-fill: white;
 }
 
 /* ============================
-   🔘 Button Styling
+    Button Styling
 ============================ */
 .jfx-button {
     -fx-font-size: 14px;
@@ -60,7 +60,7 @@
     -fx-graphic-text-gap: 5px;
 }
 
-/* ✅ Add Button */
+/*  Add Button */
 #btnAdd {
     /*-fx-background-color: #28a745;*/
     /*-fx-text-fill: white;*/
@@ -69,7 +69,7 @@
     -fx-text-fill: #218838;
 }
 
-/* 🔵 Edit Button */
+/*  Edit Button */
 #btnEdit {
     /*-fx-background-color: #007bff;*/
     /*-fx-text-fill: white;*/
@@ -78,7 +78,7 @@
     -fx-text-fill: #0056b3;
 }
 
-/* ❌ Delete Button */
+/*  Delete Button */
 #btnDelete {
     /*-fx-background-color: #dc3545;*/
     /*-fx-text-fill: white;*/
@@ -87,7 +87,7 @@
     -fx-text-fill: #C82333;
 }
 
-/* 🔍 Search & Clear Buttons */
+/*  Search & Clear Buttons */
 #btnSearch {
     /*-fx-background-color: #007bff;*/
     /*-fx-text-fill: white;*/
@@ -105,7 +105,7 @@
 }
 
 /* ============================
-   🎨 Label & TextField Styling
+    Label & TextField Styling
 ============================ */
 .label {
     -fx-font-size: 15px;
@@ -121,7 +121,7 @@
 }
 
 /* ============================
-   ✨ Smooth Transition Effects
+    Smooth Transition Effects
 ============================ */
 .jfx-button, .search-button, .clear-button {
     -fx-transition: all 0.2s ease-in-out;

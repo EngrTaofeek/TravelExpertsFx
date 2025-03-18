@@ -1,5 +1,5 @@
 /* ======================================
-    Packages Module Styling
+    Products Module Styling
 ====================================== */
 
 /*  General Styling */
@@ -32,7 +32,7 @@
     -fx-font-size: 15px;
 }
 
-/* Table Row Styling */
+/*  Table Row Styling */
 .table-row-cell:odd {
     -fx-background-color: #f9f9f9;
 }
@@ -41,9 +41,9 @@
     -fx-background-color: white;
 }
 
-/* Selected Row - Professional Blue */
+/*  Selected Row - Green Highlight */
 .table-row-cell:selected {
-    -fx-background-color: linear-gradient(to bottom, #2986CC, #1768AC);
+    -fx-background-color: linear-gradient(to bottom, #218838, #155724);
     -fx-text-fill: white;
 }
 
@@ -75,6 +75,11 @@
     -fx-text-fill: #C82333;
 }
 
+/*  Save Button */
+.save-button:hover {
+    -fx-text-fill: #17a2b8;
+}
+
 /*  Search & Clear Buttons */
 .search-button:hover {
     -fx-text-fill: #0056b3;
@@ -85,7 +90,7 @@
 }
 
 /* ============================
-    Label, TextField & DatePicker Styling
+    Label, TextField & ComboBox Styling
 ============================ */
 .label-text {
     -fx-font-size: 15px;
@@ -93,63 +98,11 @@
     -fx-font-weight: bold;
 }
 
-.text-field, .date-picker {
+.text-field {
     -fx-border-color: #ccc;
     -fx-border-radius: 5px;
     -fx-padding: 5px;
     -fx-font-size: 14px;
-}
-/*  Date Picker Styling */
-.date-picker {
-    -fx-border-color: #bfbfbf;
-    -fx-border-radius: 4px;
-    -fx-background-radius: 4px;
-    -fx-padding: 4px;
-    -fx-background-color: white;
-    -fx-pref-height: 28px;
-}
-
-/*  Date Picker Text Field */
-.date-picker .text-field {
-    -fx-border-color: transparent;
-    -fx-background-color: white;
-    -fx-font-size: 14px;
-    -fx-text-fill: #333;
-    -fx-padding: 3px 5px;
-}
-
-/*  Date Picker Button */
-.date-picker .arrow-button {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-pref-width: 25px;
-}
-
-.date-picker .arrow-button:hover {
-    -fx-background-color: #e6e6e6;
-    -fx-border-radius: 0px 4px 4px 0px;
-}
-
-/* Calendar Pop-up */
-.date-picker-popup {
-    -fx-border-color: #ccc;
-    -fx-border-radius: 4px;
-    -fx-background-color: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
-}
-
-/*  Calendar Pop-up */
-.date-picker-popup {
-    -fx-border-color: #ccc;
-    -fx-border-radius: 4px;
-    -fx-background-color: white;
-}
-
-/*  ComboBox Styling */
-.combo-box {
-    -fx-background-color: white;
-    -fx-border-color: #ccc;
-    -fx-border-radius: 5px;
 }
 
 /* ============================

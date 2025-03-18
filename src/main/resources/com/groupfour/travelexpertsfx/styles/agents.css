@@ -47,7 +47,7 @@
     -fx-background-color: white;
 }
 
-/* 🎯 Selected Row - Professional Blue */
+/* Selected Row - Professional Blue */
 .table-row-cell:selected {
     -fx-background-color: linear-gradient(to bottom, #2986CC, #1768AC);
     -fx-text-fill: white;
