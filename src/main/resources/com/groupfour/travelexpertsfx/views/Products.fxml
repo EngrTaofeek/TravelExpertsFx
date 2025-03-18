@@ -11,23 +11,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="737.0" prefWidth="1011.0" stylesheets="@../styles/products.css"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.groupfour.travelexpertsfx.controllers.ProductsController">
+<AnchorPane prefHeight="737.0" prefWidth="1011.0" stylesheets="@../styles/products.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.ProductsController">
 
    <children>
-      <!-- 🔍 Search & Filter Section -->
-      <HBox alignment="CENTER" layoutX="3.0" layoutY="93.0" prefHeight="44.0" prefWidth="1005.0"
-            AnchorPane.bottomAnchor="640.0" AnchorPane.topAnchor="50.0">
+      <!-- Search & Filter Section -->
+      <HBox alignment="CENTER" layoutX="3.0" layoutY="93.0" prefHeight="44.0" prefWidth="1005.0" AnchorPane.bottomAnchor="700.0" AnchorPane.topAnchor="10.0">
          <children>
             <Label styleClass="label-text" text="Find Product:">
                <HBox.margin>
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="tfSearchBar" prefHeight="34.0" prefWidth="250.0" promptText="Enter Product Name..."
-                       styleClass="text-field">
+            <TextField fx:id="tfSearchBar" prefHeight="34.0" prefWidth="250.0" promptText="Enter Product Name..." styleClass="text-field">
                <HBox.margin>
                   <Insets left="5.0" top="10.0" />
                </HBox.margin>
@@ -59,18 +54,16 @@
          </children>
       </HBox>
 
-      <!-- 📊 Expanded Products Table -->
-      <TableView fx:id="tvProduct" layoutX="26.0" layoutY="130.0" prefHeight="500.0" prefWidth="940.0"
-                 AnchorPane.bottomAnchor="140.0" AnchorPane.topAnchor="100.0" styleClass="table-view">
+      <!-- Expanded Products Table -->
+      <TableView fx:id="tvProduct" layoutX="26.0" layoutY="157.6" prefHeight="406.0" prefWidth="940.0" styleClass="table-view" AnchorPane.bottomAnchor="314.0" AnchorPane.topAnchor="142.0">
          <columns>
             <TableColumn fx:id="colProductId" prefWidth="150.0" text="Product ID" />
             <TableColumn fx:id="colProductName" prefWidth="790.0" text="Product Name" />
          </columns>
       </TableView>
 
-      <!-- 🎯 Action Buttons (Now Positioned Below the Table) -->
-      <HBox alignment="CENTER" layoutX="26.0" layoutY="609.0" prefHeight="35.0" prefWidth="960.0"
-            spacing="150.0" AnchorPane.bottomAnchor="85.0" AnchorPane.topAnchor="590.0">
+      <!--Action Buttons  -->
+      <HBox alignment="CENTER" layoutX="26.0" layoutY="550.0" prefHeight="35.0" prefWidth="960.0" spacing="150.0" AnchorPane.bottomAnchor="270.0000000000001" AnchorPane.topAnchor="550.0">
          <children>
             <JFXButton fx:id="btnAdd" onMouseClicked="#addProduct" styleClass="add-button" text="Add">
                <graphic>
@@ -102,17 +95,15 @@
          </children>
       </HBox>
 
-      <!-- ✏️ Edit Field (Hidden by default) -->
-      <HBox fx:id="HBoxEdit" alignment="CENTER" layoutX="16.0" layoutY="660.0" prefHeight="30.0" prefWidth="670.0"
-            spacing="15" visible="false">
+      <!--Edit Field (Hidden by default) -->
+      <HBox fx:id="HBoxEdit" alignment="CENTER" layoutX="16.0" layoutY="610.0" prefHeight="30.0" prefWidth="670.0" spacing="15" visible="false">
          <children>
             <Label styleClass="label-text" text="Product Name:">
                <HBox.margin>
                   <Insets top="7.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="tfProdName" prefHeight="30.0" prefWidth="260.0" styleClass="text-field"
-                       promptText="Enter Product Name...">
+            <TextField fx:id="tfProdName" prefHeight="30.0" prefWidth="260.0" promptText="Enter Product Name..." styleClass="text-field">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

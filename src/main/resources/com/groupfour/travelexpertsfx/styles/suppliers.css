@@ -18,13 +18,11 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 3);
 }
 
-/*  Table Header */
 .table-view .column-header-background {
     -fx-background-color: linear-gradient(to right, #5FAAFF, #F0F8FF);
     -fx-background-radius: 5px 5px 0 0;
 }
 
-/*  Table Header Text */
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-text-fill: black;
@@ -32,7 +30,6 @@
     -fx-font-size: 15px;
 }
 
-/*  Table Row Styling */
 .table-row-cell:odd {
     -fx-background-color: #f9f9f9;
 }
@@ -41,7 +38,6 @@
     -fx-background-color: white;
 }
 
-/*  Selected Row - Professional Blue */
 .table-row-cell:selected {
     -fx-background-color: linear-gradient(to bottom, #2986CC, #1768AC);
     -fx-text-fill: white;
@@ -60,46 +56,22 @@
     -fx-graphic-text-gap: 5px;
 }
 
-/*  Add Button */
-#btnAdd {
-    /*-fx-background-color: #28a745;*/
-    /*-fx-text-fill: white;*/
-}
 #btnAdd:hover {
     -fx-text-fill: #218838;
 }
 
-/*  Edit Button */
-#btnEdit {
-    /*-fx-background-color: #007bff;*/
-    /*-fx-text-fill: white;*/
-}
 #btnEdit:hover {
     -fx-text-fill: #0056b3;
 }
 
-/*  Delete Button */
-#btnDelete {
-    /*-fx-background-color: #dc3545;*/
-    /*-fx-text-fill: white;*/
-}
 #btnDelete:hover {
     -fx-text-fill: #C82333;
 }
 
-/*  Search & Clear Buttons */
-#btnSearch {
-    /*-fx-background-color: #007bff;*/
-    /*-fx-text-fill: white;*/
-}
 #btnSearch:hover {
     -fx-text-fill: #0056b3;
 }
 
-#btnClear {
-    /*-fx-background-color: #6c757d;*/
-    /*-fx-text-fill: white;*/
-}
 #btnClear:hover {
     -fx-text-fill: #0056b3;
 }
@@ -118,6 +90,14 @@
     -fx-border-radius: 5px;
     -fx-padding: 5px;
     -fx-font-size: 14px;
+}
+
+#editField {
+    -fx-background-color: white;
+    -fx-padding: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 3);
 }
 
 /* ============================

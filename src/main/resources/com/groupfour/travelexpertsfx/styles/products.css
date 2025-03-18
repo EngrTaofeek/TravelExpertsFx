@@ -43,7 +43,7 @@
 
 /*  Selected Row - Green Highlight */
 .table-row-cell:selected {
-    -fx-background-color: linear-gradient(to bottom, #218838, #155724);
+    -fx-background-color: linear-gradient(to bottom, #2986CC, #1768AC);
     -fx-text-fill: white;
 }
 
@@ -89,6 +89,11 @@
     -fx-text-fill: #0056b3;
 }
 
+.save-button{
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+}
+
 /* ============================
     Label, TextField & ComboBox Styling
 ============================ */
@@ -104,6 +109,16 @@
     -fx-padding: 5px;
     -fx-font-size: 14px;
 }
+#editField {
+    -fx-background-color: white;
+    -fx-padding: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 3);
+}
+
+
+
 
 /* ============================
    Smooth Transition Effects
