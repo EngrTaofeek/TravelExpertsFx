@@ -12,7 +12,7 @@ import java.sql.*;
  * @Description: Connect to DB, Access Products table and perform CRUD
  */
 
-public class ProductDB implements DBConnection {
+public class ProductDB {
 
 
 
