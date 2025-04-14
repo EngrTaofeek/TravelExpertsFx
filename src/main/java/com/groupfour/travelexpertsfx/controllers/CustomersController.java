@@ -3,6 +3,7 @@ package com.groupfour.travelexpertsfx.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.groupfour.travelexpertsfx.MainApplication;
@@ -31,9 +32,7 @@ import javafx.stage.Stage;
  * @To-do-list:
  *
 
- * - view past trips
- * - search customer
- *
+
  */
 
 public class CustomersController {
@@ -91,24 +90,55 @@ public class CustomersController {
 
     }
 
+//    @FXML
+//    void deleteCustomer(MouseEvent event) {
+//        int id = tvCustomer.getSelectionModel().getSelectedItem().getCustomerId();
+//        int numRows = 0;
+//        try {
+//            numRows = CustomerDB.deleteCustomer(id);
+//        } catch (SQLException e) {
+//            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error deleting Customer\n" + e.getMessage());
+//        }
+//
+//        if (numRows==1) {
+//            ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Customer has been deleted successfully");
+//        } else {
+//            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error while deleting the customer");
+//        }
+//        displayCustomer();
+//
+//    }
+
     @FXML
     void deleteCustomer(MouseEvent event) {
         int id = tvCustomer.getSelectionModel().getSelectedItem().getCustomerId();
-        int numRows = 0;
-        try {
-            numRows = CustomerDB.deleteCustomer(id);
-        } catch (SQLException e) {
-            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error deleting Customer\n" + e.getMessage());
-        }
 
-        if (numRows==1) {
-            ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Customer has been deleted successfully");
+        // Confirmation dialog
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Delete Confirmation");
+        confirmationAlert.setHeaderText(null);
+        confirmationAlert.setContentText("Are you sure you want to delete this customer?");
+
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            int numRows = 0;
+            try {
+                numRows = CustomerDB.deleteCustomer(id);
+            } catch (SQLException e) {
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error deleting Customer\n" + e.getMessage());
+            }
+
+            if (numRows == 1) {
+                ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Customer has been deleted successfully");
+            } else {
+                ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error while deleting the customer");
+            }
+            displayCustomer();
         } else {
-            ControllerMethods.alertUser(Alert.AlertType.ERROR, "Error while deleting the customer");
+            ControllerMethods.alertUser(Alert.AlertType.INFORMATION, "Customer deletion canceled");
         }
-        displayCustomer();
-
     }
+
 
     @FXML
     void editCustomer(MouseEvent event) {
@@ -337,11 +367,6 @@ public class CustomersController {
         displayCustomer();
 
     }
-
-
-
-
-
 }
 
 /*
@@ -354,6 +379,7 @@ Status: INCOMPLETE
     * CSS
     * make pages not ugly
     * add confirmation for delete
+    * add comments to describe all my methods
 
  Status: COMPLETE
     * READ - view customer details in a table

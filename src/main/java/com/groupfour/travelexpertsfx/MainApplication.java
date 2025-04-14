@@ -54,7 +54,7 @@ public class MainApplication extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Login - Travel Experts");
-            primaryStage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("/com/groupfour/travelexpertsfx/images/airplane.png")));
+            primaryStage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("/com/groupfour/travelexpertsfx/images/plane-logo.png")));
             // Open in maximized mode
             primaryStage.setMaximized(true);
 
@@ -73,7 +73,7 @@ public class MainApplication extends Application {
             Scene scene = new Scene(root,primaryStage.getWidth(),primaryStage.getHeight());
             primaryStage.setScene(scene);
             primaryStage.setTitle("Travel Experts Dashboard");
-            primaryStage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("/com/groupfour/travelexpertsfx/images/airplane.png")));
+            primaryStage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("/com/groupfour/travelexpertsfx/images/plane-logo.png")));
 
             // Open in maximized mode
             primaryStage.setMaximized(true);

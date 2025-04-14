@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import com.groupfour.travelexpertsfx.models.ProductDB;
@@ -256,16 +257,37 @@ public class ProductsController {
             }
 
         } else if (modeSetter.equalsIgnoreCase("DELETE")) {
+//            try {
+//                //productToUpdate.setProductName(tfProdName.getText());
+//                numRows = ProductDB.deleteProduct(productToUpdate.getProductId());
+//                ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Product deleted successfully.");
+//                HBoxEdit.setVisible(false);
+//                displayProduct();
+//
+//            } catch (SQLException e) {
+//                ControllerMethods.alertUser(Alert.AlertType.ERROR, "An error occurred while updating Product\n" + e.getMessage());
+//            }
             try {
-                //productToUpdate.setProductName(tfProdName.getText());
-                numRows = ProductDB.deleteProduct(productToUpdate.getProductId());
-                ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Product deleted successfully.");
-                HBoxEdit.setVisible(false);
-                displayProduct();
+                // Confirmation dialog
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("Delete Confirmation");
+                confirmationAlert.setHeaderText(null);
+                confirmationAlert.setContentText("Are you sure you want to delete this product?");
 
+                Optional<ButtonType> result = confirmationAlert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    // Proceed with deletion
+                    numRows = ProductDB.deleteProduct(productToUpdate.getProductId());
+                    ControllerMethods.alertUser(Alert.AlertType.CONFIRMATION, "Product deleted successfully.");
+                    HBoxEdit.setVisible(false);
+                    displayProduct();
+                } else {
+                    ControllerMethods.alertUser(Alert.AlertType.INFORMATION, "Product deletion canceled");
+                }
             } catch (SQLException e) {
                 ControllerMethods.alertUser(Alert.AlertType.ERROR, "An error occurred while updating Product\n" + e.getMessage());
             }
+
 
         }
 
