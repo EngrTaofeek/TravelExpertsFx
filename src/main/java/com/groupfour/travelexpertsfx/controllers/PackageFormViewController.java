@@ -50,7 +50,7 @@ public class PackageFormViewController{
     private TextArea tfDescription; // Value injected by FXMLLoader
 
     @FXML // fx:id="tfName"
-    private TextField tfName; // Value injected by FXMLLoader
+    private TextField tfName, tfDest; // Value injected by FXMLLoader
 
     private int packageId = 0;
 
@@ -69,6 +69,7 @@ public class PackageFormViewController{
         assert tfBasePrice != null : "fx:id=\"tfBasePrice\" was not injected: check your FXML file 'package-form-view.fxml'.";
         assert tfDescription != null : "fx:id=\"tfDescription\" was not injected: check your FXML file 'package-form-view.fxml'.";
         assert tfName != null : "fx:id=\"tfName\" was not injected: check your FXML file 'package-form-view.fxml'.";
+        assert tfDest != null : "fx:id=\"tfDest\" was not injected: check your FXML file 'package-form-view.fxml'.";
 
         btnCancel.setOnAction((ActionEvent event) -> {
             closeWindow(event);
@@ -129,6 +130,7 @@ public class PackageFormViewController{
     private Package getPackageFormView() {
         try {
             Validator.validateName(tfName.getText());
+            Validator.validateName(tfDest.getText());
             if(dpStartDate.getValue() == null) {
                 throw new RuntimeException("please select start date");
             }
@@ -143,7 +145,8 @@ public class PackageFormViewController{
                     Double.parseDouble(tfBasePrice.getText()),
                     Date.valueOf(dpEndDate.getValue()),
                     Date.valueOf(dpStartDate.getValue()),
-                    tfDescription.getText());
+                    tfDescription.getText(),
+                    tfDest.getText());
         } catch (Exception e) {
             message.alertMessage(Alert.AlertType.ERROR,e.getMessage());
         }
@@ -154,6 +157,7 @@ public class PackageFormViewController{
         tfBasePrice.setText(String.valueOf(pack.getPkgbaseprice()));
         tfDescription.setText(pack.getPkgdesc());
         tfName.setText(pack.getPkgname());
+        tfDest.setText(pack.getDestination());
         tfAgencyCommission.setText(String.valueOf(pack.getPkgagencycommission()));
         dpStartDate.setValue(pack.getPkgstartdate());
         dpEndDate.setValue(pack.getPkgenddate());
