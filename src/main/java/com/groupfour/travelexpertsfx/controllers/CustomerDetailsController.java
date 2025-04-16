@@ -448,9 +448,10 @@ public class CustomerDetailsController {
                 tfCustProvince.getText(),
                 tfCustPostal.getText(),
                 tfCustCountry.getText(),
-                tfCustEmail.getText(),
+
                 tfCustHomePhone.getText(),
                 tfCustBusPhone.getText(),
+                tfCustEmail.getText(),
                 Integer.parseInt(tfCustAgentId.getText())
         );
 
@@ -466,9 +467,10 @@ public class CustomerDetailsController {
                 tfCustProvince.getText(),
                 tfCustPostal.getText(),
                 tfCustCountry.getText(),
-                tfCustEmail.getText(),
+
                 tfCustHomePhone.getText(),
                 tfCustBusPhone.getText(),
+                tfCustEmail.getText(),
                 Integer.parseInt(tfCustAgentId.getText())
         );
 
