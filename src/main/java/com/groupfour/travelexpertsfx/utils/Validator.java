@@ -116,7 +116,6 @@ public class Validator {
         } else if (!city.matches(regex)) {
             throw new RuntimeException("please enter valid city");
         }
-
     }
 
     /**
@@ -173,6 +172,20 @@ public class Validator {
             throw new RuntimeException("please enter a " + fieldName);
         } else if (!price.matches(regex)) {
             throw new RuntimeException("please enter valid " + fieldName);
+        }
+    }
+
+    /**
+     * validate destination
+     *
+     * @param destination
+     */
+    public static void validateDestination(String destination) {
+        String regex = "^[A-Za-z-'\\s]{2,50}$";
+        if (destination.isEmpty()) {
+            throw new RuntimeException("please enter a destination");
+        } else if (!destination.matches(regex)) {
+            throw new RuntimeException("please enter valid destination");
         }
     }
 }

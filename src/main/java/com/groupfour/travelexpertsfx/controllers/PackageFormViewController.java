@@ -140,6 +140,7 @@ public class PackageFormViewController{
             checkDate(Date.valueOf(dpStartDate.getValue()),Date.valueOf(dpEndDate.getValue()));
             Validator.validatePrice(tfBasePrice.getText(),"base price");
             Validator.validatePrice(tfAgencyCommission.getText(),"agency commission");
+            Validator.validateDestination(tfDest.getText());
             return new Package(packageId != 0 ? packageId : 0,tfName.getText(),
                     Double.parseDouble(tfAgencyCommission.getText()),
                     Double.parseDouble(tfBasePrice.getText()),
