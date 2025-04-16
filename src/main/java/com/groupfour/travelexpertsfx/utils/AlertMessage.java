@@ -14,7 +14,6 @@ public class AlertMessage {
     public void alertMessage(javafx.scene.control.Alert.AlertType alertType, String message) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(alertType);
         alert.setTitle(alertType.toString());
-        alert.setHeaderText("Header");
         alert.setContentText(message);
         alert.showAndWait();
     }
