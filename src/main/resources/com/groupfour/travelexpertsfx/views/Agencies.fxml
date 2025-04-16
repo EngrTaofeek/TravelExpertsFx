@@ -10,42 +10,32 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="749.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.AgenciesController">
+<AnchorPane prefHeight="749.0" prefWidth="1110.0" stylesheets="@../styles/agencies.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.AgenciesController">
+
    <children>
-      <HBox layoutX="30.0" layoutY="30.0" prefHeight="30.0" prefWidth="471.0">
-         <children>
-            <JFXButton fx:id="btnAdd" prefHeight="30.0" prefWidth="92.0" text="Add">
-               <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/add2.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnEdit" prefHeight="30.0" prefWidth="107.0" text="Edit">
-               <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/edit2.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnDelete" prefHeight="45.0" prefWidth="103.0" text="Delete">
-               <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/bin2.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-         </children>
+      <!-- 🔍 Search & Filter Section -->
+      <HBox alignment="CENTER" layoutY="80.0" prefHeight="44.0" prefWidth="1110.0" AnchorPane.bottomAnchor="640.0" AnchorPane.topAnchor="50.0">
+         <Label styleClass="label-text" text="Search Agency:" />
+         <TextField fx:id="tfSearchField" prefHeight="29.0" prefWidth="336.0" styleClass="text-field" />
+         <JFXButton fx:id="btnSearch" styleClass="search-button" text="Search">
+            <graphic>
+               <ImageView fitHeight="22.0" fitWidth="22.0">
+                  <image><Image url="@../images/search.png" /></image>
+               </ImageView>
+            </graphic>
+         </JFXButton>
+         <JFXButton fx:id="btnClear" styleClass="clear-button" text="Clear">
+            <graphic>
+               <ImageView fitHeight="22.0" fitWidth="22.0">
+                  <image><Image url="@../images/clear.png" /></image>
+               </ImageView>
+            </graphic>
+         </JFXButton>
       </HBox>
-      <TableView fx:id="tvAgency" layoutX="57.0" layoutY="167.0" prefHeight="551.0" prefWidth="996.0">
+
+      <!-- 📊 Agencies Table (Adjusted Height) -->
+      <TableView fx:id="tvAgency" layoutX="57.0" layoutY="141.6" prefHeight="477.0" prefWidth="996.0" AnchorPane.bottomAnchor="140.0" AnchorPane.topAnchor="91.0">
          <columns>
             <TableColumn fx:id="tcAddress" prefWidth="193.0" text="Address" />
             <TableColumn fx:id="tcCity" prefWidth="87.0" text="City" />
@@ -56,49 +46,33 @@
             <TableColumn fx:id="tcFax" prefWidth="198.0" text="Fax" />
          </columns>
       </TableView>
-      <HBox layoutY="80.0" prefHeight="44.0" prefWidth="1110.0">
+
+      <!-- 🎯 Action Buttons (Centered & Evenly Distributed Below Table) -->
+      <HBox alignment="CENTER" layoutX="57.0" layoutY="660.0" prefHeight="35.0" prefWidth="996.0" spacing="150.0" AnchorPane.topAnchor="590.0">
          <children>
-            <Label text="Search Agency:">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="5.0" top="10.0" />
-               </HBox.margin>
-            </Label>
-            <TextField fx:id="tfSearchField" prefHeight="29.0" prefWidth="336.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="5.0" top="10.0" />
-               </HBox.margin>
-            </TextField>
-            <JFXButton fx:id="btnSearch" prefHeight="30.0" prefWidth="84.0" text="Search">
+            <JFXButton fx:id="btnAdd" styleClass="add-button" text="Add">
                <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/search.png" />
-                     </image>
+                  <ImageView fitHeight="25" fitWidth="25">
+                     <image><Image url="@../images/add2.png" /></image>
                   </ImageView>
                </graphic>
-               <HBox.margin>
-                  <Insets left="5.0" top="10.0" />
-               </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnClear" prefHeight="30.0" prefWidth="84.0" text="Clear">
+            <JFXButton fx:id="btnEdit" styleClass="edit-button" text="Edit">
                <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/clear.png" />
-                     </image>
+                  <ImageView fitHeight="25" fitWidth="25">
+                     <image><Image url="@../images/edit2.png" /></image>
                   </ImageView>
                </graphic>
-               <HBox.margin>
-                  <Insets left="5.0" top="10.0" />
-               </HBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" styleClass="delete-button" text="Delete">
+               <graphic>
+                  <ImageView fitHeight="25" fitWidth="25">
+                     <image><Image url="@../images/bin2.png" /></image>
+                  </ImageView>
+               </graphic>
             </JFXButton>
          </children>
+         <padding><Insets left="40.0" right="30.0" /></padding>
       </HBox>
    </children>
 </AnchorPane>

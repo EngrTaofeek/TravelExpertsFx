@@ -1,76 +1,105 @@
-/* ==========================================
-   Global Styling for Main Content
-   ========================================== */
+/* ======================================
+   Global Dashboard Styling
+====================================== */
 .main-content {
     -fx-background-color: white;
-    -fx-padding: 15px;
+    -fx-padding: 20px;
 }
 
-/* ==========================================
-   Top Navigation Bar Styling
-   ========================================== */
-/* Dark Top Bar */
+/* ======================================
+    Top Navigation Bar Styling
+====================================== */
 .top-bar {
     /* Optional color options */
-    /*-fx-background-color: linear-gradient(to right, #D4AF37, #FFD700); !* Gold gradient **/
-    /*-fx-background-color: linear-gradient(to right, #003366, #3399FF); !* Blue gradient *!*/
-    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
-    -fx-pref-height: 35px;
+    -fx-background-color: linear-gradient(to right, #002F6C, #0073E6); /* Deep blue gradient */
+    /*-fx-background-color: linear-gradient(to bottom, #1E3C72, #2A5298);*/ /* dark deep blue to a muted or lighter blue */
+    /*-fx-background-color: linear-gradient(to bottom, #003366, #0073e6);*/ /* dark blue to a brighter sky blue.*/
+    /*-fx-background-color: linear-gradient(to right, #6A0572, #E94560); !* Purple gradient *!*/
+
+    -fx-pref-height: 45px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 5, 0, 0, 3);
 }
 
-/* Light Navigation Bar */
 .top-nav {
     -fx-background-color: white;
-    -fx-padding: 10px 15px;
-    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 15px 25px;
+    -fx-border-width: 0 0 2px 0;
     -fx-border-color: #ddd;
+    -fx-alignment: center;
 }
 
-/* Align Menu & Home on the Left */
+/* Top Menu & Home Button */
 #btnMenuToggle, #btnHome {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 20px;
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+}
+
+/* 🔘 Top Buttons Hover Effect */
+.top-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-text-fill: #222;
+}
+
+/*  User Email Styling */
+.user-email {
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 12px;
+}
+
+/*  Logout Button */
+.logout-button {
+    -fx-background-color: #E74C3C; /* Softer Red */
+    -fx-text-fill: white;
+    -fx-font-size: 14px; /* Slightly smaller font */
+    -fx-font-weight: normal; /* Less bold */
+    -fx-padding: 8px 16px; /* Reduced padding */
+    -fx-border-radius: 6px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 4, 0, 0, 1);
+}
+
+.logout-button:hover {
+    -fx-background-color: #C0392B; /* Darker Red */
+}
+
+/* User Profile Image */
+.user-icon {
+    -fx-fit-height: 45px;
+    -fx-fit-width: 45px;
+    -fx-padding: 5px;
+}
+
+/* Top Buttons with Icons */
+.top-button {
     -fx-background-color: transparent;
     -fx-text-fill: black;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-padding: 8px 15px;
-}
-
-/* Align User Email & Logout on the Right */
-#topButtonContainer {
-    -fx-alignment: center-right;
-}
-
-/* User Email Label */
-.user-email {
-    -fx-text-fill: black;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-}
-
-/* Logout Button Styling */
-.logout-button {
-    -fx-background-color: #d9534f; /* Red color */
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-padding: 6px 12px;
+    -fx-padding: 10px 22px;
     -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-graphic-text-gap: 10px; /* Spacing between icon and text */
 }
 
-/* Logout Button Hover Effect */
-.logout-button:hover {
-    -fx-background-color: #c9302c; /* Darker red */
+/*  Smooth Transition Effects */
+.top-button, .logout-button {
+    -fx-transition: all 0.3s ease-in-out;
 }
 
-/* ==========================================
-   Sidebar Styling
-   ========================================== */
-/* Sidebar Background */
+/* ======================================
+    Sidebar Styling
+====================================== */
 .sidebar {
     /* Optional gradient color options */
-    /*-fx-background-color: linear-gradient(to bottom, #B8860B, #FFD700); !* Gold gradient sidebar *!*/
-    /*-fx-background-color: linear-gradient(to right, #003366, #3399FF); !* Blue gradient *!*/
-    -fx-background-color: linear-gradient(to right, #6A0572, #E94560); /* Purple gradient */
+    -fx-background-color: linear-gradient(to right, #002F6C, #0073E6);
+    /*-fx-background-color: linear-gradient(to right, #6A0572, #E94560); !* Purple gradient *!*/
     -fx-padding: 15px;
 }
 
@@ -80,7 +109,7 @@
     -fx-text-fill: white;
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-padding: 12px 20px;
+    -fx-padding: 14px 25px;
     -fx-alignment: center-left;
     -fx-border-radius: 5px;
     -fx-transition: all 0.3s ease-in-out;
@@ -88,46 +117,61 @@
 
 /* Sidebar Button Hover Effect */
 .sidebar-button:hover {
-    -fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); /* Brighter pink gradient */
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    /*-fx-background-color: linear-gradient(to right, #E94560, #FF9A8B); !* Brighter pink gradient *!*/
+    /*-fx-background-color: linear-gradient(to right, #FF8C00, #FFA500); !* orange highlight *! */
     -fx-text-fill: white;
     -fx-border-radius: 5px;
-    -fx-transition: all 0.3s ease-in-out;
 }
 
 /* Sidebar Button Selected/Pressed */
 .sidebar-button:focused,
 .sidebar-button:selected,
 .sidebar-button:pressed {
-    -fx-background-color: linear-gradient(to right, #FF8C00, #FFA500); /* orange highlight */
+    /*-fx-background-color: linear-gradient(to right, #FF8C00, #FFA500); !* orange highlight *!*/
+    -fx-background-color: rgba(255, 255, 255, 0.25);
     -fx-text-fill: white;
     -fx-border-width: 0;
     -fx-border-color: transparent;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0, 0, 4); /* Subtle glow */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0, 0, 4);
 }
 
-/* Sidebar Logo Styling */
+/* Sidebar Logo */
 .sidebar-logo {
-    -fx-padding: 10px 0;
+    -fx-padding: 15px 0;
     -fx-alignment: center;
 }
 
-/* ==========================================
-   Top Buttons Styling
-   ========================================== */
-/* Top Buttons Default */
+/* ======================================
+    Sidebar Buttons Styling
+====================================== */
 .top-button {
     -fx-background-color: transparent;
     -fx-text-fill: black;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-padding: 8px 20px;
+    -fx-padding: 10px 22px;
     -fx-border-radius: 5px;
     -fx-cursor: hand;
 }
 
+/* Center Menu & Home Buttons */
+#btnMenuToggle, #btnHome {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 20px; /* Reduce padding to make them align */
+    -fx-border-radius: 5px;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-translate-y: -4px; /* Slightly move them up */
+}
+
+
 /* Top Button Hover Effect */
 .top-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.2); /* Subtle effect */
+    -fx-background-color: rgba(255, 255, 255, 0.15);
     -fx-text-fill: #222;
 }
 
@@ -138,15 +182,14 @@
     -fx-text-fill: red;
 }
 
-/* ==========================================
-   Menu Button Styling
-   ========================================== */
-/* Menu Button Default */
+/* ======================================
+    Menu Button Styling
+====================================== */
 .menu-button {
     -fx-background-color: white;
     -fx-text-fill: black;
-    -fx-font-size: 14px;
-    -fx-padding: 8px 10px;
+    -fx-font-size: 15px;
+    -fx-padding: 10px 15px;
     -fx-border-radius: 5px;
     -fx-cursor: hand;
 }
@@ -156,23 +199,19 @@
     -fx-background-color: #e0e0e0;
 }
 
-/* ==========================================
+/* ======================================
    Smooth Transition Effects
-   ========================================== */
+====================================== */
 .sidebar-button, .top-button, .menu-button {
     -fx-transition: all 0.3s ease-in-out;
 }
 
-
-
-/* ==========================================
-   footer Effects (for future development e.g. copyright, version..)
-   ========================================== */
-
-
+/* ======================================
+   Footer Effects (for future dev)
+====================================== */
 .footer {
-    -fx-background-color: #6A0572;
+    -fx-background-color: #003366;
     -fx-text-fill: white;
-    -fx-padding: 5px 10px;
+    -fx-padding: 8px 12px;
     -fx-alignment: center-right;
 }

@@ -11,74 +11,24 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="737.0" prefWidth="1011.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.AgentsController">
+<AnchorPane prefHeight="737.0" prefWidth="1011.0" stylesheets="@../styles/agents.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.AgentsController">
+
    <children>
-      <HBox layoutX="26.0" layoutY="47.0" prefHeight="30.0" prefWidth="793.0">
+      <!-- 🔍 Search & Filter Section -->
+      <HBox alignment="CENTER" layoutX="3.0" layoutY="93.0" prefHeight="44.0" prefWidth="1005.0" AnchorPane.bottomAnchor="640.0" AnchorPane.topAnchor="50.0">
          <children>
-            <JFXButton fx:id="btnAdd" prefHeight="30.0" prefWidth="84.0" text="Add">
-               <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/add2.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnEdit" prefHeight="30.0" prefWidth="107.0" text="Edit">
-               <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/edit2.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnDelete" prefHeight="30.0" prefWidth="106.0" text="Delete">
-               <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/bin2.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </JFXButton>
-         </children>
-      </HBox>
-      <TableView fx:id="tvAgent" layoutX="26.0" layoutY="190.0" prefHeight="524.0" prefWidth="940.0">
-         <columns>
-            <TableColumn fx:id="tcFirstName" prefWidth="87.0" text="FirstName" />
-            <TableColumn fx:id="tcMiddleInitial" prefWidth="88.0" text="MiddleInitial" />
-            <TableColumn fx:id="tcLastName" prefWidth="94.0" text="LastName" />
-            <TableColumn fx:id="tcPhone" prefWidth="155.0" text="Phone" />
-            <TableColumn fx:id="tcEmail" prefWidth="165.0" text="Email" />
-            <TableColumn fx:id="tcPosition" prefWidth="135.0" text="Position" />
-            <TableColumn fx:id="tcAgency" prefWidth="214.0" text="Agency" />
-         </columns>
-      </TableView>
-      <HBox layoutX="3.0" layoutY="93.0" prefHeight="44.0" prefWidth="1005.0">
-         <children>
-            <Label text="Search Agent:">
-               <font>
-                  <Font size="15.0" />
-               </font>
+            <Label styleClass="label-text" text="Search Agent:">
                <HBox.margin>
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>
             </Label>
             <TextField fx:id="tfSearchField" prefHeight="29.0" prefWidth="213.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
                <HBox.margin>
                   <Insets left="5.0" top="10.0" />
                </HBox.margin>
             </TextField>
-            <Label text="Agency:">
-               <font>
-                  <Font size="15.0" />
-               </font>
+            <Label styleClass="label-text" text="Agency:">
                <HBox.margin>
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>
@@ -88,9 +38,9 @@
                   <Insets left="5.0" top="10.0" />
                </HBox.margin>
             </ComboBox>
-            <JFXButton fx:id="btnSearch" prefHeight="30.0" prefWidth="84.0" text="Search">
+            <JFXButton fx:id="btnSearch" styleClass="search-button" text="Search">
                <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25" fitWidth="25" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/search.png" />
                      </image>
@@ -100,9 +50,9 @@
                   <Insets left="5.0" top="10.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btnClear" prefHeight="30.0" prefWidth="84.0" text="Clear">
+            <JFXButton fx:id="btnClear" styleClass="clear-button" text="Clear">
                <graphic>
-                  <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25" fitWidth="25" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/clear.png" />
                      </image>
@@ -113,6 +63,61 @@
                </HBox.margin>
             </JFXButton>
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
+
+      <!-- 📊 Agents Table (Reduced Height to Make Space) -->
+      <TableView fx:id="tvAgent" layoutX="26.0" layoutY="130.0" prefHeight="500.0" prefWidth="940.0" AnchorPane.bottomAnchor="140.0" AnchorPane.topAnchor="100.0">
+         <columns>
+            <TableColumn fx:id="tcFirstName" prefWidth="100" text="FirstName" />
+            <TableColumn fx:id="tcMiddleInitial" prefWidth="100" text="MiddleInitial" />
+            <TableColumn fx:id="tcLastName" prefWidth="100.0" text="LastName" />
+            <TableColumn fx:id="tcPhone" prefWidth="100" text="Phone" />
+            <TableColumn fx:id="tcEmail" prefWidth="200.0" text="Email" />
+            <TableColumn fx:id="tcPosition" prefWidth="125" text="Position" />
+            <TableColumn fx:id="tcAgency" prefWidth="220.0" text="Agency" />
+         </columns>
+      </TableView>
+
+      <!-- 🎯 Action Buttons (Now Correctly Positioned Below the Table) -->
+      <HBox alignment="CENTER" layoutX="26.0" layoutY="609.0" prefHeight="35.0" prefWidth="960.0" spacing="150.0" AnchorPane.bottomAnchor="85.0" AnchorPane.topAnchor="590.0"> <!-- ✅ Adjusted layoutY -->
+         <children>
+            <JFXButton fx:id="btnAdd" styleClass="add-button" text="Add">
+               <graphic>
+                  <ImageView fitHeight="25" fitWidth="25" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/add2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnEdit" styleClass="edit-button" text="Edit">
+               <graphic>
+                  <ImageView fitHeight="25" fitWidth="25" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/edit2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnDelete" styleClass="delete-button" text="Delete">
+               <graphic>
+                  <ImageView fitHeight="25" fitWidth="25" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/bin2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="40.0" right="30.0" />
+         </padding>
       </HBox>
    </children>
 </AnchorPane>

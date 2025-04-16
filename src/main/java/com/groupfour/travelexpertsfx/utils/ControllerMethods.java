@@ -16,7 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public interface ControllerMethods {
+public class ControllerMethods {
     public static void alertUser(Alert.AlertType alertType, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(alertType.toString());

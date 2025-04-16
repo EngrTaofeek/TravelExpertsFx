@@ -1,0 +1,100 @@
+/* ==============================
+   Agent Form Styling
+============================== */
+
+/*  Background Styling */
+.agent-form-background {
+    -fx-background-color: linear-gradient(to right, #005f73, #0a9396); /* Cool Blue Gradient */
+    -fx-pref-width: 800px;
+    -fx-pref-height: 600px;
+}
+
+/* Form Box */
+.agent-form {
+    -fx-background-color: white;
+    -fx-border-radius: 20px; /* Rounded corners */
+    -fx-background-radius: 20px;
+    -fx-padding: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 12, 0, 0, 5); /* Subtle shadow */
+}
+
+/* 🏷Form Title */
+.agent-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #222831;
+}
+
+/* ==============================
+    Labels
+============================== */
+.agent-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+
+/*  Input Fields */
+.agent-input {
+    -fx-pref-height: 40px;
+    -fx-pref-width: 100%;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-border-color: #00ADB5;
+    -fx-border-width: 1.5px;
+    -fx-background-color: #f5f5f5; /* Light gray */
+    -fx-text-fill: #222831;
+    -fx-font-size: 15px;
+    -fx-padding: 6px;
+}
+
+/* Dropdown Styling */
+.agent-dropdown {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 8px;
+    -fx-padding: 5px;
+    -fx-font-size: 15px;
+}
+
+/* ==============================
+    Buttons
+============================== */
+.agent-button {
+    -fx-background-color: linear-gradient(to right, #007BFF, #0056D2); /* Blue gradient */
+    -fx-border-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-pref-width: 140px;
+}
+
+/* Save Button */
+.agent-save-button {
+    -fx-background-color: linear-gradient(to right, #28a745, #218838); /* Green Gradient */
+}
+
+/* Cancel Button */
+.agent-cancel-button {
+    -fx-background-color: linear-gradient(to right, #DC3545, #C82333); /* Red Gradient */
+}
+
+/* Button Hover Effects */
+.agent-button:hover {
+    -fx-background-color: linear-gradient(to right, #009688, #005F6B); /* Teal gradient */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 5);
+}
+
+/* ==============================
+    Smooth Transitions
+============================== */
+.agent-button, .agent-input, .agent-dropdown {
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+.agent-button:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-opacity: 0.9;
+}
+

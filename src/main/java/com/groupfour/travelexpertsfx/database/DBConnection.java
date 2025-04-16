@@ -16,7 +16,7 @@ package com.groupfour.travelexpertsfx.database;
 import java.sql.*;
 
 
-public interface DBConnection {
+public class DBConnection {
     public static Connection getConnection() {
         String url = DbConfig.getProperty("url");
         String user = DbConfig.getProperty("user");

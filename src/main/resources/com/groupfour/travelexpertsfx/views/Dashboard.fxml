@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,76 +11,91 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1.0" prefWidth="1.0" stylesheets="@../styles/dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.DashboardController">
+<AnchorPane prefHeight="647.0" prefWidth="885.0" stylesheets="@../styles/dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupfour.travelexpertsfx.controllers.DashboardController">
 
     <children>
         <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
             <!-- Top Navigation Bar -->
             <top>
-                <VBox prefWidth="50.0">
-                    <!-- Dark Bar Above -->
+                <VBox>
                     <Pane prefHeight="46.0" styleClass="top-bar" VBox.vgrow="NEVER" />
 
                     <!-- White Navigation Bar -->
                     <AnchorPane maxHeight="67.0" minHeight="20.0" prefHeight="48.0" styleClass="top-nav" VBox.vgrow="NEVER">
                         <children>
                             <!-- Left-side: Menu & Home Buttons -->
-                            <HBox spacing="60.0" AnchorPane.leftAnchor="15.0">
+                            <HBox layoutX="-7.0" layoutY="-2.0" spacing="90.0" AnchorPane.leftAnchor="-35.0">
                                 <children>
-                                    <Button fx:id="btnMenuToggle" onAction="#toggleSidebar" prefHeight="44.0" prefWidth="100.0" styleClass="menu-button" text="☰ Menu">
-                                        <font>
-                                            <Font size="18.0" />
-                                        </font>
-                                    </Button>
-                                    <JFXButton fx:id="btnHome" styleClass="top-button" text="Home" />
+                                    <!--  Menu Button with Icon -->
+                                    <JFXButton fx:id="btnMenuToggle" onAction="#toggleSidebar" styleClass="menu-button" text="Menu">
+                                        <graphic>
+                                            <ImageView fx:id="menuIcon" fitHeight="45.0" fitWidth="45.0">
+                                                <image>
+                                                    <Image url="@../images/menu-open.png" />
+                                                </image>
+                                            </ImageView>
+                                        </graphic>
+                              <HBox.margin>
+                                 <Insets bottom="10.0" />
+                              </HBox.margin>
+                                    </JFXButton>
+
+                                    <!-- Home Button with Icon -->
+                                    <JFXButton fx:id="btnHome" styleClass="top-button" text="Home">
+                                        <graphic>
+                                            <ImageView fitHeight="40.0" fitWidth="40.0">
+                                                <image>
+                                                    <Image url="@../images/home-icon.png" />
+                                                </image>
+                                            </ImageView>
+                                        </graphic>
+                                    </JFXButton>
                                 </children>
                             </HBox>
 
                             <!-- Right-side: User Email & Logout Button -->
-                            <HBox fx:id="topButtonContainer" spacing="15.0" AnchorPane.rightAnchor="20">
+                            <HBox fx:id="topButtonContainer" alignment="CENTER_LEFT" spacing="20.0" AnchorPane.rightAnchor="25">
                                 <children>
+                                    <ImageView fitHeight="42" fitWidth="42">
+                                        <image>
+                                            <Image url="@../images/user.png" />
+                                        </image>
+                                    </ImageView>
                                     <Label fx:id="lblUserEmail" styleClass="user-email" />
-                                    <JFXButton fx:id="btnLogout" onAction="#handleLogout" styleClass="logout-button" text="Logout">
-                              <HBox.margin>
-                                 <Insets top="5.0" />
-                              </HBox.margin></JFXButton>
+                                    <JFXButton fx:id="btnLogout" onAction="#handleLogout" styleClass="logout-button" text="Log out" />
                                 </children>
                             </HBox>
                         </children>
                     </AnchorPane>
-
                 </VBox>
             </top>
 
-            <!-- Sidebar with Logo -->
+            <!-- Sidebar -->
             <left>
-                <VBox fx:id="sideMenu" prefWidth="180.0" styleClass="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <VBox fx:id="sideMenu" prefHeight="554.0" prefWidth="194.0" styleClass="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <!-- Logo Image -->
                         <ImageView fitHeight="120.0" fitWidth="160.0" preserveRatio="true">
                             <image>
                                 <Image url="@../images/logo.png" />
                             </image>
                         </ImageView>
-
                         <JFXButton fx:id="btnAgents" styleClass="sidebar-button" text="Agents" />
                         <JFXButton fx:id="btnAgencies" styleClass="sidebar-button" text="Agencies" />
                         <JFXButton fx:id="btnPackages" styleClass="sidebar-button" text="Packages" />
                         <JFXButton fx:id="btnSuppliers" styleClass="sidebar-button" text="Suppliers" />
                         <JFXButton fx:id="btnCustomers" styleClass="sidebar-button" text="Customers" />
                         <JFXButton fx:id="btnProducts" styleClass="sidebar-button" text="Products" />
-                  <JFXButton fx:id="btnMyStatistics" layoutX="25.0" layoutY="370.0" styleClass="sidebar-button" text="My Statistics" />
-                  <JFXButton fx:id="btnManagerStatistics" layoutX="25.0" layoutY="415.0" styleClass="sidebar-button" text="Manager Stats" />
+                        <JFXButton fx:id="btnMyStatistics" styleClass="sidebar-button" text="My Statistics" />
+                        <JFXButton fx:id="btnManagerStatistics" styleClass="sidebar-button" text="Manager Stats" />
                     </children>
                 </VBox>
             </left>
 
             <!-- Main Content -->
             <center>
-                <StackPane fx:id="mainContent" styleClass="main-content" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <StackPane fx:id="mainContent" prefHeight="554.0" prefWidth="150.0" styleClass="main-content">
                     <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #222831;" text="Welcome to Travel Experts Dashboard!" />
                 </StackPane>
             </center>

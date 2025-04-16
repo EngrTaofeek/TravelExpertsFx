@@ -1,0 +1,64 @@
+/* ======================================
+    My Statistics Styling
+====================================== */
+
+/*  General Styling */
+.root {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 15px;
+}
+
+/* ============================
+    Bar Chart Styling
+============================ */
+.bar-chart {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
+}
+
+/*  Bar Chart Axis */
+.axis {
+    -fx-tick-label-fill: #333;
+    -fx-font-size: 13px;
+}
+
+.axis-label {
+    -fx-text-fill: #444;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+/*  Chart Bars */
+.default-color0.chart-bar {
+    -fx-bar-fill: #fd7e14; /* Orange */
+}
+
+.default-color1.chart-bar {
+    -fx-bar-fill: #17a2b8; /* Teal */
+}
+
+/*  No Stats Message */
+.empty-message {
+    -fx-text-fill: #dc3545;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* ============================
+   Labels, Date Picker Styling
+============================ */
+.label-text {
+    -fx-font-size: 15px;
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+}
+
+.date-picker {
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}
