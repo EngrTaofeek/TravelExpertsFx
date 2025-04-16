@@ -27,7 +27,29 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>
             </Label>
+
             <TextField fx:id="tfName" prefHeight="29.0" prefWidth="424.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="55.0" prefWidth="600.0">
+         <children>
+            <Label text="Destination:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+
+            <TextField fx:id="tfDest" prefHeight="29.0" prefWidth="424.0">
                <font>
                   <Font size="14.0" />
                </font>

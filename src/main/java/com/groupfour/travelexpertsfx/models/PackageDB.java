@@ -43,7 +43,8 @@ public class PackageDB {
                     rs.getDouble(6),
                     rs.getDate(4),
                     rs.getDate(3),
-                    rs.getString(5)
+                    rs.getString(5),
+                    rs.getString(8)
             );
             packages.add(objectPackage);
         }
@@ -95,7 +96,8 @@ public class PackageDB {
                     rs.getDouble(6),
                     rs.getDate(4),
                     rs.getDate(3),
-                    rs.getString(5)
+                    rs.getString(5),
+                    rs.getString(8)
             );
             packages.add(objectPackage);
         }
@@ -141,7 +143,8 @@ public class PackageDB {
                     rs.getDouble(6),
                     rs.getDate(4),
                     rs.getDate(3),
-                    rs.getString(5)
+                    rs.getString(5),
+                    rs.getString(8)
             );
             packages.add(objectPackage);
         }
@@ -151,7 +154,7 @@ public class PackageDB {
     public static Integer addPackage(Package objectPackage) throws SQLException {
         Connection conn = getConnection();
         int numAffectedRows = 0;
-        String sql = "INSERT INTO packages (pkgname, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO packages (pkgname, pkgstartdate, pkgenddate, pkgdesc, pkgbaseprice, pkgagencycommission, image_url, destination) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, objectPackage.getPkgname());
         stmt.setDate(2, Date.valueOf(objectPackage.getPkgstartdate()));
@@ -160,6 +163,7 @@ public class PackageDB {
         stmt.setDouble(5, objectPackage.getPkgbaseprice());
         stmt.setDouble(6, objectPackage.getPkgagencycommission());
         stmt.setString(7, "/images/packages/default.jpg");
+        stmt.setString(8, objectPackage.getDestination());
 
         numAffectedRows = stmt.executeUpdate();
         return numAffectedRows;

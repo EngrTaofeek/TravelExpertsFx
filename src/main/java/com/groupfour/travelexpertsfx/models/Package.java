@@ -22,8 +22,9 @@ public class Package {
     private SimpleStringProperty pkgdesc;
     private SimpleDoubleProperty pkgbaseprice;
     private SimpleDoubleProperty pkgagencycommission;
+    private SimpleStringProperty destination;
 
-    public Package(int id, String pkgname, Double pkgagencycommission, Double pkgbaseprice, Date pkgenddate, Date pkgstartdate, String pkgdesc) {
+    public Package(int id, String pkgname, Double pkgagencycommission, Double pkgbaseprice, Date pkgenddate, Date pkgstartdate, String pkgdesc, String destination) {
         this.id = new SimpleIntegerProperty(id);
         this.pkgname = new SimpleStringProperty(pkgname);
         this.pkgagencycommission = new SimpleDoubleProperty(pkgagencycommission);
@@ -31,6 +32,7 @@ public class Package {
         this.pkgenddate = new SimpleObjectProperty<LocalDate> (pkgenddate.toLocalDate());
         this.pkgstartdate = new SimpleObjectProperty<LocalDate> (pkgstartdate.toLocalDate());
         this.pkgdesc = new SimpleStringProperty(pkgdesc);
+        this.destination = new SimpleStringProperty(destination);
     }
 
 
@@ -129,5 +131,17 @@ public class Package {
 
     public void setPkgenddate(LocalDate pkgenddate) {
         this.pkgenddate.set(pkgenddate);
+    }
+
+    public String getDestination() {
+        return destination.get();
+    }
+
+    public SimpleStringProperty destinationProperty() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination.set(destination);
     }
 }

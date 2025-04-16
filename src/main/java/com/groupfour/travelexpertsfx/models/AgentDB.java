@@ -60,8 +60,8 @@ public class AgentDB {
         Connection conn = getConnection();
         int numAffectedRows = 0;
         String sql = "INSERT INTO agents (agtfirstname, agtmiddleinitial, " +
-                "agtlastname, agtbusphone, agtemail, agtposition, agencyid, role)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                "agtlastname, agtbusphone, agtemail, agtposition, agencyid, role, status)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, agent.getAgtfirstname());
         stmt.setString(2,agent.getAgtmiddleinitial());
@@ -71,6 +71,7 @@ public class AgentDB {
         stmt.setString(6,agent.getAgtposition());
         stmt.setInt(7,agent.getAgencyid());
         stmt.setString(8,agent.getRole());
+        stmt.setString(9, "approved");
 
         numAffectedRows = stmt.executeUpdate();
         return numAffectedRows;
