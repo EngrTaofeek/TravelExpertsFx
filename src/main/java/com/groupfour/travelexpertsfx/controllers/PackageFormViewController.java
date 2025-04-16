@@ -117,6 +117,16 @@ public class PackageFormViewController{
         this.mode = mode;
     }
 
+    private void checkDate(Date startDate,Date endDate) {
+        if(startDate.after(endDate)) {
+            throw new RuntimeException("Start date cannot be after end date");
+        }
+        Date now = new Date(System.currentTimeMillis());
+        if(startDate.before(now)) {
+            throw new RuntimeException("Start date should after now");
+        }
+    }
+
     private Package getPackageFormView() {
         try {
             Validator.validateName(tfName.getText());
@@ -127,6 +137,7 @@ public class PackageFormViewController{
             if(dpEndDate.getValue() == null) {
                 throw new RuntimeException("please select end date");
             }
+            checkDate(Date.valueOf(dpStartDate.getValue()),Date.valueOf(dpEndDate.getValue()));
             Validator.validatePrice(tfBasePrice.getText(),"base price");
             Validator.validatePrice(tfAgencyCommission.getText(),"agency commission");
             return new Package(packageId != 0 ? packageId : 0,tfName.getText(),
