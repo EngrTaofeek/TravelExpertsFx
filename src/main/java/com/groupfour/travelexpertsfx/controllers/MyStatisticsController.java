@@ -63,8 +63,8 @@ public class MyStatisticsController {
         try {
             // Get the agent's statistics
             int currentAgentId = StatisticsDB.resolveAgentId(CurrentUser.getEmail());
-            long bookings = StatisticsDB.totalSalesPerAgent(currentAgentId, date);
-            BigDecimal commissions = StatisticsDB.totalCommissionPerAgent(currentAgentId, date);
+            long bookings = StatisticsDB.totalSalesPerAgent(currentAgentId, date.plusDays(1));
+            BigDecimal commissions = StatisticsDB.totalCommissionPerAgent(currentAgentId, date.plusDays(1));
             String dateString = date.toString();
             if (isFirstLoad) {
                 // Setup bar chart

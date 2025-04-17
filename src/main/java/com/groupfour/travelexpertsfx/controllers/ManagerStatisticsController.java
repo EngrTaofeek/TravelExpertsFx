@@ -114,7 +114,7 @@ public class ManagerStatisticsController {
                 long sales = 0;
                 // Get the agent's sales
                 try {
-                    sales = StatisticsDB.totalSalesPerAgent(agent.getAgentId(), date);
+                    sales = StatisticsDB.totalSalesPerAgent(agent.getAgentId(), date.plusDays(1));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -124,7 +124,7 @@ public class ManagerStatisticsController {
                 BigDecimal commission = BigDecimal.ZERO;
                 // Get the agent's commission
                 try {
-                    commission = StatisticsDB.totalCommissionPerAgent(agent.getAgentId(), date);
+                    commission = StatisticsDB.totalCommissionPerAgent(agent.getAgentId(), date.plusDays(1));
                     // If the agent has no commission, set to zero
                     if (commission == null) {
                         commission = BigDecimal.ZERO;
@@ -142,7 +142,7 @@ public class ManagerStatisticsController {
                 long agencySales = 0;
                 // Get sales per agency
                 try {
-                    agencySales = StatisticsDB.totalSalesPerAgency(agency.getAgencyid(), date);
+                    agencySales = StatisticsDB.totalSalesPerAgency(agency.getAgencyid(), date.plusDays(1));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -155,7 +155,7 @@ public class ManagerStatisticsController {
                 long bookings = 0;
                 // Get sales per customer
                 try {
-                    bookings = StatisticsDB.totalSalesPerCustomer(customer.getCustomerId(), date);
+                    bookings = StatisticsDB.totalSalesPerCustomer(customer.getCustomerId(), date.plusDays(1));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -165,7 +165,7 @@ public class ManagerStatisticsController {
                 long totalSales = 0;
                 // Get all sales
                 try {
-                    totalSales = StatisticsDB.totalSales(date);
+                    totalSales = StatisticsDB.totalSales(date.plusDays(1));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -298,7 +298,7 @@ public class ManagerStatisticsController {
                     cmbSelectAgents.setValue(cmbSelectAgents.getItems().getFirst());
                     AgentStatsDTO agent = cmbSelectAgents.getValue();
                     // Get agent's sales until today's date
-                    long agentSales = StatisticsDB.totalSalesPerAgent(agent.getAgentId(), dtpMaxDate.getValue());
+                    long agentSales = StatisticsDB.totalSalesPerAgent(agent.getAgentId(), dtpMaxDate.getValue().plusDays(1));
                     // Convert date to string
                     String selectedDate = dtpMaxDate.getValue().toString();
                     // Format the chart
@@ -338,7 +338,7 @@ public class ManagerStatisticsController {
                     // Convert date to string
                     String today = dtpMaxDate.getValue().toString();
                     // Get agent's commission value until today's date
-                    BigDecimal agentCommission = StatisticsDB.totalCommissionPerAgent(agent.getAgentId(), dtpMaxDate.getValue());
+                    BigDecimal agentCommission = StatisticsDB.totalCommissionPerAgent(agent.getAgentId(), dtpMaxDate.getValue().plusDays(1));
                     // Format the chart
                     haxLineStats.setLabel("Date");
                     vaxLineStats.setLabel("Commission Value Per Agent");
@@ -377,7 +377,7 @@ public class ManagerStatisticsController {
                     String agencyName = agency.toString();
                     LocalDate date = dtpMaxDate.getValue();
                     // Get sales of first agency
-                    long agencySales = StatisticsDB.totalSalesPerAgency(agency.getAgencyid(), date);
+                    long agencySales = StatisticsDB.totalSalesPerAgency(agency.getAgencyid(), date.plusDays(1));
                     // Format and add data to the chart
                     pieStats.setTitle("Sales Per Agency (Until " + date + ")");
                     PieChart.Data firstAgency = new PieChart.Data(agencyName, agencySales);
@@ -410,7 +410,7 @@ public class ManagerStatisticsController {
                     cmbSelectCustomers.setValue(cmbSelectCustomers.getItems().getFirst());
                     CustomerStatsDTO customer = cmbSelectCustomers.getValue();
                     // Get number of bookings for first customer until today's date
-                    long customerBookings = StatisticsDB.totalSalesPerCustomer(customer.getCustomerId(), dtpMaxDate.getValue());
+                    long customerBookings = StatisticsDB.totalSalesPerCustomer(customer.getCustomerId(), dtpMaxDate.getValue().plusDays(1));
                     String selectedDate = dtpMaxDate.getValue().toString();
                     // Update bar chart vertical label and load data
                     vaxBarStats.setLabel("Sales Per Customer");
@@ -443,7 +443,7 @@ public class ManagerStatisticsController {
                 String selectedDate = dtpMaxDate.getValue().toString();
                 try {
                     // Get total number of sales until today's date
-                    long totalSales = StatisticsDB.totalSales(dtpMaxDate.getValue());
+                    long totalSales = StatisticsDB.totalSales(dtpMaxDate.getValue().plusDays(1));
                     // Update bar chart vertical label
                     vaxBarStats.setLabel("Number of Sales");
                     XYChart.Series<String, Number> sales = new XYChart.Series<>();
@@ -465,7 +465,7 @@ public class ManagerStatisticsController {
     private void updateCumulativeLabel(LocalDate date) {
         long cumulativeSales = 0;
         try {
-            cumulativeSales = StatisticsDB.totalSales(date);
+            cumulativeSales = StatisticsDB.totalSales(date.plusDays(1));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
