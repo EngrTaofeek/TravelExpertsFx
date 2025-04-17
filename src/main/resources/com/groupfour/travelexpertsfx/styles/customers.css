@@ -130,3 +130,11 @@
     -fx-opacity: 0.95;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
 }
+
+.customerTextEditable {
+    -fx-background-color: white;
+}
+
+.customerTextNotEditable {
+    -fx-background-color: #F4F4F4
+}
