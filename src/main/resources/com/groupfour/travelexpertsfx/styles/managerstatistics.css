@@ -18,11 +18,11 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 5, 0, 0, 3);
 }
 
-/*  Bar Chart */
-.chart-bar {
-    -fx-bar-fill: #FF6B3B;
-    -fx-bar-stroke: transparent;
-}
+/*  Bar Chart - disabled to allow different colours for different series */
+/*.chart-bar {*/
+/*    -fx-bar-fill: #FF6B3B;*/
+/*    -fx-bar-stroke: transparent;*/
+/*}*/
 
 /* Line Chart */
 .chart-line-symbol {

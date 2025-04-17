@@ -221,7 +221,7 @@ public class StatisticsDB {
         Connection conn = getConnection();
         String sql = "SELECT agentid, agtfirstname, agtmiddleinitial, agtlastname, agncycity FROM agents" +
                 " INNER JOIN agencies ON agents.agencyid = agencies.agencyid" +
-                " ORDER BY agents.agencyid ASC";
+                " ORDER BY agents.agencyid, agentid ASC";
         PreparedStatement stmt = conn.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
 
